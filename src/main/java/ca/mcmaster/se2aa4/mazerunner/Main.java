@@ -39,18 +39,18 @@ public class Main {
                 {
                     if (line.charAt(idx) == '#') 
                     {
-                        logger.info("WALL");
+                        System.out.print("WALL ");
                     } 
                     else if (line.charAt(idx) == ' ') 
                     {
-                        logger.info("PASS");
+                        System.out.print("PASS ");
                     }
                 }
-                logger.info(System.lineSeparator());
                 System.out.print(System.lineSeparator());
             }
         } catch(Exception e) {
-            System.err.println("/!\\ An error has occured /!\\");
+            logger.error("/!\\ An error has occured /!\\");
+            
         }
         logger.info("**** Computing path"); 
         logger.info("PATH NOT COMPUTED"); 
