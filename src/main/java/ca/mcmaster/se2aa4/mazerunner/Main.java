@@ -65,6 +65,12 @@ public class Main {
         logger.info("** End of MazeRunner");
 
     }
+
+    private static Random buildReproducibleGenerator(long seed) {
+        Random generator = new Random();
+        generator.setSeed(seed);
+        return generator;
+    }
 }
 
 
