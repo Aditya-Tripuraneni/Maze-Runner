@@ -31,7 +31,7 @@ public class Main {
             CommandLine cmd = parser.parse(options, args);
             String filepath = cmd.getOptionValue("i");
 
-            System.out.println("**** Reading the maze from file " + filepath);
+            logger.info("**** Reading the maze from file " + filepath); 
             BufferedReader reader = new BufferedReader(new FileReader(filepath));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -39,11 +39,11 @@ public class Main {
                 {
                     if (line.charAt(idx) == '#') 
                     {
-                        System.out.print("WALL ");
+                        logger.info("WALL");
                     } 
                     else if (line.charAt(idx) == ' ') 
                     {
-                        System.out.print("PASS ");
+                        logger.info("PASS");
                     }
                 }
                 logger.info(System.lineSeparator());
@@ -52,8 +52,9 @@ public class Main {
         } catch(Exception e) {
             System.err.println("/!\\ An error has occured /!\\");
         }
-        System.out.println("**** Computing path");
-        System.out.println("PATH NOT COMPUTED");
-        System.out.println("** End of MazeRunner");
+        logger.info("**** Computing path"); 
+        logger.info("PATH NOT COMPUTED"); 
+        logger.info("** End of MazeRunner");
+
     }
 }
