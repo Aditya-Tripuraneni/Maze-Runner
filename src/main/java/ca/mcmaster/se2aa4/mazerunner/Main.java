@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
 
         Maze maze = new Maze("Enter a maze path");
-        
+
         logger.info("** Starting Maze Runner");
         Options options = new Options();
         CommandLineParser parser = new DefaultParser();
@@ -56,9 +56,6 @@ public class Main {
         logger.info("** End of MazeRunner");
 
     }
-
-
-   
 }
 
 

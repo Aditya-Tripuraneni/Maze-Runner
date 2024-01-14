@@ -1,15 +1,17 @@
+package ca.mcmaster.se2aa4.mazerunner;
+
 public class Maze {
 
 
-    public Maze(String filepath){ 
-        return "";
+    public Maze(String someInut){
+        return; 
     }
-
 
     /************************************************
      * @ Method Name: moveLeft()                    
      * Description: Changes path direction to left. 
-     ************************************************/
+     ***********************************************
+     */
     private String moveLeft(){
         return "L";
     }
@@ -57,7 +59,7 @@ public class Maze {
      * Description: Determines if the current input path
      *  is a wall. 
      *******************************************************/
-    private boolean isWall(Char inut){
+    private boolean isWall(char inut){
         return false;
     }
 
@@ -67,7 +69,7 @@ public class Maze {
      * Description: Determines if the current input path
      *  is a exit. 
      *******************************************************/
-    private boolean isExit(Char input){
+    private boolean isExit(char input){
         return false; 
     }
 
@@ -77,7 +79,7 @@ public class Maze {
      * Description: Determines if the current input path
      *  is an entrance. 
      *******************************************************/
-    private isEntrance(Char input){
+    private boolean isEntrance(char input){
         return false; 
     }
 
