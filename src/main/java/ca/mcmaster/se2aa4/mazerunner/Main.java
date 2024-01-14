@@ -20,7 +20,6 @@ public class Main {
 
     private static final Logger logger = LogManager.getLogger();
     public static void main(String[] args) {
-        logger.info("Here goes the business code");
         Configuration config = new Configuration(args);
         Random random = buildReproducibleGenerator(config.seed());
         Maze theMaze = new Maze(config.width(), config.height());
@@ -71,6 +70,22 @@ public class Main {
         generator.setSeed(seed);
         return generator;
     }
+
+    public static String moveLeft(){
+        return "L";
+    }
+
+    public static String moveRight(){
+        return "R";
+    }
+
+    public static String moveForward(){
+        return "F";
+    }
+
+    public static String factorizeExpression(){
+        return "";
+    }
 }
 
 
@@ -87,7 +102,6 @@ class Configuration {
     public BufferedWriter outputFile() {
         return new BufferedWriter(new OutputStreamWriter(System.out));
     }
-
 
 }
 
