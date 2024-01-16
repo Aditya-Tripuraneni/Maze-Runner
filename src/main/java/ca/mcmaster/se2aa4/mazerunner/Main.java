@@ -23,6 +23,8 @@ public class Main {
         Options options = new Options();
         CommandLineParser parser = new DefaultParser();
         options.addOption("i", true, "File name for -i"); 
+        options.addOption("p", true, "Used to verify the path sequence"); 
+
 
 
 
