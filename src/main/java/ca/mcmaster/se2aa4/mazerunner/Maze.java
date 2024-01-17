@@ -40,7 +40,7 @@ public class Maze {
      * Description: Returns the cannonical path of the maze. 
      *******************************************************/
     private String cannonicalPath(){
-        return "";
+        return "RRR";
     }
 
 
