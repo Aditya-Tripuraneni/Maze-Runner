@@ -15,8 +15,8 @@ public class Maze {
         this.filepath = filepath; 
         this.maze = MazeExporter.constructMaze(filepath);
 
-        for (char[] ting: maze){
-            System.out.println(Arrays.toString(ting));
+        for (char[] row: maze){
+            System.out.println(Arrays.toString(row));
         }
     }
 
