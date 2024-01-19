@@ -62,7 +62,7 @@ public class MazeExporter{
         for (int idx = 0; idx < line.length(); idx++) 
             {
                 count++; 
-            }
+            } 
 
         
 
