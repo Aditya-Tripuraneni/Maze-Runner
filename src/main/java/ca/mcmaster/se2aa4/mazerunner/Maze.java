@@ -2,10 +2,19 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 public class Maze {
 
+    private String filepath;
 
-    public Maze(String someInut){
-        return; 
+     private int width; 
+     private int height; 
+     
+     private int[][] maze = new int[width][height]; 
+
+
+    public Maze(String filepath){
+        this.filepath = filepath; 
     }
+
+
 
     /************************************************
      * @ Method Name: moveLeft()                    
@@ -99,7 +108,7 @@ public class Maze {
      * Description: Sovles the maze and determins and output
      * path for the given input maze.
      *******************************************************/
-    public String solveMaze(Maze maze, String inputPath){
+    public String solveMaze(){
 
         return ""; 
     }
