@@ -1,6 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,9 +9,6 @@ import java.lang.module.Configuration;
 import java.text.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import main.java.ca.mcmaster.se2aa4.mazerunner.MazeExporter;
-
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLine;
@@ -36,10 +32,7 @@ public class Configurations {
             String filepath = cmd.getOptionValue("i");
     
             logger.info("**** Reading the maze from file " + filepath); 
-
-            // MazeExporter mazeExporter = new MazeExporter(filepath);
-            // System.out.println("FINAL HEIGHT" + mazeExporter.getHeight(filepath));
-    
+            Maze maze = new Maze(filepath);
             displayMap(filepath);
     }
 

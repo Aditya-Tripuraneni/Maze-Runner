@@ -1,17 +1,23 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
+
 public class Maze {
 
     private String filepath;
 
-     private int width; 
-     private int height; 
-     
-     private int[][] maze = new int[width][height]; 
 
+     private char [][] maze; 
 
-    public Maze(String filepath){
+    public Maze(String filepath) throws FileNotFoundException, IOException{
         this.filepath = filepath; 
+        this.maze = MazeExporter.constructMaze(filepath);
+
+        for (char[] ting: maze){
+            System.out.println(Arrays.toString(ting));
+        }
     }
 
 
