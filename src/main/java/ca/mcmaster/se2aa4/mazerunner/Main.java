@@ -13,8 +13,6 @@ public class Main {
 
         try {
             Configurations.configure(args);
-            // Maze maze = new Maze("Enter a maze path");
-
         }
         catch(Exception e)
         {

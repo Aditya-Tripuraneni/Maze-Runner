@@ -182,7 +182,7 @@ public class Maze {
      * Description: Determines if the computed path is a valid 
      * path for a given maze.
      *******************************************************/
-    public boolean verifyMazePath(String mazePath, String inputPath){
+    public boolean verifyMazePath(String mazePath){
         return false;
     }
 
@@ -196,11 +196,11 @@ public class Maze {
         ArrayList<Integer> coordinates = getEntranceAndExit();
         int target = coordinates.get(1); 
         int start = coordinates.get(0);
-
+    
         System.out.println("Starting at position " + start + ", " + 0); 
         System.out.println("Ending at: " + target + ", " + (maze[0].length -1));
 
-        return ""; 
+        return "FFF"; 
     }
     
 }
