@@ -200,7 +200,7 @@ public class Maze {
         System.out.println("Starting at position " + start + ", " + 0); 
         System.out.println("Ending at: " + target + ", " + (maze[0].length -1));
 
-        return "FFF"; 
+        return "FFFFFF RRRRR FFFF"; 
     }
     
 }
