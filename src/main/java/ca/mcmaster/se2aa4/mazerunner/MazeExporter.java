@@ -63,9 +63,6 @@ public class MazeExporter{
             {
                 count++; 
             } 
-
-        
-
         return count; 
 
     }
