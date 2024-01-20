@@ -13,6 +13,7 @@ public class Main {
 
         try {
             Configurations.configure(args);
+        
         }
         catch(Exception e)
         {
