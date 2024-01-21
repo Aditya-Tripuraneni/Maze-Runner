@@ -24,7 +24,6 @@ public class Maze {
         }
 
         System.out.println("New data found: \n\n\n");
-        System.out.println(getEntranceAndExit());
     }
 
     private HashMap<Character, Character> getPathOptions(int row, int col){
@@ -35,10 +34,10 @@ public class Maze {
         {
             char character = maze[row+1][col];
             if (isWall(character)){
-                neighbours.put('T', 'W');
+                neighbours.put('S', '#'); // S is for South
             }
             else{
-                neighbours.put('T', 'P');
+                neighbours.put('S', ' ');
             }
         }
 
@@ -48,10 +47,10 @@ public class Maze {
             char character = maze[row-1][col];
 
             if ( isWall(character) ){
-                neighbours.put('B', 'W'); // cannot pass on bottom
+                neighbours.put('N', '#'); // cannot pass on bottom
             }
             else {
-                neighbours.put('B', 'P'); // pass on bottom
+                neighbours.put('N', ' '); // pass on bottom
             }
         }
         
@@ -60,10 +59,10 @@ public class Maze {
         {
             char character = maze[row][col-1];
             if ( isWall(character) ){
-                neighbours.put('L', 'W'); // cannot pass on the left
+                neighbours.put('W', '#'); // cannot pass on the left
             }
             else{
-                neighbours.put('L', 'P'); // pass on left
+                neighbours.put('W', ' '); // pass on left
             }
         }
 
@@ -72,10 +71,10 @@ public class Maze {
             char character = maze[row][col+1];
 
             if ( isWall(character) ){
-                neighbours.put('R', 'W'); // cannot pass on the right
+                neighbours.put('E', '#'); // cannot pass on the right
             }
             else{
-                neighbours.put('R', 'P'); // pass on right
+                neighbours.put('E', ' '); // pass on right
             }
         }
 
@@ -114,17 +113,52 @@ public class Maze {
      * Description: Changes path direction to left. 
      ***********************************************
      */
-    private String moveLeft(){
-        return "L";
+    private boolean canMoveLeft(int row, int col, char c)
+    {
+        HashMap<Character, Character> neighbours = getPathOptions(row, col);
+        System.out.println(neighbours);
+
+        switch (c)
+        {
+            case 'E':
+                return neighbours.getOrDefault('N', '#') == ' ';
+
+            case 'W':
+                return neighbours.getOrDefault('S', '#') == ' ';
+
+            case 'N': 
+                return neighbours.getOrDefault('W', '#') == ' ';
+
+            case 'S':
+                return neighbours.getOrDefault('E', '#') == ' ';
+        }
+        return false;
     }
 
 
     /************************************************
-     * @ Method Name: moveRight()                    
-     * Description: Changes path direction to right. 
+     * @ Method Name: canMoveRight                  
+     * Description: Determines if player can move right depending on their orientation
      ************************************************/
-    private String moveRight(){
-        return "R";
+    private boolean canMoveRight(int row, int col, char c){
+        HashMap<Character, Character> neighbours = getPathOptions(row, col);
+
+        switch (c)
+        {
+            case 'E':
+                return neighbours.getOrDefault('S', '#') == ' ';
+
+            case 'W':
+                return neighbours.getOrDefault('N', '#') == ' ';
+
+
+            case 'N': 
+                return neighbours.getOrDefault('E', '#') == ' ';
+
+            case 'S':
+                return neighbours.getOrDefault('W', '#') == ' ';
+        }
+        return false;
     }
 
 
@@ -132,8 +166,25 @@ public class Maze {
      * @ Method Name: moveForward()                    
      * Description: Changes path direction to forward. 
      ************************************************/
-    private String moveForward(){
-        return "F";
+    private boolean canMoveForward(int row, int col, char c){
+        HashMap<Character, Character> neighbours = getPathOptions(row, col);
+
+        switch (c)
+        {
+            case 'E':
+                return neighbours.getOrDefault('E', '#') == ' ';
+
+            case 'W':
+                return neighbours.getOrDefault('W', '#') == ' ';
+
+
+            case 'N': 
+                return neighbours.getOrDefault('N', '#') == ' ';
+
+            case 'S':
+                return neighbours.getOrDefault('S', '#') == ' ';
+        }
+        return false;
     }
 
 
@@ -156,16 +207,6 @@ public class Maze {
     }
 
 
-    /*******************************************************
-     * @ Method Name: isWall()                    
-     * Description: Determines if the current input path
-     *  is a wall. 
-     *******************************************************/
-    private boolean isWall(char input){
-        return input == '#';
-    }
-
-
      /*******************************************************
      * @ Method Name: isExit()                    
      * Description: Determines if the current input path
@@ -173,6 +214,15 @@ public class Maze {
      *******************************************************/
     private boolean isPass(char input){
         return input == ' ';
+    }
+
+        /*******************************************************
+     * @ Method Name: isWall()                    
+     * Description: Determines if the current input path
+     *  is a wall. 
+     *******************************************************/
+    private boolean isWall(char input){
+        return input == '#';
     }
 
 
@@ -186,6 +236,10 @@ public class Maze {
         return false;
     }
 
+    private int getMazeWidth(){
+        return maze[0].length;
+    }
+
 
     /*******************************************************
      * @ Method Name: solveMaze()                    
@@ -193,12 +247,24 @@ public class Maze {
      * path for the given input maze.
      *******************************************************/
     public String solveMaze(){
+
         ArrayList<Integer> coordinates = getEntranceAndExit();
-        int target = coordinates.get(1); 
-        int start = coordinates.get(0);
-    
-        System.out.println("Starting at position " + start + ", " + 0); 
-        System.out.println("Ending at: " + target + ", " + (maze[0].length -1));
+
+
+        int exitRow = coordinates.get(1); 
+        int exitCol = getMazeWidth() -1; 
+
+        int currRow = coordinates.get(0);
+        int currCol = 0; 
+
+        char currentDirection = 'E'; 
+        
+        // while (currRow != exitRow || currCol != exitCol){
+        //     // Code to implement for right hand algorithm
+        // }
+
+        System.out.println("Starting at position " + currRow + ", " + currCol); 
+        System.out.println("Ending at: " + exitRow + ", " + (exitCol));
 
         return "FFFFFF RRRRR FFFF"; 
     }
