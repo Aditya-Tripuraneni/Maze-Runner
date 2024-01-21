@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Maze {
 
@@ -15,7 +13,8 @@ public class Maze {
 
     private char [][] maze; 
 
-    public Maze(String filepath) throws FileNotFoundException, IOException{
+    public Maze(String filepath) throws FileNotFoundException, IOException
+    {
         this.filepath = filepath; 
         this.maze = MazeExporter.constructMaze(filepath);
 
@@ -23,10 +22,11 @@ public class Maze {
             System.out.println(Arrays.toString(row));
         }
 
-        System.out.println("New data found: \n\n\n");
     }
 
-    private HashMap<Character, Character> getPathOptions(int row, int col){
+
+    private HashMap<Character, Character> getPathOptions(int row, int col)
+    {
         HashMap<Character, Character> neighbours = new HashMap<>();
 
         // check within bounds for not going past the bottom row
@@ -107,11 +107,10 @@ public class Maze {
     }
 
 
-    /************************************************
+    /**************************************************************************************************
      * @ Method Name: canMoveLeft()                    
      * Description: Checks to see if user can move left based on their current orientation of N,E,S,W
-     ***********************************************
-     */
+     **************************************************************************************************/
     private boolean canMoveLeft(int row, int col, char c){
         HashMap<Character, Character> neighbours = getPathOptions(row, col);
         switch (c)
@@ -134,52 +133,43 @@ public class Maze {
 
     }
 
-    /************************************************
+    /******************************************************************
      * @ Method Name: moveLeft()                    
-     * Description: Changes path direction to left. 
-     ***********************************************
+     * Description: Changes path direction to left updating orienation
+     ******************************************************************
      */
     private int[] moveLeft(int row, int col, char c)
     {
         switch (c)
         {
             case 'E':
-                    row--;
                     c = 'N';
-                    System.out.println("Moving NORTH I just updated row it's now " + row);
+                    // System.out.println("Turning NORTH");
                     break; 
-
             case 'W':
-                    row++;
                     c = 'S'; 
-                    System.out.println("Moving SOUTH I just updated row it's now " + row);
+                    // System.out.println("Turning SOUTH");
                     break;
-
-                
             case 'N': 
-                    col--;
                     c = 'W';
-                    System.out.println("Moving WEST I just updated col it's now " + col);
+                    // System.out.println("Turning WEST");
                     break; 
                 
             case 'S':
-                    col ++;
                     c = 'E'; 
-                    System.out.println("Moving EAST I just updated row it's now " + col);
+                    // System.out.println("Turning EAST");
                     break; 
-
         }
 
         return new int[]{row, col, c};
     }
 
 
-    //! Completion point delete this comment later
 
-     /************************************************
+     /*************************************************************************************************
      * @ Method Name: canMoveRight()                    
      * Description: Checks to see if user can move right based on their current orientation of N,E,S,W
-     ***********************************************
+     ***************************************************************************************************
      */
     private boolean canMoveRight(int row, int col, char c){
         HashMap<Character, Character> neighbours = getPathOptions(row, col);
@@ -204,49 +194,40 @@ public class Maze {
     }
 
 
-    /************************************************
+    /********************************************************************
      * @ Method Name: moveRight                  
-     * Description: Determines if player can move right depending on their orientation
-     ************************************************/
-    private int[] moveRight(int row, int col, char c){
+     * Description: Changes path direction to right updating orienation
+     ********************************************************************/
+    private int[] moveRight(int row, int col, char c)
+    {
         switch (c)
         {
             case 'E':
-                row++;
                 c = 'S';
-                System.out.println("Moving SOUTH I just updated row it's now " + row);
+                // System.out.println("Turning SOUTH");
                 break; 
-
-
             case 'W':
-                row--; 
                 c = 'N';
-                System.out.println("Moving NORTH I just updated row it's now " + row);
+                // System.out.println("Turning NORTH");
                 break;
-
-
             case 'N': 
-                col++;
                 c = 'E';
-                System.out.println("Moving EAST I just updated col it's now " + col);
+                // System.out.println("TURNING EAST");
                 break;
-
-
             case 'S':
-                col--;
                 c = 'W';
-                System.out.println("Moving WEST I just updated row it's now " + col);
+                // System.out.println("Turning WEST");
                 break; 
         }
+
         return new int[]{row, col, c};
     }
 
 
-        /************************************************
-     * @ Method Name: canMoveLeft()                    
+    /***************************************************************************************************
+     * @ Method Name: canMoveForward()                    
      * Description: Checks to see if user can move left based on their current orientation of N,E,S,W
-     ***********************************************
-     */
+     ************************************************************************************************* */
     private boolean canMoveForward(int row, int col, char c)
     {
         HashMap<Character, Character> neighbours = getPathOptions(row, col);
@@ -274,7 +255,7 @@ public class Maze {
 
     /************************************************
      * @ Method Name: moveForward()                    
-     * Description: Changes path direction to forward. 
+     * Description: Changes path direction to forward
      ************************************************/
     private int[] moveForward(int row, int col, char c){
         System.out.println("Entered moveForward");
@@ -282,63 +263,55 @@ public class Maze {
         {
             case 'E':
                     col++;
-                    System.out.println("Moving EAST I just updated col it's now " + col);
+                    // System.out.println("Moving EAST I just updated col it's now " + col);
                     break; 
             
             case 'W':
                     col--;
-                    System.out.println("Moving WEST I just updated col it's now " + col);
+                    // System.out.println("Moving WEST I just updated col it's now " + col);
                     break;
 
 
             case 'N': 
                     row--; 
-                    System.out.println("Moving NORTH I just updated row it's now " + row);
+                    // System.out.println("Moving NORTH I just updated row it's now " + row);
                     break; 
 
             case 'S':
                     row ++; 
-                    System.out.println("Moving SOUTH I just updated row it's now " + row);
+                    // System.out.println("Moving SOUTH I just updated row it's now " + row);
                     break;
                   
         }
         return new int[]{row, col, c};
     }
 
-        /************************************************
-     * @ Method Name: moveForward()                    
-     * Description: Changes path direction to forward. 
-     ************************************************/
-    private int[] moveBackWards(int row, int col, char c){
-        System.out.println("Entered moveForward");
+     /**************************************************************************
+     * @ Method Name: moveBackwards()                    
+     * Description: Changes path direction to backwards and updates orienation. 
+     **************************************************************************/
+    private int[] moveBackWards(int row, int col, char c)
+    {
         switch (c)
         {
             case 'E':
-                    col--;
                     c = 'W';
-                    System.out.println("Moving EAST I just updated col it's now " + col);
+                    // System.out.println("TURNED AROUND");
                     break; 
-            
             case 'W':
-                    col++;
                     c = 'E';
-                    System.out.println("Moving WEST I just updated col it's now " + col);
+                    // System.out.println("TURNED AROUND");
                     break;
-
-
             case 'N': 
-                    row++; 
                     c = 'S';
-                    System.out.println("Moving NORTH I just updated row it's now " + row);
+                    // System.out.println("TURNED AROUND");
                     break; 
-
             case 'S':
-                    row --; 
                     c = 'N';
-                    System.out.println("Moving SOUTH I just updated row it's now " + row);
+                    // System.out.println("TURNED AROUND");
                     break;
-                  
         }
+
         return new int[]{row, col, c};
     }
 
@@ -406,6 +379,7 @@ public class Maze {
     public String solveMaze(){
 
         ArrayList<Integer> coordinates = getEntranceAndExit();
+        StringBuilder string = new StringBuilder();
 
 
         int exitRow = coordinates.get(1); 
@@ -420,47 +394,97 @@ public class Maze {
 
         char orientation = 'E'; 
 
-        
         while (currRow != exitRow || currCol != exitCol)
         {
             if (canMoveRight(currRow, currCol, orientation))
             {
-                System.out.println("I can move right");
-                int[] changes = moveRight(currRow, currCol, orientation);
+                System.out.println("I can turn right");
+                int[] changes = moveRight(currRow, currCol, orientation); // the character has turned right at this point NOT MOVED
+                orientation = (char) changes[2];
+
+                if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'F'))
+                    string.append(" R"); 
+                else
+                    string.append("R");
+                
+                changes = moveForward(currRow, currCol, orientation); // the character has MOVED forward at this point
                 currRow = changes[0];
                 currCol = changes[1];
                 orientation = (char) changes[2];
+    
+                if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'R'))
+                    string.append(" F"); 
+                else
+                    string.append("F");
+
+                
             }
             else if (canMoveForward(currRow, currCol, orientation))
             {
                 System.out.println("I can move forward");
-                int[] changes = moveForward(currRow, currCol, orientation);
+                int[] changes = moveForward(currRow, currCol, orientation); // the character has MOVED forward at this point
                 currRow = changes[0];
                 currCol = changes[1];
                 orientation = (char) changes[2];
+
+                if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'R'))
+                    string.append(" F"); 
+                else
+                    string.append("F");
+
             }
             else if (canMoveLeft(currRow, currCol, orientation))
             {
-                System.out.println("I can move left");
-                int[] changes = moveLeft(currRow, currCol, orientation);
+                System.out.println("I can turn left");
+                int[] changes = moveLeft(currRow, currCol, orientation); // the character has TURNED left at this point NOT moved
+
+                orientation = (char) changes[2];
+
+                if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'R'))
+                    string.append(" L"); 
+                else
+                    string.append("L");
+
+                changes = moveForward(currRow, currCol, orientation); // the character has MOVED forward at this point
                 currRow = changes[0];
                 currCol = changes[1];
                 orientation = (char) changes[2];
+        
+                if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'R'))
+                    string.append(" F"); 
+                else
+                    string.append("F");
             }
             else{
-                System.out.println("MOVING BACKWARDS!");
+                System.out.println("Turning around!");
                 int[] changes = moveBackWards(currRow, currCol, orientation); 
+
+                orientation = (char) changes[2];
+
+                if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'L'))
+                    string.append(" RR"); 
+                else
+                    string.append("RR");
+
+                changes = moveForward(currRow, currCol, orientation); // the character has MOVED forward at this point
                 currRow = changes[0];
                 currCol = changes[1];
                 orientation = (char) changes[2];
+        
+                if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'R'))
+                    string.append(" F"); 
+                else
+                    string.append("F");
+
             }
+
             System.out.println("Orientation: " + orientation + " Row: " + currRow + " Col: " + currCol);
+            System.out.println(string);
+
         }
 
         System.out.println("EXITING THE MAZE PATH FIND FINALLY");
         System.out.println("Exited with " + currRow + " " + currCol + " " + orientation);
-
-
 
         return "FFFFFF RRRRR FFFF"; 
     }
