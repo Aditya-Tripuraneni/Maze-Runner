@@ -44,14 +44,19 @@ public class Maze {
             if (string.charAt(i) == currLetter)
                 count++;
             else if(string.charAt(i) != ' '){
-                factoredExpression.append(count).append(currLetter).append(" ");
+                if (count > 1)
+                    factoredExpression.append(count).append(currLetter).append(" ");
+                else
+                    factoredExpression.append(currLetter).append(" ");
                 currLetter = string.charAt(i);
                 count = 1;
 
             }
         }
-
-        factoredExpression.append(count).append(currLetter).append(" ");
+        if (count > 1)
+            factoredExpression.append(count).append(currLetter).append(" ");
+        else 
+            factoredExpression.append(currLetter).append(" ");
 
 
         return factoredExpression.toString();
