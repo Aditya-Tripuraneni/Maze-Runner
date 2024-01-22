@@ -11,6 +11,7 @@ public class PathChecker {
         this.maze = maze;
     }
 
+    
     private HashMap<Character, Character> getPathOptions(Player player)
     {
         HashMap<Character, Character> neighbours = new HashMap<>();
@@ -69,6 +70,7 @@ public class PathChecker {
         return neighbours; 
     }  
 
+
     public ArrayList<Integer> getEntranceAndExit(){
         ArrayList<Integer>  exitAndEntrance = new ArrayList<>();
         
@@ -89,10 +91,10 @@ public class PathChecker {
                 exitAndEntrance.add(row); 
             }
         }
-
         // returned in the form <Entrance, Exit> 
         return exitAndEntrance; 
     }
+
 
     /*******************************************************
      * @ Method Name: isPass()                    
@@ -102,6 +104,7 @@ public class PathChecker {
     private boolean isPass(char input){
         return input == ' ';
     }
+
 
     /*******************************************************
      * @ Method Name: isWall()                    
@@ -133,6 +136,7 @@ public class PathChecker {
         return false;
     }
 
+
     public boolean canMoveRight(Player player){
         HashMap<Character, Character> neighbours = getPathOptions(player);
 
@@ -153,6 +157,7 @@ public class PathChecker {
         return false;
 
     }
+
 
     public boolean canMoveForward(Player player)
     {

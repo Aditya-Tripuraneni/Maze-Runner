@@ -52,10 +52,11 @@ public class Maze {
 
             }
         }
+
         if (count > 1)
-            factoredExpression.append(count).append(currLetter).append(" ");
+            factoredExpression.append(count).append(currLetter);
         else 
-            factoredExpression.append(currLetter).append(" ");
+            factoredExpression.append(currLetter);
 
 
         return factoredExpression.toString();
@@ -94,21 +95,16 @@ public class Maze {
     }
 
 
-    /*******************************************************
-     * @ Method Name: verifyMazePath()                    
-     * Description: Determines if the computed path is a valid 
-     * path for a given maze.
-     *******************************************************/
-    public boolean verifyMazePath(String mazePath){
-        return false;
-
-
-    }
-
     private int getMazeWidth(){
         return maze[0].length;
     }
 
+
+    /*******************************************************
+     * @ Method Name: solveMazeGeneral()                    
+     * Description: Sovles the maze either east to west or west to east,
+     * this is a general algorithm.
+     *******************************************************/
 
     private void solveMazeGeneral(Player player, PathChecker pathChecker, StringBuilder path){
 
@@ -145,15 +141,14 @@ public class Maze {
 
 
     /*******************************************************
-     * @ Method Name: solveMaze()                    
-     * Description: Sovles the maze and determins and output
+     * @ Method Name: solveMazeEastToWest()                    
+     * Description: Sovles the maze and east to west and output
      * path for the given input maze.
      *******************************************************/
     public String solveMazeEastToWest(){
         PathChecker pathChecker = new PathChecker(maze);
 
         ArrayList<Integer> rowCoordinates = pathChecker.getEntranceAndExit();
-        System.out.println(rowCoordinates);
         StringBuilder path = new StringBuilder();
 
         int startRow = rowCoordinates.get(0); // entrance coordinate 
@@ -170,19 +165,60 @@ public class Maze {
 
         solveMazeGeneral(player, pathChecker, path);
 
-        System.out.println(path);
-
-        // System.out.println("Exited with " + player.getRow() + " " + player.getCol() + " " + player.getOrientation());
-
-        // String s = path.toString().replaceAll("\\s", "");
-
-        // System.out.println(s);
 
         System.out.println(factoredExpressionPath(path.toString()));
         
         System.out.println();
 
         return factoredExpressionPath(path.toString()); 
+    }
+
+
+
+    /*******************************************************
+     * @ Method Name: solveMazeWestToEast()                    
+     * Description: Sovles the maze west to east and output
+     * path for the given input maze.
+     *******************************************************/
+    private String solveMazeWestToEast(){
+        PathChecker pathChecker = new PathChecker(maze);
+
+        ArrayList<Integer> rowCoordinates = pathChecker.getEntranceAndExit();
+        StringBuilder path = new StringBuilder();
+
+        int startRow = rowCoordinates.get(1); // entrance coordinate from west side
+        int startCol = getMazeWidth() -1; // starting on west  side means col = width - 1 
+
+        int exitRow =  rowCoordinates.get(0); // exit coordinate
+        int exitCol = 0;
+
+        System.out.println("Starting West Point: " + startRow + " " + startCol);
+        System.out.println("Exit East Point: " + exitRow + " " + exitCol);
+
+        // path to be computed without -p paramater
+        Player player = new Player(startRow, startCol, exitRow, exitCol, 'W'); 
+
+        solveMazeGeneral(player, pathChecker, path);
+
+
+        System.out.println(factoredExpressionPath(path.toString()));
+        
+        System.out.println();
+
+        return factoredExpressionPath(path.toString()); 
+    }
+
+    public void verifyPath(String userInput){
+        String eastToWestPath = solveMazeEastToWest();
+        String westToEastPath = solveMazeWestToEast(); 
+
+        if (userInput.equals(eastToWestPath) || userInput.equals(westToEastPath)){
+            System.out.println("correct path");
+        }
+        else{
+            System.out.println("incorrect path");
+        }
+        
     }
     
 }
