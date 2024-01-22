@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import javax.xml.transform.stream.StreamResult;
+
 public class Maze {
 
     private char [][] maze; 
@@ -14,9 +16,9 @@ public class Maze {
     {
         this.maze = MazeExporter.constructMaze(filepath);
 
-        // for (char[] row: maze){
-        //     System.out.println(Arrays.toString(row));
-        // }
+        for (char[] row: maze){
+            System.out.println(Arrays.toString(row));
+        }
 
     }
 
@@ -31,8 +33,28 @@ public class Maze {
      * Description: Returns the factored expression path 
      *  of the maze so its simplified. 
      *******************************************************/
-    private String factoredExpressionPath(){
-        return "";
+    private String factoredExpressionPath(String string){
+        StringBuilder factoredExpression = new StringBuilder();
+
+        char currLetter = string.charAt(0);
+        int count = 0; 
+
+        for (int i = 0; i < string.length(); i ++)
+        {
+            if (string.charAt(i) == currLetter)
+                count++;
+            else if(string.charAt(i) != ' '){
+                factoredExpression.append(count).append(currLetter).append(" ");
+                currLetter = string.charAt(i);
+                count = 1;
+
+            }
+        }
+
+        factoredExpression.append(count).append(currLetter).append(" ");
+
+
+        return factoredExpression.toString();
     }
 
 
@@ -92,6 +114,7 @@ public class Maze {
         
 
         ArrayList<Integer> rowCoordinates = pathChecker.getEntranceAndExit();
+        System.out.println(rowCoordinates);
         StringBuilder path = new StringBuilder();
 
         int exitRow = rowCoordinates.get(1); 
@@ -134,11 +157,15 @@ public class Maze {
 
         System.out.println(path);
 
-        System.out.println("Exited with " + player.getRow() + " " + player.getCol() + " " + player.getOrientation());
+        // System.out.println("Exited with " + player.getRow() + " " + player.getCol() + " " + player.getOrientation());
 
-        String s = path.toString().replaceAll("\\s", "");
+        // String s = path.toString().replaceAll("\\s", "");
 
         // System.out.println(s);
+
+        System.out.println(factoredExpressionPath(path.toString()));
+        
+        System.out.println();
 
         return path.toString(); 
     }
