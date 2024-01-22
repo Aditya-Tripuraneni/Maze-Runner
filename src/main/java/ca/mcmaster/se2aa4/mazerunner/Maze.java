@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import javax.xml.transform.stream.StreamResult;
 
 public class Maze {
 
@@ -16,9 +15,9 @@ public class Maze {
     {
         this.maze = MazeExporter.constructMaze(filepath);
 
-        for (char[] row: maze){
-            System.out.println(Arrays.toString(row));
-        }
+        // for (char[] row: maze){
+        //     System.out.println(Arrays.toString(row));
+        // }
 
     }
 
@@ -102,6 +101,8 @@ public class Maze {
      *******************************************************/
     public boolean verifyMazePath(String mazePath){
         return false;
+
+
     }
 
     private int getMazeWidth(){
@@ -109,28 +110,9 @@ public class Maze {
     }
 
 
-    /*******************************************************
-     * @ Method Name: solveMaze()                    
-     * Description: Sovles the maze and determins and output
-     * path for the given input maze.
-     *******************************************************/
-    public String solveMaze(){
-        PathChecker pathChecker = new PathChecker(maze);
-        
+    private void solveMazeGeneral(Player player, PathChecker pathChecker, StringBuilder path){
 
-        ArrayList<Integer> rowCoordinates = pathChecker.getEntranceAndExit();
-        System.out.println(rowCoordinates);
-        StringBuilder path = new StringBuilder();
-
-        int exitRow = rowCoordinates.get(1); 
-        int exitCol = getMazeWidth() -1; 
-
-        System.out.println("Starting Point: " + rowCoordinates.get(0) + " " + 0);
-        System.out.println("Exit Point: " + exitRow + " " + exitCol);
-
-        Player player = new Player(rowCoordinates.get(0), 0, 'E'); 
-
-        while (player.getRow() != exitRow || player.getCol() != exitCol)
+        while (player.getRow() != player.getExitRow() || player.getCol() != player.getExitCol())
         {
             if (pathChecker.canMoveRight(player))
             {
@@ -159,6 +141,34 @@ public class Maze {
                 instructForward(path);
             }
         }
+    }
+
+
+    /*******************************************************
+     * @ Method Name: solveMaze()                    
+     * Description: Sovles the maze and determins and output
+     * path for the given input maze.
+     *******************************************************/
+    public String solveMazeEastToWest(){
+        PathChecker pathChecker = new PathChecker(maze);
+
+        ArrayList<Integer> rowCoordinates = pathChecker.getEntranceAndExit();
+        System.out.println(rowCoordinates);
+        StringBuilder path = new StringBuilder();
+
+        int startRow = rowCoordinates.get(0); // entrance coordinate 
+        int startCol = 0;  // starting on east side means col = 0
+
+        int exitRow = rowCoordinates.get(1);  // exit coordinate
+        int exitCol = getMazeWidth() -1; 
+
+        System.out.println("Starting East Point: " + rowCoordinates.get(0) + " " + 0);
+        System.out.println("Exit West Point: " + exitRow + " " + exitCol);
+
+        // path to be computed without -p paramater
+        Player player = new Player(startRow, startCol, exitRow, exitCol, 'E'); 
+
+        solveMazeGeneral(player, pathChecker, path);
 
         System.out.println(path);
 
@@ -172,7 +182,7 @@ public class Maze {
         
         System.out.println();
 
-        return path.toString(); 
+        return factoredExpressionPath(path.toString()); 
     }
     
 }

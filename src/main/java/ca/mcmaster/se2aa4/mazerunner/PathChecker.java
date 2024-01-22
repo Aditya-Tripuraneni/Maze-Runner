@@ -73,24 +73,19 @@ public class PathChecker {
         ArrayList<Integer>  exitAndEntrance = new ArrayList<>();
         
         int lastXCoordinate  = maze[0].length -1; 
-        System.out.println("is this being called");
 
         for (int row =0; row < maze.length; row ++)
         {
-            System.out.println(Arrays.toString(maze[row]));
-            System.out.println("TESTTT " + "'" + maze[row][0]+"'");
+
             if (isPass(maze[row][0]) || maze[row][0] == '\0'){
-                System.out.println("HITTTTT");
                 exitAndEntrance.add(row); // we are not concerned with the 'x' coordinate since we know it's the 0th element since entrance is west most
             }
         }
 
         for (int row =0; row < maze.length; row ++)
         {
-            System.out.println(Arrays.toString(maze[row]));
 
-            if (isPass(maze[row][lastXCoordinate]) || maze[row][0] == '\0'){
-                System.out.println("TEST HIT");
+            if (isPass(maze[row][lastXCoordinate]) || maze[row][lastXCoordinate] == '\0'){
                 exitAndEntrance.add(row); 
             }
         }
