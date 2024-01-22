@@ -34,7 +34,12 @@ public class Configurations {
             logger.info("**** Reading the maze from file " + filepath); 
             Maze maze = new Maze(filepath);
             maze.solveMaze();
-            // displayMap(filepath);
+
+            // if (cmd.hasOption("p")){
+            //     // implement logic for path verifcation
+
+            // }
+    
     }
 
     private static void displayMap(String filepath) throws FileNotFoundException, IOException{
