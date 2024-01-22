@@ -40,6 +40,7 @@ public class MazeExporter{
 
         return maze;
     }
+    
 
     private int getHeight(String filePath) throws FileNotFoundException, IOException{
         int count = 0; 
@@ -53,6 +54,7 @@ public class MazeExporter{
         return count; 
 
     }
+
 
     private int getWidth(String filePath) throws FileNotFoundException, IOException{
         int count = 0; 
