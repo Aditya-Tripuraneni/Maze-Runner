@@ -10,6 +10,7 @@ import java.util.Arrays;
 public class MazeExporter{
     private String filePath; 
     
+
     public static char[][] constructMaze(String filepath) throws FileNotFoundException, IOException
     {
         MazeExporter mazeExporter = new MazeExporter();
