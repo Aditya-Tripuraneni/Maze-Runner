@@ -33,7 +33,7 @@ public class Configurations {
     
             logger.info("**** Reading the maze from file " + filepath); 
             Maze maze = new Maze(filepath);
-            maze.solveMaze();
+            maze.solveMazeEastToWest();
 
             // if (cmd.hasOption("p")){
             //     // implement logic for path verifcation

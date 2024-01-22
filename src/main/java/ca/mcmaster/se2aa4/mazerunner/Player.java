@@ -4,11 +4,17 @@ package ca.mcmaster.se2aa4.mazerunner;
 public class Player {
     private int row; 
     private int col; 
+    private int exitRow; 
+    private int exitCol; 
     private char orientation; 
 
-    public Player(int row, int col, char orientation){
+
+
+    public Player(int row, int col, int exitRow, int exitCol, char orientation){
         this.row = row; 
         this.col = col; 
+        this.exitRow = exitRow; 
+        this.exitCol = exitCol; 
         this.orientation = orientation; 
     }
 
@@ -25,6 +31,16 @@ public class Player {
 
     public int getCol(){
         return this.col; 
+    }
+
+
+    public int getExitRow(){
+        return this.exitRow;
+    }
+
+
+    public int getExitCol(){
+        return this.exitCol; 
     }
 
 
