@@ -7,9 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class MazeExporter{
-    private String filePath; 
-    
+public class MazeExporter{    
 
     public static char[][] constructMaze(String filepath) throws FileNotFoundException, IOException
     {
@@ -23,6 +21,7 @@ public class MazeExporter{
 
         BufferedReader reader = new BufferedReader(new FileReader(filepath));
         String line;
+        
         int row = 0; 
         while ((line = reader.readLine()) != null) 
         {
@@ -38,6 +37,7 @@ public class MazeExporter{
             row ++; 
         }
 
+        reader.close();
         return maze;
     }
     
@@ -52,7 +52,6 @@ public class MazeExporter{
         }
 
         return count; 
-
     }
 
 
