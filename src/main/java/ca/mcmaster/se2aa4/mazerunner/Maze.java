@@ -4,20 +4,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 
 public class Maze {
 
     private char [][] maze; 
+    PathChecker pathChecker;
+    
 
     public Maze(String filepath) throws FileNotFoundException, IOException
     {
         this.maze = MazeExporter.constructMaze(filepath);
-
-        // for (char[] row: maze){
-        //     System.out.println(Arrays.toString(row));
-        // }
+        pathChecker = new PathChecker(maze);
 
     }
 
@@ -105,14 +103,13 @@ public class Maze {
      * Description: Sovles the maze either east to west or west to east,
      * this is a general algorithm.
      *******************************************************/
-
     private void solveMazeGeneral(Player player, PathChecker pathChecker, StringBuilder path){
 
         while (player.getRow() != player.getExitRow() || player.getCol() != player.getExitCol())
         {
             if (pathChecker.canMoveRight(player))
             {
-                player.moveRight();
+                player.moveRight(); 
                 instructRight(path);
                 player.moveForward();
                 instructForward(path);
@@ -141,12 +138,11 @@ public class Maze {
 
 
     /*******************************************************
-     * @ Method Name: solveMazeEastToWest()                    
+     * @ Method Name: solveMazeWestToEast                 
      * Description: Sovles the maze and east to west and output
      * path for the given input maze.
      *******************************************************/
-    public String solveMazeEastToWest(){
-        PathChecker pathChecker = new PathChecker(maze);
+    public String solveMazeWestToEast(){
 
         ArrayList<Integer> rowCoordinates = pathChecker.getEntranceAndExit();
         StringBuilder path = new StringBuilder();
@@ -165,7 +161,6 @@ public class Maze {
 
         solveMazeGeneral(player, pathChecker, path);
 
-
         System.out.println(factoredExpressionPath(path.toString()));
         
         System.out.println();
@@ -176,13 +171,11 @@ public class Maze {
 
 
     /*******************************************************
-     * @ Method Name: solveMazeWestToEast()                    
+     * @ Method Name: solveMazeEastToWest                   
      * Description: Sovles the maze west to east and output
      * path for the given input maze.
      *******************************************************/
-    private String solveMazeWestToEast(){
-        PathChecker pathChecker = new PathChecker(maze);
-
+    private String solveMazeEastToWest(){
         ArrayList<Integer> rowCoordinates = pathChecker.getEntranceAndExit();
         StringBuilder path = new StringBuilder();
 
@@ -200,7 +193,6 @@ public class Maze {
 
         solveMazeGeneral(player, pathChecker, path);
 
-
         System.out.println(factoredExpressionPath(path.toString()));
         
         System.out.println();
@@ -208,6 +200,7 @@ public class Maze {
         return factoredExpressionPath(path.toString()); 
     }
 
+    
     public void verifyPath(String userInput){
         String eastToWestPath = solveMazeEastToWest();
         String westToEastPath = solveMazeWestToEast(); 
