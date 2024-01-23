@@ -59,7 +59,7 @@ public class PathChecker {
         {
             char character = maze[row][col+1];
 
-            if ( isWall(character) ){
+            if (isWall(character) ){
                 neighbours.put('E', '#'); // cannot pass on the right
             }
             else{
@@ -162,15 +162,17 @@ public class PathChecker {
     public boolean canMoveForward(Player player)
     {
         HashMap<Character, Character> neighbours = getPathOptions(player);
+        // System.out.println(neighbours);
 
         switch (player.getOrientation())
         {
             case 'E':
+                // System.out.println("Here " + "'" + neighbours.get('E') + "'");
+
                 return neighbours.getOrDefault('E', '#') == ' ';
 
             case 'W':
                 return neighbours.getOrDefault('W', '#') == ' ';
-
 
             case 'N': 
                 return neighbours.getOrDefault('N', '#') == ' '; 

@@ -9,13 +9,16 @@ import java.util.Arrays;
 public class Maze {
 
     private char [][] maze; 
-    PathChecker pathChecker;
+    private PathChecker pathChecker;
+    private  ArrayList<Integer> rowCoordinates;
+
     
 
     public Maze(String filepath) throws FileNotFoundException, IOException
     {
         this.maze = MazeExporter.constructMaze(filepath);
         pathChecker = new PathChecker(maze);
+        rowCoordinates = pathChecker.getEntranceAndExit();
 
     }
 
@@ -144,11 +147,10 @@ public class Maze {
      *******************************************************/
     public String solveMazeWestToEast(){
 
-        ArrayList<Integer> rowCoordinates = pathChecker.getEntranceAndExit();
         StringBuilder path = new StringBuilder();
 
         int startRow = rowCoordinates.get(0); // entrance coordinate 
-        int startCol = 0;  // starting on east side means col = 0
+        int startCol = 0;  // starting on west side means col = 0
 
         int exitRow = rowCoordinates.get(1);  // exit coordinate
         int exitCol = getMazeWidth() -1; 
@@ -176,11 +178,10 @@ public class Maze {
      * path for the given input maze.
      *******************************************************/
     private String solveMazeEastToWest(){
-        ArrayList<Integer> rowCoordinates = pathChecker.getEntranceAndExit();
         StringBuilder path = new StringBuilder();
 
-        int startRow = rowCoordinates.get(1); // entrance coordinate from west side
-        int startCol = getMazeWidth() -1; // starting on west  side means col = width - 1 
+        int startRow = rowCoordinates.get(1); // entrance coordinate from east side
+        int startCol = getMazeWidth() -1; // starting on east  side means col = width - 1 
 
         int exitRow =  rowCoordinates.get(0); // exit coordinate
         int exitCol = 0;
@@ -200,17 +201,158 @@ public class Maze {
         return factoredExpressionPath(path.toString()); 
     }
 
-    
-    public void verifyPath(String userInput){
-        String eastToWestPath = solveMazeEastToWest();
-        String westToEastPath = solveMazeWestToEast(); 
 
-        if (userInput.equals(eastToWestPath) || userInput.equals(westToEastPath)){
-            System.out.println("correct path");
+    private boolean isCannonical(String userInput){
+        for (char c: userInput.toCharArray()){
+            if (Character.isDigit(c)){
+                return false; 
+            }
+        }
+
+        return true; 
+    }
+
+    private boolean verifyCannonical(String userInput, boolean startWest)
+    {
+            Player player; 
+            if (startWest){
+                player = new Player(rowCoordinates.get(0), 0, rowCoordinates.get(1), getMazeWidth() -1, 'E');
+            }
+            else
+            {
+                player = new Player(rowCoordinates.get(1), getMazeWidth() -1, rowCoordinates.get(0), 0, 'W');
+            }
+
+            System.out.println("Exits: " +  player.getExitRow() + " " + player.getExitCol());
+            System.out.println("Starts: " + player.getRow() + " " + player.getCol());
+
+
+            for (char c: userInput.toCharArray()){
+                // if the player cannot make a valid move then the path is not valid so return false
+                if (!followInstruction(c, player)) 
+                    return false; 
+            }
+
+            if (player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol()){
+                return true; 
+            }
+
+            return false; 
+    }
+
+
+    public boolean followInstruction(char instruction, Player player){
+        if (instruction == 'F')
+        {
+            if (pathChecker.canMoveForward(player)){
+                player.moveForward();
+            }
+            else{
+                return false;
+            }
+        }
+        else if (instruction == 'R')
+        {
+            player.moveRight();
+        }
+        else if (instruction == 'L')
+        {
+            player.moveLeft();
+        }
+
+        return true; 
+    }
+
+
+    private boolean verifyFactorized(String userInput, boolean startWest){
+
+        Player player; 
+
+        // accordingly set the entrance and exit coordinates of player based on which way they start
+        if (startWest){
+            player = new Player(rowCoordinates.get(0), 0, rowCoordinates.get(1), getMazeWidth() -1, 'E');
+        }
+        else
+        {
+            player = new Player(rowCoordinates.get(1), getMazeWidth() -1, rowCoordinates.get(0), 0, 'W');
+        }
+
+        int i = 0;         
+
+        // must be < than since we have multiple incrementation points in this loop which allows for case of  i exceeding length at a point
+        while (i < userInput.length())
+        {
+            char instruction = userInput.charAt(i);
+            if (Character.isDigit(instruction))
+            {
+                StringBuilder numberPortion = new StringBuilder();
+
+                // extract all digits before an instruction
+                while(i < userInput.length() && Character.isDigit(userInput.charAt(i)))
+                {
+                    // add the instruction we now have
+                    numberPortion.append(instruction);
+                    i++; // move on to next character
+                }
+
+                int instructionTimes = Integer.parseInt(numberPortion.toString());  // number of times to execute the instruction
+
+                // need to check out of bounds incase after incrementation we are moving past the last letter
+                if (i < userInput.length()){
+                    instruction = userInput.charAt(i);
+                }
+
+
+                
+                // execute instructions
+                for (int j = 1; j <= instructionTimes; j++)
+                {
+                    if (!followInstruction(instruction, player)){
+                        return false; // hit a wall so path invalid
+                    }
+                }
+            }
+            else{
+                if (!followInstruction(instruction, player))
+                {
+                    return false; // hit a wall so path invalid 
+                }
+            }
+            i++;
+        }
+
+        if (player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol()){
+            return true; // return to correct exit
+        }
+
+        return false; // invalid path
+    }
+
+    
+    public void verifyPath(String userInput)
+    {
+        userInput = userInput.replaceAll("\\s", ""); 
+        
+
+        if (isCannonical(userInput))
+        {
+            System.out.println("Is cannonical!");
+            if (verifyCannonical(userInput, true) || verifyCannonical(userInput, false)){
+                System.out.println("Correct path!");
+            }
+            else{
+                System.out.println("Incorrect path!");
+            }
         }
         else{
-            System.out.println("incorrect path");
+            if (verifyFactorized(userInput, true) || verifyFactorized(userInput, false)){
+                System.out.println("Correct path!");
+            }
+            else{
+                System.out.println("Incorrect path!");
+            }
         }
+
         
     }
     
