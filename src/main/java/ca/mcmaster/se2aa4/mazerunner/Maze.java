@@ -23,11 +23,6 @@ public class Maze {
     }
 
 
-    public char[][] getMaze(){
-        return this.maze; 
-    }
-
-
     /*******************************************************
      * @ Method Name: factoredExpressionPath()                    
      * Description: Returns the factored expression path 
@@ -43,7 +38,8 @@ public class Maze {
         {
             if (string.charAt(i) == currLetter)
                 count++;
-            else if(string.charAt(i) != ' '){
+            else if(string.charAt(i) != ' ')
+            {
                 if (count > 1)
                     factoredExpression.append(count).append(currLetter).append(" ");
                 else
@@ -64,6 +60,16 @@ public class Maze {
     }
 
 
+    /************************************************************************
+    * @Method Name: instructForward(StringBuilder string)                    
+    * 
+    * @Description: Appends the instruction for moving forward ('F') 
+    *               to the provided StringBuilder. If the last character 
+    *               in the StringBuilder is 'L' or 'R', a space followed 
+    *               by 'F' is appended; otherwise, 'F' is appended directly.
+    * 
+    * @param string: The StringBuilder to which the instruction is appended.
+    *************************************************************************/
     private void instructForward(StringBuilder string){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'R'))
             string.append(" F"); 
@@ -72,6 +78,16 @@ public class Maze {
     }
 
 
+    /**********************************************************
+    * @Method Name: instructRight(StringBuilder string)                    
+    * 
+    * @Description: Appends the instruction for turning right ('R') 
+    *               to the provided StringBuilder. If the last character 
+    *               in the StringBuilder is 'L' or 'F', a space followed 
+    *               by 'R' is appended; otherwise, 'R' is appended directly.
+    * 
+    * @param string: The StringBuilder to which the instruction is appended.
+    **********************************************************/
     private void instructRight(StringBuilder string){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'F'))
             string.append(" R"); 
@@ -80,6 +96,16 @@ public class Maze {
     }
 
 
+    /**********************************************************
+    * @Method Name: instructLeft(StringBuilder string)                    
+    * 
+    * @Description: Appends the instruction for turning left ('L') 
+    *               to the provided StringBuilder. If the last character 
+    *               in the StringBuilder is 'F' or 'R', a space followed 
+    *               by 'L' is appended; otherwise, 'L' is appended directly.
+    * 
+    * @param string: The StringBuilder to which the instruction is appended.
+    **********************************************************/
     private void instructLeft(StringBuilder string){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'R'))
             string.append(" L"); 
@@ -88,6 +114,16 @@ public class Maze {
     }
 
 
+    /**********************************************************
+    * @Method Name: instructBackwards(StringBuilder string)                    
+    * 
+    * @Description: Appends the instruction for moving backwards ('RR') 
+    *               to the provided StringBuilder. If the last character 
+    *               in the StringBuilder is 'F' or 'L', a space followed 
+    *               by 'RR' is appended; otherwise, 'RR' is appended directly.
+    * 
+    * @param string: The StringBuilder to which the instruction is appended.
+    **********************************************************/
     private void instructBackwards(StringBuilder string){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'L'))
             string.append(" RR"); 
@@ -96,6 +132,15 @@ public class Maze {
     }
 
 
+
+    /**********************************************************
+    * @Method Name: getMazeWidth()                    
+    * 
+    * @Description: Returns the width of the maze, which is the 
+    *               number of columns in the 2D character array.
+    * 
+    * @return int: The width of the maze.
+    **********************************************************/
     private int getMazeWidth(){
         return maze[0].length;
     }
@@ -163,6 +208,10 @@ public class Maze {
 
         solveMazeGeneral(player, pathChecker, path);
 
+        // System.out.println(path);
+        // System.out.println("\n\n\n\n");
+
+
         System.out.println(factoredExpressionPath(path.toString()));
         
         System.out.println();
@@ -194,6 +243,7 @@ public class Maze {
 
         solveMazeGeneral(player, pathChecker, path);
 
+
         System.out.println(factoredExpressionPath(path.toString()));
         
         System.out.println();
@@ -202,16 +252,42 @@ public class Maze {
     }
 
 
+
+    /**********************************************************
+    * @Method Name: isCanonical(String userInput)                    
+    * 
+    * @Description: Checks if the provided user input consists 
+    *               entirely of non-digit characters.
+    * 
+    * @param userInput: The input string to be checked.
+    * @return boolean: True if the input is canonical (contains 
+    *                 only non-digit characters), false otherwise.
+    **********************************************************/
     private boolean isCannonical(String userInput){
         for (char c: userInput.toCharArray()){
             if (Character.isDigit(c)){
                 return false; 
             }
         }
-
         return true; 
     }
 
+
+
+    /**********************************************************
+     * @Method Name: verifyCanonical(String userInput, boolean startWest)                    
+     * 
+     * @Description: Verifies whether the given canonical user input 
+     *               leads the player to the maze exit. The player's 
+     *               starting position and direction are determined 
+     *               based on the 'startWest' parameter.
+     * 
+     * @param userInput: The canonical user input string to be verified.
+     * @param startWest: A boolean flag indicating whether the player 
+     *                  starts from the west side of the maze.
+     * @return boolean: True if the user input leads the player to 
+     *                 the maze exit, false otherwise.
+     **********************************************************/
     private boolean verifyCannonical(String userInput, boolean startWest)
     {
             Player player; 
@@ -229,41 +305,30 @@ public class Maze {
 
             for (char c: userInput.toCharArray()){
                 // if the player cannot make a valid move then the path is not valid so return false
-                if (!followInstruction(c, player)) 
+                if (!pathChecker.canFollowInstruction(c, player)) 
                     return false; 
             }
 
-            if (player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol()){
-                return true; 
-            }
+            return ( (player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()) );
 
-            return false; 
     }
 
 
-    public boolean followInstruction(char instruction, Player player){
-        if (instruction == 'F')
-        {
-            if (pathChecker.canMoveForward(player)){
-                player.moveForward();
-            }
-            else{
-                return false;
-            }
-        }
-        else if (instruction == 'R')
-        {
-            player.moveRight();
-        }
-        else if (instruction == 'L')
-        {
-            player.moveLeft();
-        }
 
-        return true; 
-    }
-
-
+    /**********************************************************
+     * @Method Name: verifyFactorized(String userInput, boolean startWest)                    
+     * 
+     * @Description: Verifies whether the given factorized user input 
+     *               leads the player to the maze exit. The player's 
+     *               starting position and direction are determined 
+     *               based on the 'startWest' parameter.
+     * 
+     * @param userInput: The factorized user input string to be verified.
+     * @param startWest: A boolean flag indicating whether the player 
+     *                  starts from the west side of the maze.
+     * @return boolean: True if the user input leads the player to 
+     *                 the maze exit, false otherwise.
+     **********************************************************/
     private boolean verifyFactorized(String userInput, boolean startWest){
 
         Player player; 
@@ -293,6 +358,7 @@ public class Maze {
                     // add the instruction we now have
                     numberPortion.append(instruction);
                     i++; // move on to next character
+                    instruction = userInput.charAt(i); 
                 }
 
                 int instructionTimes = Integer.parseInt(numberPortion.toString());  // number of times to execute the instruction
@@ -301,25 +367,32 @@ public class Maze {
                 if (i < userInput.length()){
                     instruction = userInput.charAt(i);
                 }
-
-
                 
                 // execute instructions
                 for (int j = 1; j <= instructionTimes; j++)
                 {
-                    if (!followInstruction(instruction, player)){
-                        return false; // hit a wall so path invalid
+                    if (!pathChecker.canFollowInstruction(instruction, player)){
+                        System.out.println("Error for loop");
+                        System.out.println("Im being told to do: " + instruction);
+                        System.out.println("Current: " + player.getRow() + " " + player.getCol() + " " + player.getOrientation());
+
+                        return false; 
                     }
+
                 }
             }
-            else{
-                if (!followInstruction(instruction, player))
+            else{ 
+                if (!pathChecker.canFollowInstruction(instruction, player))
                 {
+                    System.out.println("Error outside");
                     return false; // hit a wall so path invalid 
                 }
             }
             i++;
         }
+
+        System.out.println("Exits: " +  player.getExitRow() + " " + player.getExitCol());
+        System.out.println("Current: " + player.getRow() + " " + player.getCol() + " " + player.getOrientation());
 
         if (player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol()){
             return true; // return to correct exit
@@ -329,6 +402,17 @@ public class Maze {
     }
 
     
+    /**********************************************************
+     * @Method Name: verifyPath(String userInput)                    
+     * 
+     * @Description: Verifies whether the given user input string 
+     *               represents a valid path leading the player to 
+     *               the maze exit. The method checks if the input 
+     *               is canonical or factorized and validates the 
+     *               path accordingly.
+     * 
+     * @param userInput: The user input string representing the path.
+     **********************************************************/
     public void verifyPath(String userInput)
     {
         userInput = userInput.replaceAll("\\s", ""); 
@@ -352,8 +436,6 @@ public class Maze {
                 System.out.println("Incorrect path!");
             }
         }
-
-        
     }
     
 }
