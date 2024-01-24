@@ -181,10 +181,31 @@ public class PathChecker {
                 return neighbours.getOrDefault('S', '#') == ' '; 
         }
         return false;
-
     }
 
-    
+
+    public boolean canFollowInstruction(char instruction, Player player){
+        if (instruction == 'F')
+        {
+            if (canMoveForward(player)){
+                player.moveForward();
+            }
+            else{
+                System.out.println("This is being hit");
+                return false;
+            }
+        }
+        else if (instruction == 'R')
+        {
+            player.moveRight();
+        }
+        else if (instruction == 'L')
+        {
+            player.moveLeft();
+        }
+
+        return true; 
+    }
 
     
 }

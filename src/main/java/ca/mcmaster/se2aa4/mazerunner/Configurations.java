@@ -40,7 +40,6 @@ public class Configurations {
             else{
                 String userPath = cmd.getOptionValue("p");
                 maze.verifyPath(userPath);
-
             }
     
     }

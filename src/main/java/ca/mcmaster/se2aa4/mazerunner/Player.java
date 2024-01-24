@@ -9,7 +9,6 @@ public class Player {
     private char orientation; 
 
 
-
     public Player(int row, int col, int exitRow, int exitCol, char orientation){
         this.row = row; 
         this.col = col; 
