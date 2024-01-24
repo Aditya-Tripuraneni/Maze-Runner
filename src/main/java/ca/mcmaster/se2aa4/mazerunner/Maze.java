@@ -11,6 +11,7 @@ public class Maze {
     private char [][] maze; 
     private PathChecker pathChecker;
     private  ArrayList<Integer> rowCoordinates;
+    private StringBuilder path = new StringBuilder();
 
     
 
@@ -23,116 +24,6 @@ public class Maze {
     }
 
 
-    /*******************************************************
-     * @ Method Name: factoredExpressionPath()                    
-     * Description: Returns the factored expression path 
-     *  of the maze so its simplified. 
-     *******************************************************/
-    private String factoredExpressionPath(String string){
-        StringBuilder factoredExpression = new StringBuilder();
-
-        char currLetter = string.charAt(0);
-        int count = 0; 
-
-        for (int i = 0; i < string.length(); i ++)
-        {
-            if (string.charAt(i) == currLetter)
-                count++;
-            else if(string.charAt(i) != ' ')
-            {
-                if (count > 1)
-                    factoredExpression.append(count).append(currLetter).append(" ");
-                else
-                    factoredExpression.append(currLetter).append(" ");
-                currLetter = string.charAt(i);
-                count = 1;
-
-            }
-        }
-
-        if (count > 1)
-            factoredExpression.append(count).append(currLetter);
-        else 
-            factoredExpression.append(currLetter);
-
-
-        return factoredExpression.toString();
-    }
-
-
-    /************************************************************************
-    * @Method Name: instructForward(StringBuilder string)                    
-    * 
-    * @Description: Appends the instruction for moving forward ('F') 
-    *               to the provided StringBuilder. If the last character 
-    *               in the StringBuilder is 'L' or 'R', a space followed 
-    *               by 'F' is appended; otherwise, 'F' is appended directly.
-    * 
-    * @param string: The StringBuilder to which the instruction is appended.
-    *************************************************************************/
-    private void instructForward(StringBuilder string){
-        if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'R'))
-            string.append(" F"); 
-        else
-            string.append("F");
-    }
-
-
-    /**********************************************************
-    * @Method Name: instructRight(StringBuilder string)                    
-    * 
-    * @Description: Appends the instruction for turning right ('R') 
-    *               to the provided StringBuilder. If the last character 
-    *               in the StringBuilder is 'L' or 'F', a space followed 
-    *               by 'R' is appended; otherwise, 'R' is appended directly.
-    * 
-    * @param string: The StringBuilder to which the instruction is appended.
-    **********************************************************/
-    private void instructRight(StringBuilder string){
-        if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'F'))
-            string.append(" R"); 
-        else
-            string.append("R");
-    }
-
-
-    /**********************************************************
-    * @Method Name: instructLeft(StringBuilder string)                    
-    * 
-    * @Description: Appends the instruction for turning left ('L') 
-    *               to the provided StringBuilder. If the last character 
-    *               in the StringBuilder is 'F' or 'R', a space followed 
-    *               by 'L' is appended; otherwise, 'L' is appended directly.
-    * 
-    * @param string: The StringBuilder to which the instruction is appended.
-    **********************************************************/
-    private void instructLeft(StringBuilder string){
-        if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'R'))
-            string.append(" L"); 
-        else
-            string.append("L");
-    }
-
-
-    /**********************************************************
-    * @Method Name: instructBackwards(StringBuilder string)                    
-    * 
-    * @Description: Appends the instruction for moving backwards ('RR') 
-    *               to the provided StringBuilder. If the last character 
-    *               in the StringBuilder is 'F' or 'L', a space followed 
-    *               by 'RR' is appended; otherwise, 'RR' is appended directly.
-    * 
-    * @param string: The StringBuilder to which the instruction is appended.
-    **********************************************************/
-    private void instructBackwards(StringBuilder string){
-        if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'L'))
-            string.append(" RR"); 
-        else
-            string.append("RR");
-    }
-
-
-
     /**********************************************************
     * @Method Name: getMazeWidth()                    
     * 
@@ -141,116 +32,21 @@ public class Maze {
     * 
     * @return int: The width of the maze.
     **********************************************************/
-    private int getMazeWidth(){
+    public int getMazeWidth(){
         return maze[0].length;
     }
 
-
-    /*******************************************************
-     * @ Method Name: solveMazeGeneral()                    
-     * Description: Sovles the maze either east to west or west to east,
-     * this is a general algorithm.
-     *******************************************************/
-    private void solveMazeGeneral(Player player, PathChecker pathChecker, StringBuilder path){
-
-        while (player.getRow() != player.getExitRow() || player.getCol() != player.getExitCol())
-        {
-            if (pathChecker.canMoveRight(player))
-            {
-                player.moveRight(); 
-                instructRight(path);
-                player.moveForward();
-                instructForward(path);
-            }
-            else if (pathChecker.canMoveForward(player))
-            {
-                player.moveForward();
-                instructForward(path);
-            }
-            else if (pathChecker.canMoveLeft(player))
-            {
-                player.moveLeft();
-                instructLeft(path);
-                player.moveForward();
-                instructForward(path);
-            }
-            else
-            {
-                player.moveBackWards();
-                instructBackwards(path);
-                player.moveForward();
-                instructForward(path);
-            }
-        }
+    public StringBuilder getPath(){
+        return path; 
     }
 
-
-    /*******************************************************
-     * @ Method Name: solveMazeWestToEast                 
-     * Description: Sovles the maze and east to west and output
-     * path for the given input maze.
-     *******************************************************/
-    public String solveMazeWestToEast(){
-
-        StringBuilder path = new StringBuilder();
-
-        int startRow = rowCoordinates.get(0); // entrance coordinate 
-        int startCol = 0;  // starting on west side means col = 0
-
-        int exitRow = rowCoordinates.get(1);  // exit coordinate
-        int exitCol = getMazeWidth() -1; 
-
-        System.out.println("Starting East Point: " + rowCoordinates.get(0) + " " + 0);
-        System.out.println("Exit West Point: " + exitRow + " " + exitCol);
-
-        // path to be computed without -p paramater
-        Player player = new Player(startRow, startCol, exitRow, exitCol, 'E'); 
-
-        solveMazeGeneral(player, pathChecker, path);
-
-        // System.out.println(path);
-        // System.out.println("\n\n\n\n");
-
-
-        System.out.println(factoredExpressionPath(path.toString()));
-        
-        System.out.println();
-
-        return factoredExpressionPath(path.toString()); 
+    public ArrayList<Integer> getRowCoordinates(){
+        return rowCoordinates; 
     }
 
-
-
-    /*******************************************************
-     * @ Method Name: solveMazeEastToWest                   
-     * Description: Sovles the maze west to east and output
-     * path for the given input maze.
-     *******************************************************/
-    private String solveMazeEastToWest(){
-        StringBuilder path = new StringBuilder();
-
-        int startRow = rowCoordinates.get(1); // entrance coordinate from east side
-        int startCol = getMazeWidth() -1; // starting on east  side means col = width - 1 
-
-        int exitRow =  rowCoordinates.get(0); // exit coordinate
-        int exitCol = 0;
-
-        System.out.println("Starting West Point: " + startRow + " " + startCol);
-        System.out.println("Exit East Point: " + exitRow + " " + exitCol);
-
-        // path to be computed without -p paramater
-        Player player = new Player(startRow, startCol, exitRow, exitCol, 'W'); 
-
-        solveMazeGeneral(player, pathChecker, path);
-
-
-        System.out.println(factoredExpressionPath(path.toString()));
-        
-        System.out.println();
-
-        return factoredExpressionPath(path.toString()); 
+    public char[][] getMaze(){
+        return maze;
     }
-
 
 
     /**********************************************************
@@ -310,7 +106,6 @@ public class Maze {
             }
 
             return ( (player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()) );
-
     }
 
 
@@ -394,11 +189,16 @@ public class Maze {
         System.out.println("Exits: " +  player.getExitRow() + " " + player.getExitCol());
         System.out.println("Current: " + player.getRow() + " " + player.getCol() + " " + player.getOrientation());
 
-        if (player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol()){
-            return true; // return to correct exit
-        }
+        return  ((player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()));
 
-        return false; // invalid path
+    }
+
+
+    public void rightHandExplore()
+    {
+        RightHandExploration rightHandExplorer = new RightHandExploration(); 
+        String path = rightHandExplorer.solveMazeWestToEast(this);
+        System.out.println(path);
     }
 
     

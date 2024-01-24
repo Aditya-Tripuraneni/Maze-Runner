@@ -35,7 +35,7 @@ public class Configurations {
             Maze maze = new Maze(filepath);
 
             if (!cmd.hasOption("p")){
-                maze.solveMazeWestToEast();
+                maze.rightHandExplore();
             }
             else{
                 String userPath = cmd.getOptionValue("p");
