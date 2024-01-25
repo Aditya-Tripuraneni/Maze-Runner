@@ -6,20 +6,19 @@ import ca.mcmaster.se2aa4.mazerunner.PathChecker;
 import java.util.ArrayList;
 
 
-public class RightHandExploration extends MazeSolver{
+public class RightHandExploration implements MazeSolver{
 
 
     // algorithm for right hand exploration of maze
-    private void rightHandExplore(Player player, Maze maze){
+    private static void rightHandExplore(Player player, Maze maze){
         StringBuilder path = maze.getPath();
         PathChecker pathChecker = new PathChecker(maze.getMaze()); 
-
 
         while (player.getRow() != player.getExitRow() || player.getCol() != player.getExitCol())
         {
             if (pathChecker.canMoveRight(player))
             {
-                player.moveRight(); 
+                player.turnRight(); // turn right
                 AlgorithmInstructions.instructRight(path);
                 player.moveForward();
                 AlgorithmInstructions.instructForward(path);
@@ -31,14 +30,15 @@ public class RightHandExploration extends MazeSolver{
             }
             else if (pathChecker.canMoveLeft(player))
             {
-                player.moveLeft();
+                player.turnLeft(); 
                 AlgorithmInstructions.instructLeft(path);
                 player.moveForward();
                 AlgorithmInstructions.instructForward(path);
             }
             else
             {
-                player.moveBackWards();
+                // cannot go right, forward, left so must turn around
+                player.turnBackwards(); 
                 AlgorithmInstructions.instructBackwards(path);
                 player.moveForward();
                 AlgorithmInstructions.instructForward(path);
@@ -46,10 +46,10 @@ public class RightHandExploration extends MazeSolver{
         }
     }
 
-    @Override
-    public String solveMazeWestToEast(Maze maze)
+
+    public static String solveMaze(Maze maze) 
     {
-        ArrayList<Integer> rowCoordinates = maze.getRowCoordinates();
+        ArrayList<Integer> rowCoordinates = maze.getRowCoordinates(); 
 
         int startRow = rowCoordinates.get(0); // entrance coordinate 
         int startCol = 0;  // starting on west side means col = 0
@@ -61,36 +61,11 @@ public class RightHandExploration extends MazeSolver{
         Player player = new Player(startRow, startCol, exitRow, exitCol, 'E'); 
         
 
-        rightHandExplore(player, maze);
-
+        rightHandExplore(player, maze); // solve maze using rightHandExplore algorithm
 
         StringBuilder path = maze.getPath(); 
 
+        // factored instructions to exit maze
         return AlgorithmInstructions.factoredExpressionPath(path.toString()); 
     }
-
-
-    @Override
-    public String solveMazeEastToWest(Maze maze){
-        ArrayList<Integer> rowCoordinates = maze.getRowCoordinates();
-
-        int startRow = rowCoordinates.get(1); // entrance coordinate from east side
-        int startCol = maze.getMazeWidth() -1; // starting on east  side means col = width - 1 
-
-        int exitRow =  rowCoordinates.get(0); // exit row coordinate
-        int exitCol = 0;
-
-        // Player to be spawned on East side of maze
-        Player player = new Player(startRow, startCol, exitRow, exitCol, 'W'); 
-
-        rightHandExplore(player, maze);
-
-        StringBuilder path = maze.getPath(); 
-
-        return AlgorithmInstructions.factoredExpressionPath(path.toString()); // factored path of instructions
-    }
-
-
-
-    
 }

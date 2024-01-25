@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner;
+ package ca.mcmaster.se2aa4.mazerunner;
 
 
 public class AlgorithmInstructions {
@@ -22,16 +22,6 @@ public class AlgorithmInstructions {
     }
 
 
-    /**********************************************************
-    * @Method Name: instructRight(StringBuilder string)                    
-    * 
-    * @Description: Appends the instruction for turning right ('R') 
-    *               to the provided StringBuilder. If the last character 
-    *               in the StringBuilder is 'L' or 'F', a space followed 
-    *               by 'R' is appended; otherwise, 'R' is appended directly.
-    * 
-    * @param string: The StringBuilder to which the instruction is appended.
-    **********************************************************/
     public static void instructRight(StringBuilder string){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'F'))
             string.append(" R"); 
@@ -40,16 +30,6 @@ public class AlgorithmInstructions {
     }
 
 
-    /**********************************************************
-    * @Method Name: instructLeft(StringBuilder string)                    
-    * 
-    * @Description: Appends the instruction for turning left ('L') 
-    *               to the provided StringBuilder. If the last character 
-    *               in the StringBuilder is 'F' or 'R', a space followed 
-    *               by 'L' is appended; otherwise, 'L' is appended directly.
-    * 
-    * @param string: The StringBuilder to which the instruction is appended.
-    **********************************************************/
     public static void instructLeft(StringBuilder string){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'R'))
             string.append(" L"); 
@@ -58,16 +38,6 @@ public class AlgorithmInstructions {
     }
 
 
-    /**********************************************************
-    * @Method Name: instructBackwards(StringBuilder string)                    
-    * 
-    * @Description: Appends the instruction for moving backwards ('RR') 
-    *               to the provided StringBuilder. If the last character 
-    *               in the StringBuilder is 'F' or 'L', a space followed 
-    *               by 'RR' is appended; otherwise, 'RR' is appended directly.
-    * 
-    * @param string: The StringBuilder to which the instruction is appended.
-    **********************************************************/
     public static void instructBackwards(StringBuilder string){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'L'))
             string.append(" RR"); 
@@ -76,11 +46,6 @@ public class AlgorithmInstructions {
     }
 
     
-    /*******************************************************
-     * @ Method Name: factoredExpressionPath()                    
-     * Description: Returns the factored expression path 
-     *  of the maze so its simplified. 
-     *******************************************************/
     public static String factoredExpressionPath(String string){
         StringBuilder factoredExpression = new StringBuilder();
 
