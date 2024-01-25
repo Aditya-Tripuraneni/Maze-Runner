@@ -43,6 +43,7 @@ public class Player {
     }
 
 
+    // turns player right relative to cardinal direction
     public void moveRight()
     {
         switch (orientation)
@@ -62,7 +63,7 @@ public class Player {
         }
     }
 
-
+    // turns left relative to cardinal direction
     public void moveLeft()
     {
         switch (orientation)
@@ -83,6 +84,7 @@ public class Player {
         }
     }
 
+    // turns backwards relative to cardinal direction
     public void moveBackWards()
     {
         switch (orientation)
@@ -107,21 +109,17 @@ public class Player {
         switch (orientation)
         {
             case 'E':
-                    // player.setCol(player.getCol() + 1); // move east so col ++
                     col++;
                     break; 
             
             case 'W':
-                    // player.setCol(player.getCol() -1); // move west so col--
                     col--;
                     break;
             case 'N': 
-                    // player.setRow(player.getRow() -1);
                     row--;
                     break; 
 
             case 'S':
-                    // player.setRow(player.getRow() + 1);
                     row++;
                     break;
         }

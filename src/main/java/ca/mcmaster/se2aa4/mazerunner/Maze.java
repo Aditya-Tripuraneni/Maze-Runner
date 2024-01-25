@@ -3,8 +3,6 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public class Maze {
 
@@ -20,70 +18,40 @@ public class Maze {
         this.maze = MazeExporter.constructMaze(filepath);
         pathChecker = new PathChecker(maze);
         rowCoordinates = pathChecker.getEntranceAndExit();
-
     }
 
 
-    /**********************************************************
-    * @Method Name: getMazeWidth()                    
-    * 
-    * @Description: Returns the width of the maze, which is the 
-    *               number of columns in the 2D character array.
-    * 
-    * @return int: The width of the maze.
-    **********************************************************/
+
     public int getMazeWidth(){
         return maze[0].length;
     }
+
 
     public StringBuilder getPath(){
         return path; 
     }
 
+
     public ArrayList<Integer> getRowCoordinates(){
         return rowCoordinates; 
     }
+
 
     public char[][] getMaze(){
         return maze;
     }
 
 
-    /**********************************************************
-    * @Method Name: isCanonical(String userInput)                    
-    * 
-    * @Description: Checks if the provided user input consists 
-    *               entirely of non-digit characters.
-    * 
-    * @param userInput: The input string to be checked.
-    * @return boolean: True if the input is canonical (contains 
-    *                 only non-digit characters), false otherwise.
-    **********************************************************/
     private boolean isCannonical(String userInput){
         for (char c: userInput.toCharArray()){
-            if (Character.isDigit(c)){
-                return false; 
-            }
+            if (Character.isDigit(c)) return false; 
         }
+        
         return true; 
     }
 
 
 
-    /**********************************************************
-     * @Method Name: verifyCanonical(String userInput, boolean startWest)                    
-     * 
-     * @Description: Verifies whether the given canonical user input 
-     *               leads the player to the maze exit. The player's 
-     *               starting position and direction are determined 
-     *               based on the 'startWest' parameter.
-     * 
-     * @param userInput: The canonical user input string to be verified.
-     * @param startWest: A boolean flag indicating whether the player 
-     *                  starts from the west side of the maze.
-     * @return boolean: True if the user input leads the player to 
-     *                 the maze exit, false otherwise.
-     **********************************************************/
     private boolean verifyCannonical(String userInput, boolean startWest)
     {
             Player player; 
@@ -153,7 +121,7 @@ public class Maze {
                     // add the instruction we now have
                     numberPortion.append(instruction);
                     i++; // move on to next character
-                    instruction = userInput.charAt(i); 
+                    instruction = userInput.charAt(i); // update our instruction after incrementation
                 }
 
                 int instructionTimes = Integer.parseInt(numberPortion.toString());  // number of times to execute the instruction
@@ -166,22 +134,12 @@ public class Maze {
                 // execute instructions
                 for (int j = 1; j <= instructionTimes; j++)
                 {
-                    if (!pathChecker.canFollowInstruction(instruction, player)){
-                        System.out.println("Error for loop");
-                        System.out.println("Im being told to do: " + instruction);
-                        System.out.println("Current: " + player.getRow() + " " + player.getCol() + " " + player.getOrientation());
-
-                        return false; 
-                    }
-
+                    if (!pathChecker.canFollowInstruction(instruction, player)) return false; 
                 }
             }
             else{ 
-                if (!pathChecker.canFollowInstruction(instruction, player))
-                {
-                    System.out.println("Error outside");
-                    return false; // hit a wall so path invalid 
-                }
+                // hit a wall so path invalid 
+                if (!pathChecker.canFollowInstruction(instruction, player)) return false; 
             }
             i++;
         }
@@ -220,7 +178,6 @@ public class Maze {
 
         if (isCannonical(userInput))
         {
-            System.out.println("Is cannonical!");
             if (verifyCannonical(userInput, true) || verifyCannonical(userInput, false)){
                 System.out.println("Correct path!");
             }
