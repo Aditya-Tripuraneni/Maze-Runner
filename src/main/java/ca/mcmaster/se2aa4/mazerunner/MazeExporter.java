@@ -11,11 +11,9 @@ public class MazeExporter{
 
     public static char[][] constructMaze(String filepath) throws FileNotFoundException, IOException
     {
-        MazeExporter mazeExporter = new MazeExporter();
 
-
-        int width = mazeExporter.getWidth(filepath); // width is esentially the columns since its how far across, we are concerned with NUMBER of columns
-        int height = mazeExporter.getHeight(filepath);  // height is esentially the rows since it spans up and down, we are concerned with number of rows
+        int width = getWidth(filepath); 
+        int height = getHeight(filepath);  
 
         char[][] maze = new char[height][width];
 
@@ -23,6 +21,8 @@ public class MazeExporter{
         String line;
         
         int row = 0; 
+        
+        // constructs the maze based on wall or space
         while ((line = reader.readLine()) != null) 
         {
             for (int col = 0; col < line.length(); col++) 
@@ -38,11 +38,13 @@ public class MazeExporter{
         }
 
         reader.close();
+
         return maze;
     }
     
-
-    private int getHeight(String filePath) throws FileNotFoundException, IOException{
+    
+    // obtains height of the maze
+    private static int getHeight(String filePath) throws FileNotFoundException, IOException{
         int count = 0; 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
@@ -51,11 +53,12 @@ public class MazeExporter{
             count++;
         }
 
-        return count; 
+        return count; // height of maze
     }
 
 
-    private int getWidth(String filePath) throws FileNotFoundException, IOException{
+    // obtains width of the maze
+    private static int getWidth(String filePath) throws FileNotFoundException, IOException{
         int count = 0; 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
@@ -65,7 +68,7 @@ public class MazeExporter{
             {
                 count++; 
             } 
-        return count; 
+        return count; // width of maze
 
     }
 }

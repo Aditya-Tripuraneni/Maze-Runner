@@ -22,10 +22,6 @@ public class Main {
             System.exit(1);
         }
 
-        logger.info("**** Computing path"); 
-        logger.info("PATH NOT COMPUTED"); 
-        logger.info("** End of MazeRunner");
-
     }
 }
 

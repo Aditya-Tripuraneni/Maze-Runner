@@ -20,7 +20,6 @@ public class Configurations {
 
     public static void configure(String[] args) throws Exception
     {
-            logger.info("** Starting Maze Runner");
 
             Options options = new Options(); 
             options.addOption("i", true, "File name for -i"); 
@@ -31,13 +30,12 @@ public class Configurations {
     
             String filepath = cmd.getOptionValue("i");
     
-            logger.info("**** Reading the maze from file " + filepath); 
             Maze maze = new Maze(filepath);
-
+            
             if (!cmd.hasOption("p")){
                 maze.rightHandExplore();
             }
-            else{
+            else{ // need to veirfy user path
                 String userPath = cmd.getOptionValue("p");
                 maze.verifyPath(userPath);
             }

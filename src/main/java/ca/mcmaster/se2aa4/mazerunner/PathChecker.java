@@ -67,7 +67,7 @@ public class PathChecker {
             }
         }
 
-        return neighbours; 
+        return neighbours; // all paths left, right up and down relative to player
     }  
 
 
@@ -91,31 +91,23 @@ public class PathChecker {
                 exitAndEntrance.add(row); 
             }
         }
+        
         // returned in the form <Entrance, Exit> 
         return exitAndEntrance; 
     }
 
 
-    /*******************************************************
-     * @ Method Name: isPass()                    
-     * Description: Determines if the current input path is a valid 
-     * tile to step on 
-     *******************************************************/
     private boolean isPass(char input){
         return input == ' ';
     }
 
 
-    /*******************************************************
-     * @ Method Name: isWall()                    
-     * Description: Determines if the current input path
-     *  is a wall. 
-     *******************************************************/
+
     private boolean isWall(char input){
         return input == '#';
     }
 
-
+    // verifies if a player can move left in case of walls
     public boolean canMoveLeft(Player player){
         HashMap<Character, Character> neighbours = getPathOptions(player);
         switch (player.getOrientation())
@@ -137,6 +129,7 @@ public class PathChecker {
     }
 
 
+    // verifies if a player can move right incase of walls
     public boolean canMoveRight(Player player){
         HashMap<Character, Character> neighbours = getPathOptions(player);
 
@@ -158,7 +151,7 @@ public class PathChecker {
 
     }
 
-
+    // verifies if a player can move forward incase of walls
     public boolean canMoveForward(Player player)
     {
         HashMap<Character, Character> neighbours = getPathOptions(player);
@@ -191,8 +184,7 @@ public class PathChecker {
                 player.moveForward();
             }
             else{
-                System.out.println("This is being hit");
-                return false;
+                return false; // being instructed to go into wall hence false
             }
         }
         else if (instruction == 'R')
