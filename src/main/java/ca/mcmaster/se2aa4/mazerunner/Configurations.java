@@ -37,29 +37,11 @@ public class Configurations {
             }
             else{ // need to veirfy user path
                 String userPath = cmd.getOptionValue("p");
-                maze.verifyPath(userPath);
+                maze.setUserDefinedPath(userPath);
+
+                maze.verifyPath();
             }
-    
+
     }
 
-    private static void displayMap(String filepath) throws FileNotFoundException, IOException{
-        BufferedReader reader = new BufferedReader(new FileReader(filepath));
-        String line;
-
-        while ((line = reader.readLine()) != null) 
-        {
-            for (int idx = 0; idx < line.length(); idx++) 
-            {
-                if (line.charAt(idx) == '#') 
-                {
-                    System.out.print("WALL ");
-                } 
-                else if (line.charAt(idx) == ' ') 
-                {
-                    System.out.print("PASS ");
-                }
-            }
-        }
-    }
-    
 }

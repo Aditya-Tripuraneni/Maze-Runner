@@ -44,7 +44,7 @@ public class Player {
 
 
     // turns player right relative to cardinal direction
-    public void moveRight()
+    public void turnRight()
     {
         switch (orientation)
         {
@@ -64,7 +64,7 @@ public class Player {
     }
 
     // turns left relative to cardinal direction
-    public void moveLeft()
+    public void turnLeft()
     {
         switch (orientation)
         {
@@ -85,7 +85,7 @@ public class Player {
     }
 
     // turns backwards relative to cardinal direction
-    public void moveBackWards()
+    public void turnBackwards()
     {
         switch (orientation)
         {

@@ -6,10 +6,28 @@ import java.util.Arrays;
 public class PathChecker {
 
     private char[][] maze; 
+    private int width;
+    private String userDefinedPath;
+
 
     public PathChecker(char[][] maze ){
         this.maze = maze;
+        this.width = maze[0].length;
     }
+
+
+
+
+    private boolean isPass(char input){
+        return input == ' ';
+    }
+
+
+
+    private boolean isWall(char input){
+        return input == '#';
+    }
+
 
     
     private HashMap<Character, Character> getPathOptions(Player player)
@@ -55,7 +73,7 @@ public class PathChecker {
             }
         }
 
-        if (col != maze[0].length - 1)
+        if (col != this.width - 1)
         {
             char character = maze[row][col+1];
 
@@ -97,15 +115,6 @@ public class PathChecker {
     }
 
 
-    private boolean isPass(char input){
-        return input == ' ';
-    }
-
-
-
-    private boolean isWall(char input){
-        return input == '#';
-    }
 
     // verifies if a player can move left in case of walls
     public boolean canMoveLeft(Player player){
@@ -155,13 +164,10 @@ public class PathChecker {
     public boolean canMoveForward(Player player)
     {
         HashMap<Character, Character> neighbours = getPathOptions(player);
-        // System.out.println(neighbours);
 
         switch (player.getOrientation())
         {
             case 'E':
-                // System.out.println("Here " + "'" + neighbours.get('E') + "'");
-
                 return neighbours.getOrDefault('E', '#') == ' ';
 
             case 'W':
@@ -169,7 +175,6 @@ public class PathChecker {
 
             case 'N': 
                 return neighbours.getOrDefault('N', '#') == ' '; 
-
             case 'S':
                 return neighbours.getOrDefault('S', '#') == ' '; 
         }
@@ -189,15 +194,29 @@ public class PathChecker {
         }
         else if (instruction == 'R')
         {
-            player.moveRight();
+            player.turnRight();
         }
         else if (instruction == 'L')
         {
-            player.moveLeft();
+            player.turnLeft();
         }
 
         return true; 
     }
 
+
+    public int getWidth(){
+        return this.width; 
+    }
+
+    
+    public String getUserDefinedPath(){
+        return this.userDefinedPath;
+    }
+
+
+    public void setUserDefinedPath(String userInput){
+        this.userDefinedPath = userInput;
+    }
     
 }
