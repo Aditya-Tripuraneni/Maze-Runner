@@ -1,7 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 
-public class Player {
+public class Player implements PlayerExplorer{
     private int row; 
     private int col; 
     private int exitRow; 
@@ -63,6 +63,7 @@ public class Player {
         }
     }
 
+
     // turns left relative to cardinal direction
     public void turnLeft()
     {
@@ -84,6 +85,7 @@ public class Player {
         }
     }
 
+
     // turns backwards relative to cardinal direction
     public void turnBackwards()
     {
@@ -103,6 +105,7 @@ public class Player {
                     break;
         }
     }
+
 
     public void moveForward(){
 

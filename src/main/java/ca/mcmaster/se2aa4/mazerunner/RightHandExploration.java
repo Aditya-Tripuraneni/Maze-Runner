@@ -60,7 +60,6 @@ public class RightHandExploration implements MazeSolver{
         // Player to be spawned on West side of maze
         Player player = new Player(startRow, startCol, exitRow, exitCol, 'E'); 
         
-
         rightHandExplore(player, maze); // solve maze using rightHandExplore algorithm
 
         StringBuilder path = maze.getPath(); 

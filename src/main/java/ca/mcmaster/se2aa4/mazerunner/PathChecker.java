@@ -16,18 +16,16 @@ public class PathChecker {
     }
 
 
-
-
+    // checks if tile is open position
     private boolean isPass(char input){
         return input == ' ';
     }
 
 
-
+    // checks if tile is wall
     private boolean isWall(char input){
         return input == '#';
     }
-
 
     
     private HashMap<Character, Character> getPathOptions(Player player)
@@ -41,14 +39,14 @@ public class PathChecker {
         {
             char character = maze[row+1][col];
             if (isWall(character)){
-                neighbours.put('S', '#'); // S is for South
+                neighbours.put('S', '#'); 
             }
             else{
                 neighbours.put('S', ' ');
             }
         }
 
-        // check within bounds for not going past the top row
+        // check within bounds for not going past the top row neighbouring tile
         if (row != 0)
         {
             char character = maze[row-1][col];
@@ -61,7 +59,7 @@ public class PathChecker {
             }
         }
         
-        // check within bounds for viewing left neighbour
+        // check within bounds for viewing left neighbouring tile
         if (col != 0)
         {
             char character = maze[row][col-1];
@@ -73,6 +71,7 @@ public class PathChecker {
             }
         }
 
+        // checks within bounds for viewing right neighbouring tile
         if (col != this.width - 1)
         {
             char character = maze[row][col+1];
@@ -92,8 +91,9 @@ public class PathChecker {
     public ArrayList<Integer> getEntranceAndExit(){
         ArrayList<Integer>  exitAndEntrance = new ArrayList<>();
         
-        int lastXCoordinate  = maze[0].length -1; 
+        int lastXCoordinate  = this.width -1; // last valid column within the maze
 
+        // extract the east entrance of the maze on east side
         for (int row =0; row < maze.length; row ++)
         {
 
@@ -102,6 +102,7 @@ public class PathChecker {
             }
         }
 
+        // extract the exit of the maze on the west side
         for (int row =0; row < maze.length; row ++)
         {
 
@@ -113,7 +114,6 @@ public class PathChecker {
         // returned in the form <Entrance, Exit> 
         return exitAndEntrance; 
     }
-
 
 
     // verifies if a player can move left in case of walls
@@ -160,6 +160,7 @@ public class PathChecker {
 
     }
 
+    
     // verifies if a player can move forward incase of walls
     public boolean canMoveForward(Player player)
     {
@@ -192,12 +193,10 @@ public class PathChecker {
                 return false; // being instructed to go into wall hence false
             }
         }
-        else if (instruction == 'R')
-        {
+        else if (instruction == 'R'){
             player.turnRight();
         }
-        else if (instruction == 'L')
-        {
+        else if (instruction == 'L'){
             player.turnLeft();
         }
 

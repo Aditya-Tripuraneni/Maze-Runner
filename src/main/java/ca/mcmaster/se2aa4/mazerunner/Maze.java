@@ -8,8 +8,8 @@ public class Maze {
     private char [][] maze; 
     private PathChecker pathChecker;
     private  ArrayList<Integer> rowCoordinates;
-    private StringBuilder path = new StringBuilder(); // userinput 
-    private String userDefinedPath;
+    private StringBuilder path = new StringBuilder(); // path to exit maze
+    private String userDefinedPath; // path user enters to verify path 
 
     
     public Maze(String filepath) throws FileNotFoundException, IOException
@@ -19,7 +19,6 @@ public class Maze {
         rowCoordinates = pathChecker.getEntranceAndExit();
         
     }
-
 
 
     public int getMazeWidth(){
