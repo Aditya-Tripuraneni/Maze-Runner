@@ -58,6 +58,15 @@ public class MazeInputReader implements InputReader{
                     instruction = userInput.charAt(i);
                 }
                 
+                // Reduces redundant 360-degree turnarounds: multiples of 4 turns are equivalent to staying in the same spot
+                if (instruction != 'F' && instructionTimes % 4 == 0){
+                    instructionTimes = (instructionTimes % 4); 
+                }
+                // Optimizes turn repetitions: 5 turns = 1 turn, 6 turns = 2 turns, 7 turns = 3 turns
+                else if(instruction != 'F' && instruction % 4 != 0){
+                    instructionTimes %= 4; 
+                }
+                
                 // execute instructions
                 for (int j = 1; j <= instructionTimes; j++)
                 {
@@ -85,8 +94,7 @@ public class MazeInputReader implements InputReader{
             return new Player(rowCoordinates.get(0), 0, rowCoordinates.get(1), this.width - 1, 'E');
         } 
         
-        return new Player(rowCoordinates.get(1), this.width - 1, rowCoordinates.get(0), 0, 'W');
-        
+        return new Player(rowCoordinates.get(1), this.width - 1, rowCoordinates.get(0), 0, 'W'); 
     }
 
     
@@ -96,13 +104,11 @@ public class MazeInputReader implements InputReader{
             Player player = initializePlayer(startWest);
 
             for (char c: userInput.toCharArray()){
-                // if the player cannot make a valid move then the path is not valid so return false
-                if (!pathChecker.canFollowInstruction(c, player)) 
-                    return false; 
+                // player cannot make a valid move then the path is not valid so return false
+                if (!pathChecker.canFollowInstruction(c, player)) return false; 
             }
             
             // verify if current coordinates match exit coordinates
             return ( (player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()) );
     }
-    
 }
