@@ -47,7 +47,7 @@ public class Maze {
 
 
     public void setUserDefinedPath(String userPath){
-        userPath = userPath.replaceAll("\\s", ""); // remove any spaces
+        userPath = userPath.replaceAll("\\s", ""); // Remove any spaces
 
         pathChecker.setUserDefinedPath(userPath);
         
@@ -60,7 +60,7 @@ public class Maze {
     }
 
 
-    // apply right hand exploration algorithm to solve maze
+    // Apply right hand exploration algorithm to solve maze
     public void rightHandExplore()
     {
         String path = RightHandExploration.solveMaze(this); 
@@ -68,7 +68,12 @@ public class Maze {
     }
 
     
-    // verifies the users entered path
+    /**
+     * Verifies the user's entered path by utilizing MazeInputReader and path-checking methods.
+     * The method checks whether the entered path is canonical or factorized and verifies
+     * both west-to-east and east-to-west paths accordingly.
+     * Prints the result (correct or incorrect) to the console.
+     */
     public void verifyPath()
     {
     

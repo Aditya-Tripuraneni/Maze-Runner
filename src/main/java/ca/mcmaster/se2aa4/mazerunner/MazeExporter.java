@@ -22,7 +22,7 @@ public class MazeExporter{
         
         int row = 0; 
         
-        // constructs the maze based on wall or space
+        // Constructs the maze based on wall or space
         while ((line = reader.readLine()) != null) 
         {
             for (int col = 0; col < line.length(); col++) 
@@ -43,7 +43,6 @@ public class MazeExporter{
     }
     
     
-    // obtains height of the maze
     private static int getHeight(String filePath) throws FileNotFoundException, IOException{
         int count = 0; 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
@@ -57,7 +56,6 @@ public class MazeExporter{
     }
 
 
-    // obtains width of the maze
     private static int getWidth(String filePath) throws FileNotFoundException, IOException{
         int count = 0; 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));

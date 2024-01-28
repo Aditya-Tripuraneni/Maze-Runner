@@ -20,17 +20,27 @@ public class MazeInputReader implements InputReader{
     }
 
 
+    // Verfies if the userInput is a cannonical path
     public boolean isCannonical(){
         for (char c: userInput.toCharArray()){
-            if (Character.isDigit(c)) return false; // if digit then its factorized
+            if (Character.isDigit(c)) return false; // If digit then its factorized
         }
         
-        return true; // no digit found so cannonical
+        return true; // No digit found so cannonical
     }
 
 
+    /**
+     * Verifies whether a sequence of factorized instructions is valid for the given maze and player.
+     * The factorized instructions are provided as a string in the form "3F2L5R" (this is an example), where the number
+     * preceding each instruction indicates how many times the instruction should be executed.
+     * 
+     * @param startWest A boolean flag indicating whether the player starts on the west side of the maze.
+     * @return True if the factorized instructions lead the player to the maze exit, false otherwise.
+     */
     public boolean verifyFactorized(boolean startWest){
 
+        // Initialize the player based on the starting side of the maze
         Player player = initializePlayer(startWest);
 
         int i = 0;         
@@ -42,10 +52,10 @@ public class MazeInputReader implements InputReader{
             {
                 StringBuilder numberPortion = new StringBuilder();
 
-                // extract all digits before an instruction
+                // Extract all digits before an instruction
                 while(i < userInput.length() && Character.isDigit(userInput.charAt(i)))
                 {
-                    // add the instruction we now have
+                    // Add the instruction we now have
                     numberPortion.append(instruction);
                     i++; 
                     instruction = userInput.charAt(i); 
@@ -53,7 +63,7 @@ public class MazeInputReader implements InputReader{
 
                 int instructionTimes = Integer.parseInt(numberPortion.toString());  // number of times to execute the instruction
 
-                // need to check out of bounds in-case after incrementation we are moving past the last letter
+                // Check out of bounds in-case after incrementation we are moving past the last letter
                 if (i < userInput.length()){
                     instruction = userInput.charAt(i);
                 }
@@ -67,29 +77,34 @@ public class MazeInputReader implements InputReader{
                     instructionTimes %= 4; 
                 }
                 
-                // execute instructions
+                // Execute instructions
                 for (int j = 1; j <= instructionTimes; j++)
                 {
-                    // hit wall so invalid path
+                    // Hit wall so invalid path
                     if (!pathChecker.canFollowInstruction(instruction, player)) return false; 
                 }
             }
             else{ 
-                // hit a wall so path invalid 
+                // Hit a wall so path invalid 
                 if (!pathChecker.canFollowInstruction(instruction, player)) return false; 
             }
             i++;
         }
 
-        // verify if current coordinates match exit coordinates
+        // Verify if current coordinates match exit coordinates
         return  ((player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()));
-
     }
 
 
+    /**
+     * Initializes a player's starting point based on the specified side of the maze.
+     * If starting from the west, the player is placed on the west side facing east.
+     * If starting from the east, the player is placed on the east side facing west.
+     * 
+     * @param startWest A boolean flag indicating whether the player starts on the west side of the maze.
+     * @return A new Player object representing the initialized player.
+     */
     private Player initializePlayer(boolean startWest) {
-
-        // initalize a player's starting point based on starting west or east
         if (startWest) {
             return new Player(rowCoordinates.get(0), 0, rowCoordinates.get(1), this.width - 1, 'E');
         } 
@@ -98,17 +113,24 @@ public class MazeInputReader implements InputReader{
     }
 
     
+    /**
+     * Verifies whether a sequence of canonical instructions is valid for the given maze and player.
+     * Each character in the user input represents a single move or action ('F', 'L', 'R', 'B').
+     * 
+     * @param startWest A boolean flag indicating whether the player starts on the west side of the maze.
+     * @return True if the canonical instructions lead the player to the maze exit, false otherwise.
+     */
     public boolean verifyCannonical(boolean startWest)
     {
 
-            Player player = initializePlayer(startWest);
+        Player player = initializePlayer(startWest);
 
-            for (char c: userInput.toCharArray()){
-                // player cannot make a valid move then the path is not valid so return false
-                if (!pathChecker.canFollowInstruction(c, player)) return false; 
-            }
+        for (char c: userInput.toCharArray()){
+            // Player cannot make a valid move then the path is not valid so return false
+            if (!pathChecker.canFollowInstruction(c, player)) return false; 
+        }
             
-            // verify if current coordinates match exit coordinates
-            return ( (player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()) );
+        // Verify if current coordinates match exit coordinates
+        return ( (player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()) );
     }
 }

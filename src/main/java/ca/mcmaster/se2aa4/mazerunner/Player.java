@@ -106,7 +106,8 @@ public class Player implements PlayerExplorer{
         }
     }
 
-
+    
+    // updates players coordinates after moving forward relative to cardinal direction
     public void moveForward(){
 
         switch (orientation)
