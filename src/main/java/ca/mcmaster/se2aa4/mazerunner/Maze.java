@@ -2,19 +2,20 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Maze {
-    private char [][] maze; 
+    private Tile [][] maze; 
     private PathChecker pathChecker;
-    private  ArrayList<Integer> rowCoordinates;
+    private List<Integer> rowCoordinates;
     private StringBuilder path = new StringBuilder(); // path to exit maze
     private String userDefinedPath; // path user enters to verify path 
 
     
     public Maze(String filepath) throws FileNotFoundException, IOException
     {
-        this.maze = MazeExporter.constructMaze(filepath);
+        MazeExporter mazeExporter = new MazeExporter(filepath); 
+        this.maze = mazeExporter.constructMaze();
         pathChecker = new PathChecker(maze);
         rowCoordinates = pathChecker.getEntranceAndExit();
         
@@ -31,12 +32,12 @@ public class Maze {
     }
 
 
-    public ArrayList<Integer> getRowCoordinates(){
+    public List<Integer> getRowCoordinates(){
         return this.rowCoordinates; 
     }
 
 
-    public char[][] getMaze(){
+    public Tile [][] getMaze(){
         return this.maze;
     }
 
@@ -63,7 +64,8 @@ public class Maze {
     // Apply right hand exploration algorithm to solve maze
     public void rightHandExplore()
     {
-        String path = RightHandExploration.solveMaze(this); 
+        RightHandExploration rightHandExplorationSolver = new RightHandExploration(this);
+        String path = rightHandExplorationSolver.solveMaze(); 
         System.out.println(path);
     }
 

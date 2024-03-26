@@ -1,13 +1,15 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import ca.mcmaster.se2aa4.mazerunner.Maze;
-import ca.mcmaster.se2aa4.mazerunner.PathChecker;
-import java.util.ArrayList;
+
+
+import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
+
+import java.util.List;
 
 
 public class MazeInputReader implements InputReader{
     private PathChecker pathChecker; 
-    private ArrayList<Integer> rowCoordinates;
+    private List<Integer> rowCoordinates;
     private int width; 
     private String userInput; 
     
@@ -68,12 +70,13 @@ public class MazeInputReader implements InputReader{
                     instruction = userInput.charAt(i);
                 }
                 
+                Direction convertedDirection = this.convertDirection(instruction);
                 // Reduces redundant 360-degree turnarounds: multiples of 4 turns are equivalent to staying in the same spot
-                if (instruction != 'F' && instructionTimes % 4 == 0){
+                if (convertedDirection != FORWARD && instructionTimes % 4 == 0){
                     instructionTimes = (instructionTimes % 4); 
                 }
                 // Optimizes turn repetitions: 5 turns = 1 turn, 6 turns = 2 turns, 7 turns = 3 turns
-                else if(instruction != 'F' && instruction % 4 != 0){
+                else if(convertedDirection != FORWARD && instruction % 4 != 0){
                     instructionTimes %= 4; 
                 }
                 
@@ -81,12 +84,14 @@ public class MazeInputReader implements InputReader{
                 for (int j = 1; j <= instructionTimes; j++)
                 {
                     // Hit wall so invalid path
-                    if (!pathChecker.canFollowInstruction(instruction, player)) return false; 
+                    Direction playerInstruction = this.convertDirection(instruction);
+                    if (!pathChecker.canFollowInstruction(playerInstruction, player)) return false; 
                 }
             }
             else{ 
                 // Hit a wall so path invalid 
-                if (!pathChecker.canFollowInstruction(instruction, player)) return false; 
+                Direction playerInstruction = this.convertDirection(instruction);
+                if (!pathChecker.canFollowInstruction(playerInstruction, player)) return false; 
             }
             i++;
         }
@@ -106,10 +111,10 @@ public class MazeInputReader implements InputReader{
      */
     private Player initializePlayer(boolean startWest) {
         if (startWest) {
-            return new Player(rowCoordinates.get(0), 0, rowCoordinates.get(1), this.width - 1, 'E');
+            return new Player(rowCoordinates.get(0), 0, rowCoordinates.get(1), this.width - 1, EAST);
         } 
         
-        return new Player(rowCoordinates.get(1), this.width - 1, rowCoordinates.get(0), 0, 'W'); 
+        return new Player(rowCoordinates.get(1), this.width - 1, rowCoordinates.get(0), 0, WEST); 
     }
 
     
@@ -127,10 +132,24 @@ public class MazeInputReader implements InputReader{
 
         for (char c: userInput.toCharArray()){
             // Player cannot make a valid move then the path is not valid so return false
-            if (!pathChecker.canFollowInstruction(c, player)) return false; 
+            Direction instructionDirection = this.convertDirection(c);
+            if (!pathChecker.canFollowInstruction(instructionDirection, player)) return false; 
         }
             
         // Verify if current coordinates match exit coordinates
         return ( (player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()) );
+    }
+
+    private Direction convertDirection(char c){
+        switch (c) {
+            case 'F':
+                return FORWARD;
+            case 'L':
+                return LEFT; 
+            case 'R':
+                return RIGHT; 
+            default:
+                return null;
+        }
     }
 }

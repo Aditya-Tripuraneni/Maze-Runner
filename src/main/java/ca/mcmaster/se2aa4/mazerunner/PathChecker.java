@@ -1,30 +1,35 @@
 package ca.mcmaster.se2aa4.mazerunner;
+
+import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
+import static ca.mcmaster.se2aa4.mazerunner.Tile.*;
+
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PathChecker {
 
-    private char[][] maze; 
+    private Tile [][] maze; 
     private int width;
     private String userDefinedPath;
 
 
-    public PathChecker(char[][] maze ){
+    public PathChecker(Tile [][] maze ){
         this.maze = maze;
         this.width = maze[0].length;
     }
 
 
     // Checks if tile is open position
-    private boolean isPass(char input){
-        return input == ' ';
+    private boolean isPass(Tile input){
+        return input ==  Tile.PASS;
     }
 
 
     // Checks if tile is wall
-    private boolean isWall(char input){
-        return input == '#';
+    private boolean isWall(Tile input){
+        return input == Tile.WALL;
     }
 
     
@@ -36,59 +41,60 @@ public class PathChecker {
      * @param player The player for whom path options are to be determined.
      * @return A HashMap containing path options ('N', 'S', 'W', 'E') and their corresponding tile contents.
      */
-    private HashMap<Character, Character> getPathOptions(Player player)
+    private Map<Direction, Tile> getPathOptions(Player player)
     {
-        HashMap<Character, Character> neighbours = new HashMap<>();
+
+        Map<Direction, Tile> neighbours = new HashMap<>();
         int row  = player.getRow();
         int col = player.getCol();
 
         // Check within bounds for not going past the bottom row
         if (row != maze.length -1)
         {
-            char character = maze[row+1][col];
+            Tile character = maze[row+1][col];
             if (isWall(character)){
-                neighbours.put('S', '#'); 
+                neighbours.put(SOUTH, WALL); 
             }
             else{
-                neighbours.put('S', ' ');
+                neighbours.put(SOUTH, PASS);
             }
         }
 
         // Check within bounds for not going past the top row neighbouring tile
         if (row != 0)
         {
-            char character = maze[row-1][col];
+            Tile character = maze[row-1][col];
 
-            if ( isWall(character) ){
-                neighbours.put('N', '#'); // cannot pass on bottom
+            if (isWall(character)){
+                neighbours.put(NORTH, WALL); // cannot pass on bottom
             }
             else {
-                neighbours.put('N', ' '); // pass on bottom
+                neighbours.put(NORTH, PASS); // pass on bottom
             }
         }
         
         // Check within bounds for viewing left neighbouring tile
         if (col != 0)
         {
-            char character = maze[row][col-1];
+            Tile character = maze[row][col-1];
             if ( isWall(character) ){
-                neighbours.put('W', '#'); // cannot pass on the left
+                neighbours.put(Direction.WEST, WALL); // cannot pass on the left
             }
             else{
-                neighbours.put('W', ' '); // pass on left
+                neighbours.put(Direction.WEST, PASS); // pass on left
             }
         }
 
         // Checks within bounds for viewing right neighbouring tile
         if (col != this.width - 1)
         {
-            char character = maze[row][col+1];
+            Tile character = maze[row][col+1];
 
             if (isWall(character) ){
-                neighbours.put('E', '#'); // Cannot pass on the right
+                neighbours.put(Direction.EAST, WALL); // Cannot pass on the right
             }
             else{
-                neighbours.put('E', ' '); // Pass on right
+                neighbours.put(Direction.EAST, PASS); // Pass on right
             }
         }
 
@@ -103,8 +109,8 @@ public class PathChecker {
      *
      * @return An ArrayList containing the entrance and exit row coordinates of the maze.
      */
-    public ArrayList<Integer> getEntranceAndExit(){
-        ArrayList<Integer>  exitAndEntrance = new ArrayList<>();
+    public List<Integer> getEntranceAndExit(){
+        List<Integer>  exitAndEntrance = new ArrayList<>();
         
         int lastXCoordinate  = this.width -1; // Last valid column within the maze
 
@@ -112,7 +118,7 @@ public class PathChecker {
         for (int row =0; row < maze.length; row ++)
         {
 
-            if (isPass(maze[row][0]) || maze[row][0] == '\0'){
+            if (isPass(maze[row][0]) || maze[row][0] == null){
                 exitAndEntrance.add(row); // We are not concerned with the 'x' coordinate since we know it's the 0th element since entrance is west most
             }
         }
@@ -121,7 +127,7 @@ public class PathChecker {
         for (int row =0; row < maze.length; row ++)
         {
 
-            if (isPass(maze[row][lastXCoordinate]) || maze[row][lastXCoordinate] == '\0'){
+            if (isPass(maze[row][lastXCoordinate]) || maze[row][lastXCoordinate] == null){
                 exitAndEntrance.add(row); 
             }
         }
@@ -133,21 +139,22 @@ public class PathChecker {
 
     // Verifies if a player can move left in case of walls
     public boolean canMoveLeft(Player player){
-        HashMap<Character, Character> neighbours = getPathOptions(player);
+        Map<Direction, Tile> neighbours = this.getPathOptions(player);
         switch (player.getOrientation())
         {
-            case 'E':
-                return neighbours.getOrDefault('N', '#') == ' ';
+            case EAST:
+                return neighbours.getOrDefault(NORTH, WALL) == PASS;
 
-            case 'W':
-                return neighbours.getOrDefault('S', '#') == ' ';
+            case WEST:
+                return neighbours.getOrDefault(SOUTH, WALL) == PASS;
 
+            case NORTH: 
+                return neighbours.getOrDefault(WEST, WALL) == PASS; 
 
-            case 'N': 
-                return neighbours.getOrDefault('W', '#') == ' '; 
-
-            case 'S':
-                return neighbours.getOrDefault('E', '#') == ' '; 
+            case SOUTH:
+                return neighbours.getOrDefault(EAST, WALL) == PASS;
+            default:
+                break; 
         }
         return false;
     }
@@ -155,21 +162,23 @@ public class PathChecker {
 
     // Verifies if a player can move right incase of walls
     public boolean canMoveRight(Player player){
-        HashMap<Character, Character> neighbours = getPathOptions(player);
+        Map<Direction, Tile> neighbours = getPathOptions(player);
 
         switch (player.getOrientation())
         {
-            case 'E':
-                return neighbours.getOrDefault('S', '#') == ' ';
+            case EAST:
+                return neighbours.getOrDefault(SOUTH, WALL) == PASS;
 
-            case 'W':
-                return neighbours.getOrDefault('N', '#') == ' ';
+            case WEST:
+                return neighbours.getOrDefault(NORTH, WALL) == PASS;
 
-            case 'N': 
-                return neighbours.getOrDefault('E', '#') == ' '; 
+            case NORTH: 
+                return neighbours.getOrDefault(EAST, WALL) == PASS; 
 
-            case 'S':
-                return neighbours.getOrDefault('W', '#') == ' '; 
+            case SOUTH:
+                return neighbours.getOrDefault(WEST, WALL) == PASS;
+            default:
+                break; 
         }
         return false;
 
@@ -179,28 +188,30 @@ public class PathChecker {
     // Verifies if a player can move forward incase of walls
     public boolean canMoveForward(Player player)
     {
-        HashMap<Character, Character> neighbours = getPathOptions(player);
+        Map<Direction, Tile> neighbours = getPathOptions(player);
 
         switch (player.getOrientation())
         {
-            case 'E':
-                return neighbours.getOrDefault('E', '#') == ' ';
+            case EAST:
+                return neighbours.getOrDefault(EAST, WALL) == PASS;
 
-            case 'W':
-                return neighbours.getOrDefault('W', '#') == ' ';
+            case WEST:
+                return neighbours.getOrDefault(WEST, WALL) == PASS;
 
-            case 'N': 
-                return neighbours.getOrDefault('N', '#') == ' '; 
-            case 'S':
-                return neighbours.getOrDefault('S', '#') == ' '; 
+            case NORTH: 
+                return neighbours.getOrDefault(NORTH, WALL) == PASS; 
+            case SOUTH:
+                return neighbours.getOrDefault(SOUTH, WALL) == PASS;
+            default:
+                break; 
         }
         return false;
     }
 
 
     // Verifies if a player can follow a particular instruction such as (F, R, L)
-    public boolean canFollowInstruction(char instruction, Player player){
-        if (instruction == 'F')
+    public boolean canFollowInstruction(Direction instruction, Player player){
+        if (instruction == FORWARD)
         {
             if (canMoveForward(player)){
                 player.moveForward();
@@ -209,10 +220,10 @@ public class PathChecker {
                 return false; // being instructed to go into wall hence false
             }
         }
-        else if (instruction == 'R'){
+        else if (instruction == RIGHT){
             player.turnRight();
         }
-        else if (instruction == 'L'){
+        else if (instruction == LEFT){
             player.turnLeft();
         }
 
