@@ -1,23 +1,28 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class MazeExporter{    
+    private String filePath; 
 
-    public static char[][] constructMaze(String filepath) throws FileNotFoundException, IOException
+    public MazeExporter(String filePath){
+        this.filePath = filePath; 
+    }
+
+
+
+    public Tile [][] constructMaze() throws FileNotFoundException, IOException
     {
 
-        int width = getWidth(filepath); 
-        int height = getHeight(filepath);  
+        int width = this.getWidth(); 
+        int height = this.getHeight();  
 
-        char[][] maze = new char[height][width];
+        Tile [][] maze = new Tile [height][width];
 
-        BufferedReader reader = new BufferedReader(new FileReader(filepath));
+        BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
         String line;
         
         int row = 0; 
@@ -27,12 +32,7 @@ public class MazeExporter{
         {
             for (int col = 0; col < line.length(); col++) 
             {
-               if (line.charAt(col) == '#'){
-                maze[row][col] = '#'; // wall
-               }
-               else{
-                maze[row][col] = ' '; // pass
-               }
+                maze[row][col] = this.convertTilechar(line.charAt(col));
             }
             row ++; 
         }
@@ -41,11 +41,24 @@ public class MazeExporter{
 
         return maze;
     }
+
+
+    private Tile convertTilechar(char c){
+        switch (c){
+            case '#': 
+                return Tile.WALL; 
+            case ' ': 
+                return Tile.PASS; 
+            default:
+                throw new IllegalArgumentException("Invalid character " + c);
+        }
+
+    }
     
     
-    private static int getHeight(String filePath) throws FileNotFoundException, IOException{
+    private int getHeight() throws FileNotFoundException, IOException{
         int count = 0; 
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
         String line;
         while ((line = reader.readLine()) != null) 
         {
@@ -56,9 +69,9 @@ public class MazeExporter{
     }
 
 
-    private static int getWidth(String filePath) throws FileNotFoundException, IOException{
+    private  int getWidth() throws FileNotFoundException, IOException{
         int count = 0; 
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
         String line;
         line = reader.readLine(); 
 

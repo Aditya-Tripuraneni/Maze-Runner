@@ -1,9 +1,9 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import ca.mcmaster.se2aa4.mazerunner.Maze;
-import ca.mcmaster.se2aa4.mazerunner.MazeSolver;
-import ca.mcmaster.se2aa4.mazerunner.PathChecker;
-import java.util.ArrayList;
+
+import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
+
+import java.util.List;
 
 
 public class RightHandExploration implements MazeSolver{
@@ -58,7 +58,7 @@ public class RightHandExploration implements MazeSolver{
      */
     public static String solveMaze(Maze maze) 
     {
-        ArrayList<Integer> rowCoordinates = maze.getRowCoordinates(); 
+        List<Integer> rowCoordinates = maze.getRowCoordinates(); 
 
         int startRow = rowCoordinates.get(0); // Entrance coordinate 
         int startCol = 0;  // Starting on west side means col = 0
@@ -67,7 +67,7 @@ public class RightHandExploration implements MazeSolver{
         int exitCol = maze.getMazeWidth() -1; 
 
         // Player to be spawned on West side of maze
-        Player player = new Player(startRow, startCol, exitRow, exitCol, 'E'); 
+        Player player = new Player(startRow, startCol, exitRow, exitCol, EAST); 
         
         rightHandExplore(player, maze); // Solve maze using rightHandExplore algorithm
 

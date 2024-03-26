@@ -1,15 +1,17 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
+
 
 public class Player implements PlayerExplorer{
     private int row; 
     private int col; 
     private int exitRow; 
     private int exitCol; 
-    private char orientation; 
+    private Direction orientation; 
 
 
-    public Player(int row, int col, int exitRow, int exitCol, char orientation){
+    public Player(int row, int col, int exitRow, int exitCol, Direction orientation){
         this.row = row; 
         this.col = col; 
         this.exitRow = exitRow; 
@@ -18,7 +20,7 @@ public class Player implements PlayerExplorer{
     }
 
 
-    public char getOrientation(){
+    public Direction getOrientation(){
         return this.orientation;
     }
 
@@ -48,18 +50,20 @@ public class Player implements PlayerExplorer{
     {
         switch (orientation)
         {
-            case 'E':
-                orientation = 'S';
+            case EAST:
+                orientation = SOUTH;
                 break; 
-            case 'W':
-                orientation = 'N';
+            case WEST:
+                orientation = NORTH;
                 break;
-            case 'N': 
-                orientation = 'E';
+            case NORTH: 
+                orientation = EAST;
                 break;
-            case 'S':
-                orientation = 'W';
-                break; 
+            case SOUTH:
+                orientation = WEST;
+                break;
+            default:
+                break;  
         }
     }
 
@@ -69,19 +73,21 @@ public class Player implements PlayerExplorer{
     {
         switch (orientation)
         {
-            case 'E':
-                    orientation = 'N';
-                    break; 
-            case 'W':
-                    orientation = 'S';
-                    break;
-            case 'N': 
-                    orientation = 'W';
-                    break; 
+            case EAST:
+                orientation = NORTH;
+                break; 
+            case WEST:
+                orientation = SOUTH;
+                break;
+            case NORTH: 
+                orientation = WEST;
+                break; 
                 
-            case 'S':
-                    orientation = 'E';
-                    break; 
+            case SOUTH:
+                orientation = EAST;
+                break;
+            default:
+                break; 
         }
     }
 
@@ -91,18 +97,20 @@ public class Player implements PlayerExplorer{
     {
         switch (orientation)
         {
-            case 'E':
-                    orientation = 'W';
-                    break; 
-            case 'W':
-                    orientation = 'E';
-                    break;
-            case 'N': 
-                    orientation = 'S';
-                    break; 
-            case 'S':
-                    orientation = 'N';
-                    break;
+            case EAST:
+                orientation = WEST;
+                break; 
+            case WEST:
+                orientation = EAST;
+                break;
+            case NORTH: 
+                orientation = SOUTH;
+                break; 
+            case SOUTH:
+                orientation = NORTH;
+                break;
+            default:
+                break;
         }
     }
 
@@ -112,20 +120,22 @@ public class Player implements PlayerExplorer{
 
         switch (orientation)
         {
-            case 'E':
-                    col++;
-                    break; 
+            case EAST:
+                col++;
+                break; 
             
-            case 'W':
-                    col--;
-                    break;
-            case 'N': 
-                    row--;
-                    break; 
+            case WEST:
+                col--;
+                break;
+            case NORTH: 
+                row--;
+                break; 
 
-            case 'S':
-                    row++;
-                    break;
+            case SOUTH:
+                row++;
+                break;
+            default:
+                break;
         }
 
     }
