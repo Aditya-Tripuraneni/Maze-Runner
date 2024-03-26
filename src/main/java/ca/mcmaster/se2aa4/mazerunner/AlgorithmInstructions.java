@@ -2,6 +2,11 @@
 
 
 public class AlgorithmInstructions {
+    private StringBuilder string; 
+
+    public AlgorithmInstructions(StringBuilder string){
+        this.string = string; 
+    }
 
 
     /************************************************************************
@@ -14,7 +19,7 @@ public class AlgorithmInstructions {
     * 
     * @param string: The StringBuilder to which the instruction is appended.
     *************************************************************************/
-    public static void instructForward(StringBuilder string){
+    public void instructForward(){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'R'))
             string.append(" F"); 
         else
@@ -22,7 +27,7 @@ public class AlgorithmInstructions {
     }
 
 
-    public static void instructRight(StringBuilder string){
+    public void instructRight(){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'F'))
             string.append(" R"); 
         else
@@ -30,7 +35,7 @@ public class AlgorithmInstructions {
     }
 
 
-    public static void instructLeft(StringBuilder string){
+    public void instructLeft(){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'R'))
             string.append(" L"); 
         else
@@ -38,7 +43,7 @@ public class AlgorithmInstructions {
     }
 
 
-    public static void instructBackwards(StringBuilder string){
+    public void instructBackwards(){
         if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'L'))
             string.append(" RR"); 
         else
@@ -46,7 +51,7 @@ public class AlgorithmInstructions {
     }
 
     
-    public static String factoredExpressionPath(String string){
+    public String factoredExpressionPath(String string){
         StringBuilder factoredExpression = new StringBuilder();
 
         char currLetter = string.charAt(0);

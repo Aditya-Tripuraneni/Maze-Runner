@@ -64,7 +64,8 @@ public class Maze {
     // Apply right hand exploration algorithm to solve maze
     public void rightHandExplore()
     {
-        String path = RightHandExploration.solveMaze(this); 
+        RightHandExploration rightHandExplorationSolver = new RightHandExploration(this);
+        String path = rightHandExplorationSolver.solveMaze(); 
         System.out.println(path);
     }
 
