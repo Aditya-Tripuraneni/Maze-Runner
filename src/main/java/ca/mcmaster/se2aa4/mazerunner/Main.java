@@ -1,6 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import javax.naming.ConfigurationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +11,8 @@ public class Main {
 
 
         try {
-            Configurations.configure(args);
+            Configurations configurator = new Configurations(args); 
+            configurator.configure();
         }
         catch(Exception e)
         {

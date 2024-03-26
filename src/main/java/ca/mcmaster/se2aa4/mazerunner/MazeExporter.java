@@ -64,7 +64,7 @@ public class MazeExporter{
         {
             count++;
         }
-
+        reader.close();
         return count; // height of maze
     }
 
@@ -76,9 +76,11 @@ public class MazeExporter{
         line = reader.readLine(); 
 
         for (int idx = 0; idx < line.length(); idx++) 
-            {
-                count++; 
-            } 
+        {
+            count++; 
+        } 
+
+        reader.close();
         return count; // width of maze
 
     }
