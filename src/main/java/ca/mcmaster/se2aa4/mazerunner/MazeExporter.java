@@ -52,7 +52,6 @@ public class MazeExporter{
             default:
                 throw new IllegalArgumentException("Invalid character " + c);
         }
-
     }
     
     
