@@ -22,7 +22,7 @@ public class Maze {
     {
         MazeExporter mazeExporter = new MazeExporter(filepath); 
         this.maze = mazeExporter.constructMaze();
-        pathChecker = new PathChecker(maze, this);
+        pathChecker = new PathChecker(this);
         rowCoordinates = pathChecker.getEntranceAndExit();
         
     }

@@ -9,24 +9,16 @@ import java.util.Map;
 import java.util.ArrayList;
 
 public class PathChecker {
-
-    private Tile [][] maze; 
-    private Maze maze2;
+    private Maze maze;
     private int width;
     private String userDefinedPath;
 
 
-    public PathChecker(Tile [][] maze, Maze maze2 ){
-        this.maze = maze;
-        this.maze2 = maze2; 
-        this.width = maze[0].length;
+    public PathChecker(Maze maze){
+        this.maze = maze; 
+        this.width = this.maze.getMazeWidth();
     }
 
-
-    // Checks if tile is open position
-    private boolean isPass(Tile input){
-        return input ==  Tile.PASS;
-    }
     
     /**
      * This method retrieves the nearest path options for a given player in the maze.
@@ -43,7 +35,7 @@ public class PathChecker {
         int row  = player.getRow();
         int col = player.getCol();
 
-        Map<Direction, Boolean> neighbouringTiles = this.maze2.getNeighbouringTiles(row, col);
+        Map<Direction, Boolean> neighbouringTiles = this.maze.getNeighbouringTiles(row, col);
 
         if (neighbouringTiles.get(SOUTH)){
             neighbours.put(SOUTH, PASS);
@@ -90,19 +82,19 @@ public class PathChecker {
         int lastXCoordinate  = this.width -1; // Last valid column within the maze
 
         // Extract the east entrance of the maze on east side
-        for (int row =0; row < maze.length; row ++)
+        for (int row =0; row < this.maze.getMazeHeight(); row ++)
         {
 
-            if (isPass(maze[row][0])){
+            if (this.maze.isPassTile(row, 0)){
                 exitAndEntrance.add(row); // We are not concerned with the 'x' coordinate since we know it's the 0th element since entrance is west most
             }
         }
 
         // Extract the exit of the maze on the west side
-        for (int row =0; row < maze.length; row ++)
+        for (int row =0; row < this.maze.getMazeHeight(); row ++)
         {
 
-            if (isPass(maze[row][lastXCoordinate])){
+            if (this.maze.isPassTile(row, lastXCoordinate)){
                 exitAndEntrance.add(row); 
             }
         }
