@@ -22,7 +22,7 @@ public class Maze {
     {
         MazeExporter mazeExporter = new MazeExporter(filepath); 
         this.maze = mazeExporter.constructMaze();
-        pathChecker = new PathChecker(maze);
+        pathChecker = new PathChecker(maze, this);
         rowCoordinates = pathChecker.getEntranceAndExit();
         
     }
@@ -30,6 +30,10 @@ public class Maze {
 
     public int getMazeWidth(){
         return maze[0].length;
+    }
+
+    public int getMazeHeight(){
+        return this.maze.length;
     }
 
 
@@ -53,8 +57,13 @@ public class Maze {
         neighbours.put(WEST, westValidity);
 
         return neighbours; 
-
     }
+
+
+    public boolean isPassTile(int row, int col){
+        return this.maze[row][col] == PASS;
+    }
+
 
 
     public StringBuilder getPath(){

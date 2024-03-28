@@ -4,7 +4,6 @@ import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,17 +18,16 @@ public class BreadthFirstSearchSolver implements MazeSolver{
 
     private Queue<Node> queue = new LinkedList<>(); 
     private List<Integer> rowCoordinates; 
-    private Map<Node, Integer> distanceMapping;
-    private Map<Node, Node> parentMapping;
+    private Map<Node, Integer> distanceMapping = new HashMap<>();
+    private Map<Node, Node> parentMapping = new HashMap<>();
     
-
 
     public BreadthFirstSearchSolver(Maze maze){
         this.maze = maze; 
         this.rowCoordinates = maze.getRowCoordinates();
-        this.distanceMapping = this.createDistanceMapping();
-        this.parentMapping = this.createParentMapping();
-        this.instructorCreator = new AlgorithmInstructions(maze.getPath());
+        this.createMappings();
+        this.instructorCreator = new AlgorithmInstructions(maze.getPath()); //! this should be interacting with a path class 
+        //! ideally we dont want to store the path inside the maze class
     }
 
 
@@ -91,36 +89,15 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     }
 
 
-    private Map<Node, Integer> createDistanceMapping(){
-        Tile[][] mazeMatrix = this.maze.getMaze();
-        Map<Node, Integer> mapping = new HashMap<>(); 
-        // for (Tile[] row: mazeMatrix){
-        //     System.out.println(Arrays.toString(row));
-        // }
-        
-
-        for(int row = 0; row < mazeMatrix.length; row ++){
-            for (int col = 0; col < mazeMatrix[row].length; col ++){
+    private void createMappings(){        
+        for(int row = 0; row < this.maze.getMazeHeight(); row ++){
+            for (int col = 0; col < this.maze.getMazeWidth(); col ++){
                 Node node = new Node(row, col); 
-                mapping.put(node, Integer.MAX_VALUE);
+                this.distanceMapping.put(node, Integer.MAX_VALUE);
+                this.parentMapping.put(node, node);
             }
         }
 
-        return mapping; 
-    }
-
-
-    private Map<Node, Node> createParentMapping(){
-        Tile[][] mazeMatrix = this.maze.getMaze();
-        Map<Node, Node> mapping = new HashMap<>(); 
-
-        for(int row = 0; row < mazeMatrix.length; row ++){
-            for (int col =0; col < mazeMatrix[row].length; col ++){
-                Node node = new Node(row, col); 
-                mapping.put(node, node);
-            }
-        }
-        return mapping; 
     }
 
 

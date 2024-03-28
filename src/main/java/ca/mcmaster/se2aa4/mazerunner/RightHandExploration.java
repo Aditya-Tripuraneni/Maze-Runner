@@ -19,7 +19,7 @@ public class RightHandExploration implements MazeSolver{
 
     // Algorithm for right hand exploration of maze
     private void rightHandExplore(Player player){
-        PathChecker pathChecker = new PathChecker(maze.getMaze()); 
+        PathChecker pathChecker = new PathChecker(maze.getMaze(), maze); 
 
         while (player.getRow() != player.getExitRow() || player.getCol() != player.getExitCol())
         {

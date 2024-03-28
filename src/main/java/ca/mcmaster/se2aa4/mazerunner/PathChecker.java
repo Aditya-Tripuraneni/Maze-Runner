@@ -11,12 +11,14 @@ import java.util.ArrayList;
 public class PathChecker {
 
     private Tile [][] maze; 
+    private Maze maze2;
     private int width;
     private String userDefinedPath;
 
 
-    public PathChecker(Tile [][] maze ){
+    public PathChecker(Tile [][] maze, Maze maze2 ){
         this.maze = maze;
+        this.maze2 = maze2; 
         this.width = maze[0].length;
     }
 
@@ -25,13 +27,6 @@ public class PathChecker {
     private boolean isPass(Tile input){
         return input ==  Tile.PASS;
     }
-
-
-    // Checks if tile is wall
-    private boolean isWall(Tile input){
-        return input == Tile.WALL;
-    }
-
     
     /**
      * This method retrieves the nearest path options for a given player in the maze.
@@ -48,54 +43,34 @@ public class PathChecker {
         int row  = player.getRow();
         int col = player.getCol();
 
-        // Check within bounds for not going past the bottom row
-        if (row != maze.length -1)
-        {
-            Tile character = maze[row+1][col];
-            if (isWall(character)){
-                neighbours.put(SOUTH, WALL); 
-            }
-            else{
-                neighbours.put(SOUTH, PASS);
-            }
+        Map<Direction, Boolean> neighbouringTiles = this.maze2.getNeighbouringTiles(row, col);
+
+        if (neighbouringTiles.get(SOUTH)){
+            neighbours.put(SOUTH, PASS);
+        }
+        else {
+            neighbours.put(SOUTH, WALL);
         }
 
-        // Check within bounds for not going past the top row neighbouring tile
-        if (row != 0)
-        {
-            Tile character = maze[row-1][col];
-
-            if (isWall(character)){
-                neighbours.put(NORTH, WALL); // cannot pass on bottom
-            }
-            else {
-                neighbours.put(NORTH, PASS); // pass on bottom
-            }
+        if (neighbouringTiles.get(NORTH)){
+            neighbours.put(NORTH, PASS);
         }
-        
-        // Check within bounds for viewing left neighbouring tile
-        if (col != 0)
-        {
-            Tile character = maze[row][col-1];
-            if ( isWall(character) ){
-                neighbours.put(Direction.WEST, WALL); // cannot pass on the left
-            }
-            else{
-                neighbours.put(Direction.WEST, PASS); // pass on left
-            }
+        else{
+            neighbours.put(NORTH, WALL);
         }
 
-        // Checks within bounds for viewing right neighbouring tile
-        if (col != this.width - 1)
-        {
-            Tile character = maze[row][col+1];
+        if (neighbouringTiles.get(EAST)){
+            neighbours.put(EAST, PASS);
+        }
+        else{
+            neighbours.put(EAST, WALL);
+        }
 
-            if (isWall(character) ){
-                neighbours.put(Direction.EAST, WALL); // Cannot pass on the right
-            }
-            else{
-                neighbours.put(Direction.EAST, PASS); // Pass on right
-            }
+        if (neighbouringTiles.get(WEST)){
+            neighbours.put(WEST, PASS);
+        }
+        else{
+            neighbours.put(WEST, WALL);
         }
 
         return neighbours; // All paths left, right up and down relative to player
@@ -118,7 +93,7 @@ public class PathChecker {
         for (int row =0; row < maze.length; row ++)
         {
 
-            if (isPass(maze[row][0]) || maze[row][0] == null){
+            if (isPass(maze[row][0])){
                 exitAndEntrance.add(row); // We are not concerned with the 'x' coordinate since we know it's the 0th element since entrance is west most
             }
         }
@@ -127,7 +102,7 @@ public class PathChecker {
         for (int row =0; row < maze.length; row ++)
         {
 
-            if (isPass(maze[row][lastXCoordinate]) || maze[row][lastXCoordinate] == null){
+            if (isPass(maze[row][lastXCoordinate])){
                 exitAndEntrance.add(row); 
             }
         }
