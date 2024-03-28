@@ -1,7 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 
-
 import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
 
 import java.util.List;

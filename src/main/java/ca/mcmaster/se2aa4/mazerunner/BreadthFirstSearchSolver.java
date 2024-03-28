@@ -33,10 +33,7 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     }
 
 
-    private void BFS(){
-        Tile[][] mazeMatrix = maze.getMaze(); 
-
-
+    private void BFS(){        
         // Entrance Coordinate
         int startRow = this.rowCoordinates.get(0); // Entrance coordinate 
         int startCol = 0;  // Starting on west side means col = 0
@@ -62,36 +59,22 @@ public class BreadthFirstSearchSolver implements MazeSolver{
                 return; 
             }
 
-            // check if can add South tile
-            if (currentNode.getX() + 1 < mazeMatrix.length){
-                boolean isValidSouthTile = mazeMatrix[currentNode.getX() + 1][currentNode.getY()] != Tile.WALL;                
-                if (isValidSouthTile){
-                    this.addNeighbour(currentNode, new Node(currentNode.getX() + 1, currentNode.getY()));
-                }
+            Map<Direction, Boolean> neighbours = maze.getNeighbouringTiles(currentNode.getX(), currentNode.getY());
+
+            if (neighbours.get(SOUTH)){
+                this.addNeighbour(currentNode, new Node(currentNode.getX() + 1, currentNode.getY()));
             }
 
-            // check if can add North tile
-            if (currentNode.getX() - 1 >= 0){
-                boolean isValidNorthTile = mazeMatrix[currentNode.getX() - 1][currentNode.getY()] != Tile.WALL;
-                if (isValidNorthTile){
-                    this.addNeighbour(currentNode,  new Node(currentNode.getX() -1, currentNode.getY()));
-                }
+            if (neighbours.get(NORTH)){
+                this.addNeighbour(currentNode,  new Node(currentNode.getX() -1, currentNode.getY()));
             }
 
-            // check if can add East tile
-            if (currentNode.getY() + 1 < mazeMatrix[0].length){
-                boolean isValidEastTile = mazeMatrix[currentNode.getX()][currentNode.getY() + 1] != Tile.WALL;
-                if (isValidEastTile){
-                    this.addNeighbour(currentNode, new Node(currentNode.getX(), currentNode.getY() + 1));
-                }
+            if (neighbours.get(EAST)){
+                this.addNeighbour(currentNode, new Node(currentNode.getX(), currentNode.getY() + 1));
             }
 
-            // check if can add West tile
-            if (currentNode.getY() - 1 >= 0){
-                boolean isValidWestTile = mazeMatrix[currentNode.getX()][currentNode.getY() -1] != Tile.WALL;
-                if (isValidWestTile){
-                    this.addNeighbour(currentNode, new Node(currentNode.getX(), currentNode.getY() -1));
-                }
+            if (neighbours.get(WEST)){
+                this.addNeighbour(currentNode, new Node(currentNode.getX(), currentNode.getY() -1));
             }
         }
     }
