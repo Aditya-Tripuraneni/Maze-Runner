@@ -1,30 +1,34 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
-import static ca.mcmaster.se2aa4.mazerunner.Tile.WALL;
-
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 public class BreadthFirstSearchSolver implements MazeSolver{
+    private static final Logger logger = LogManager.getLogger();
 
     private Maze maze; 
     private AlgorithmInstructions instructorCreator;
 
-    private Map<Node, Integer> distanceMapping = this.createDistanceMapping(); 
-    private Map<Node, Node> parentMapping = this.createParentMapping(); 
+    private Queue<Node> queue = new LinkedList<>(); 
 
-    
+
+    private Map<Node, Integer> distanceMapping;
+    private Map<Node, Node> parentMapping;
     public BreadthFirstSearchSolver(Maze maze){
         this.maze = maze; 
+        this.distanceMapping = this.createDistanceMapping();
+        this.parentMapping = this.createParentMapping();
         this.instructorCreator = new AlgorithmInstructions(maze.getPath());
     }
 
 
-    public void BFS(){
+    private void BFS(){
+        logger.info("hello is this reached");
         Tile[][] mazeMatrix = maze.getMaze(); 
 
         List<Integer> rowCoordinates = maze.getRowCoordinates(); 
@@ -42,64 +46,64 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         int exitCol = maze.getMazeWidth() -1; 
         Node exitNode = new Node(exitRow, exitCol);
 
-        Queue<Node> queue = new LinkedList<>(); 
-
-        queue.add(startNode);
-
+        this.queue.add(startNode);
 
         while (!queue.isEmpty())
         {
 
-            Node currentNode =  queue.remove(); 
+            Node currentNode =  this.queue.remove(); 
 
             // exit upon reaching the exit of the maze
             if (currentNode.getX() == exitNode.getX() && currentNode.getY() == exitNode.getY()){
                 return; 
             }
 
-            int currentDistance = distanceMapping.get(currentNode);
-
-            boolean isValidSouthTile = mazeMatrix[currentNode.getX() + 1][currentNode.getY()] != Tile.WALL;
-            Node southNode = new Node(currentNode.getX() + 1, currentNode.getY());
-
-            boolean isValidNorthTile = mazeMatrix[currentNode.getX() - 1][currentNode.getY()] != Tile.WALL;
-            Node northNode = new Node(currentNode.getX() -1, currentNode.getY());
-
-            boolean isValidEastTile = mazeMatrix[currentNode.getX()][currentNode.getY() + 1] != Tile.WALL;
-            Node eastNode = new Node(currentNode.getX(), currentNode.getY() + 1);
-
-
-            boolean isValidWestTile = mazeMatrix[currentNode.getX()][currentNode.getY() -1] != Tile.WALL;
-            Node westNode = new Node(currentNode.getX(), currentNode.getY() -1);
-
-            // east node check
-            if (isValidEastTile && (currentDistance + 1 < distanceMapping.get(eastNode))) {
-                //update distance
-                distanceMapping.put(eastNode, currentDistance + 1);
-
-                //update parent node now the east nodes parent was the current node we just dequeued as that had the shorter distance
-                parentMapping.put(eastNode, currentNode);
+            // check if can add South tile
+            if (currentNode.getX() + 1 < mazeMatrix.length){
+                boolean isValidSouthTile = mazeMatrix[currentNode.getX() + 1][currentNode.getY()] != Tile.WALL;                
+                if (isValidSouthTile){
+                    this.addNeighbour(currentNode, new Node(currentNode.getX() + 1, currentNode.getY()));
+                }
             }
 
-            // west node check
-            if (isValidWestTile && (currentDistance + 1 < distanceMapping.get(westNode))){
-                  //update distance
-                  distanceMapping.put(westNode, currentDistance + 1);
-                  //update parent node now the east nodes parent was the current node we just dequeued as that had the shorter distance
-                  parentMapping.put(westNode, currentNode);
-              }
-
-
-            // north node check
-            if (isValidNorthTile && (currentDistance + 1 < distanceMapping.get(northNode))){
-                distanceMapping.put(northNode, currentDistance + 1);
-                parentMapping.put(northNode, currentNode);
+            // check if can add North tile
+            if (currentNode.getX() - 1 >= 0){
+                boolean isValidNorthTile = mazeMatrix[currentNode.getX() - 1][currentNode.getY()] != Tile.WALL;
+                if (isValidNorthTile){
+                    this.addNeighbour(currentNode,  new Node(currentNode.getX() -1, currentNode.getY()));
+                }
             }
 
-            if (isValidSouthTile && (currentDistance + 1 < distanceMapping.get(southNode))){
-                distanceMapping.put(southNode, currentDistance + 1);
-                parentMapping.put(southNode, currentNode);
+            // check if can add East tile
+            if (currentNode.getY() + 1 < mazeMatrix[0].length){
+                boolean isValidEastTile = mazeMatrix[currentNode.getX()][currentNode.getY() + 1] != Tile.WALL;
+                if (isValidEastTile){
+                    this.addNeighbour(currentNode, new Node(currentNode.getX(), currentNode.getY() + 1));
+                }
             }
+
+            // check if can add West tile
+            if (currentNode.getY() - 1 >= 0){
+                boolean isValidWestTile = mazeMatrix[currentNode.getX()][currentNode.getY() -1] != Tile.WALL;
+                if (isValidWestTile){
+                    this.addNeighbour(currentNode, new Node(currentNode.getX(), currentNode.getY() -1));
+                }
+            }
+        }
+    }
+
+
+    private void addNeighbour(Node currentNode, Node neighbourNode){
+        int currentDistance = distanceMapping.get(currentNode);
+
+        //only enqueue the node if has shorter distance and not a wall tile
+        System.out.println("Current Node: " + currentNode.toString());
+        System.out.println("Neighbour Node: " + neighbourNode.toString());
+
+        if (currentDistance + 1 < distanceMapping.get(neighbourNode)){
+            distanceMapping.put(neighbourNode, currentDistance + 1);
+            parentMapping.put(neighbourNode, currentNode);
+            this.queue.add(neighbourNode);
         }
     }
 
@@ -113,6 +117,7 @@ public class BreadthFirstSearchSolver implements MazeSolver{
                 mapping.put(node, Integer.MAX_VALUE);
             }
         }
+
         return mapping; 
     }
 
@@ -143,13 +148,15 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         int exitCol = maze.getMazeWidth() -1; 
 
         Node startNode = new Node(startRow, startCol);
-
+        logger.info("WAS THIS EVER REACHED");
 
         Node exitNode = new Node(exitRow, exitCol);
 
         this.BFS();
 
-    
+        System.out.println("Distance to exit node: " + this.distanceMapping.get(exitNode) );
+        System.out.println("Distance to start node: " + this.distanceMapping.get(startNode) );
+
 
         return "FFFF"; // hard coded implemetntion to solve straight maze path
 

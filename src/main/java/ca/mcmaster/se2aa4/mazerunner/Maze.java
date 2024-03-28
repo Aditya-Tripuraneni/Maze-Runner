@@ -64,10 +64,25 @@ public class Maze {
     // Apply right hand exploration algorithm to solve maze
     public void rightHandExplore()
     {
-        RightHandExploration rightHandExplorationSolver = new RightHandExploration(this);
+        MazeSolver rightHandExplorationSolver = new RightHandExploration(this);
         String path = rightHandExplorationSolver.solveMaze(); 
         System.out.println(path);
+
+        System.out.println("Now doing the BFS algo \n\n");
+        this.BFSExplore();
+
     }
+
+    public void BFSExplore(){
+        MazeSolver breadthFirstSearchSolver = new BreadthFirstSearchSolver(this);
+        String path2 =  breadthFirstSearchSolver.solveMaze();
+        System.out.println("THIS WASNT EVEN HIT");
+
+        // System.out.println(path2);
+    }
+
+
+
 
     
     /**
