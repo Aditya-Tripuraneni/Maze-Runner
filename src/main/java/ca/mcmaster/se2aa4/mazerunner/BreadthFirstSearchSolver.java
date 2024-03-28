@@ -111,9 +111,9 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     private Map<Node, Integer> createDistanceMapping(){
         Tile[][] mazeMatrix = this.maze.getMaze();
         Map<Node, Integer> mapping = new HashMap<>(); 
-        for (Tile[] row: mazeMatrix){
-            System.out.println(Arrays.toString(row));
-        }
+        // for (Tile[] row: mazeMatrix){
+        //     System.out.println(Arrays.toString(row));
+        // }
         
 
         for(int row = 0; row < mazeMatrix.length; row ++){
@@ -188,30 +188,27 @@ public class BreadthFirstSearchSolver implements MazeSolver{
             if (dx < 0){
                 relativeDirection = compass.getRelativeDirection(oldOrientation, NORTH);  
                 oldOrientation = NORTH; 
-                this.handleInstruction(relativeDirection);
-
             }
             // positive result implies we moved south
             else if (dx > 0){
                 relativeDirection = compass.getRelativeDirection(oldOrientation, SOUTH);
                 oldOrientation = SOUTH; 
-                this.handleInstruction(relativeDirection);
-
             }
             // negative result implies we moved west
             else if (dy < 0){
                 relativeDirection = compass.getRelativeDirection(oldOrientation, WEST);
                 oldOrientation = WEST; 
-                this.handleInstruction(relativeDirection);
-
             }
             // positive result implies we moved east
-            else if (dy > 0){
+            else{
                 relativeDirection = compass.getRelativeDirection(oldOrientation, EAST);
                 oldOrientation = EAST; 
-                this.handleInstruction(relativeDirection);
-
             }
+
+            this.handleInstruction(relativeDirection);
+
+
+
             System.out.println("Old Node: " + prevNode.toString());
             System.out.println("New Node: " + currentNode.toString());
             System.out.println("Result of dx, dy: " + dx + ", " + dy);
