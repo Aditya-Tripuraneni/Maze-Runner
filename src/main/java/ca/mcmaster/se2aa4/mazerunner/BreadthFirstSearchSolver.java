@@ -1,6 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,8 +97,8 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         int currentDistance = distanceMapping.get(currentNode);
 
         //only enqueue the node if has shorter distance and not a wall tile
-        System.out.println("Current Node: " + currentNode.toString());
-        System.out.println("Neighbour Node: " + neighbourNode.toString());
+        // System.out.println("Current Node: " + currentNode.toString());
+        // System.out.println("Neighbour Node: " + neighbourNode.toString());
 
         if (currentDistance + 1 < distanceMapping.get(neighbourNode)){
             distanceMapping.put(neighbourNode, currentDistance + 1);
@@ -107,12 +107,17 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         }
     }
 
+
     private Map<Node, Integer> createDistanceMapping(){
         Tile[][] mazeMatrix = this.maze.getMaze();
         Map<Node, Integer> mapping = new HashMap<>(); 
+        for (Tile[] row: mazeMatrix){
+            System.out.println(Arrays.toString(row));
+        }
         
-        for(int row = 0; row < maze.getMazeWidth(); row ++){
-            for (int col =0; col < mazeMatrix[row].length; col ++){
+
+        for(int row = 0; row < mazeMatrix.length; row ++){
+            for (int col = 0; col < mazeMatrix[row].length; col ++){
                 Node node = new Node(row, col); 
                 mapping.put(node, Integer.MAX_VALUE);
             }
@@ -126,7 +131,7 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         Tile[][] mazeMatrix = this.maze.getMaze();
         Map<Node, Node> mapping = new HashMap<>(); 
 
-        for(int row = 0; row < maze.getMazeWidth(); row ++){
+        for(int row = 0; row < mazeMatrix.length; row ++){
             for (int col =0; col < mazeMatrix[row].length; col ++){
                 Node node = new Node(row, col); 
                 mapping.put(node, node);
@@ -154,8 +159,7 @@ public class BreadthFirstSearchSolver implements MazeSolver{
 
         this.BFS();
 
-        System.out.println("Distance to exit node: " + this.distanceMapping.get(exitNode) );
-        System.out.println("Distance to start node: " + this.distanceMapping.get(startNode) );
+        System.out.println("\n\nDistance to EXIT node: " + this.distanceMapping.get(exitNode) );
 
 
         return "FFFF"; // hard coded implemetntion to solve straight maze path

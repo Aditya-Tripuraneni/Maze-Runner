@@ -32,6 +32,7 @@ public class Configurations {
             
             if (!cmd.hasOption("p")){
                 maze.rightHandExplore();
+                maze.BFSExplore();
             }
             else{ // need to veirfy user pathhow 
                 String userPath = cmd.getOptionValue("p");

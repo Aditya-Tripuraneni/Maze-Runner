@@ -68,8 +68,6 @@ public class Maze {
         String path = rightHandExplorationSolver.solveMaze(); 
         System.out.println(path);
 
-        System.out.println("Now doing the BFS algo \n\n");
-        this.BFSExplore();
 
     }
 
