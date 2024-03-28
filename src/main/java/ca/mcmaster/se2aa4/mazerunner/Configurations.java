@@ -31,7 +31,7 @@ public class Configurations {
             Maze maze = new Maze(filepath);
             
             if (!cmd.hasOption("p")){
-                maze.rightHandExplore();
+                // maze.rightHandExplore();
                 maze.BFSExplore();
             }
             else{ // need to veirfy user pathhow 

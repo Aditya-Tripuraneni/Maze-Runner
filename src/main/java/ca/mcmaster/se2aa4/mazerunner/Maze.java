@@ -74,15 +74,12 @@ public class Maze {
     public void BFSExplore(){
         MazeSolver breadthFirstSearchSolver = new BreadthFirstSearchSolver(this);
         String path2 =  breadthFirstSearchSolver.solveMaze();
-        System.out.println("THIS WASNT EVEN HIT");
-
-        // System.out.println(path2);
+        System.out.println(path2);
     }
 
 
 
 
-    
     /**
      * Verifies the user's entered path by utilizing MazeInputReader and path-checking methods.
      * The method checks whether the entered path is canonical or factorized and verifies
