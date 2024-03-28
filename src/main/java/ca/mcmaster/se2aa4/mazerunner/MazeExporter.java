@@ -30,6 +30,12 @@ public class MazeExporter{
         // Constructs the maze based on wall or space
         while ((line = reader.readLine()) != null) 
         {
+
+            // Pad the line with spaces if it's shorter than the width
+            if (line.length() < width) {
+                line = String.format("%-" + width + "s", line);
+            }
+
             for (int col = 0; col < line.length(); col++) 
             {
                 maze[row][col] = this.convertTilechar(line.charAt(col));
@@ -49,10 +55,11 @@ public class MazeExporter{
                 return Tile.WALL; 
             case ' ': 
                 return Tile.PASS; 
+            case '\0':
+                return Tile.PASS; 
             default:
                 throw new IllegalArgumentException("Invalid character " + c);
         }
-
     }
     
     
