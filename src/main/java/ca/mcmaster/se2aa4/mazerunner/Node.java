@@ -11,8 +11,23 @@ public class Node {
     }
 
     public int getX(){return this.X;}
+    
 
     public int getY(){return this.Y;}
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Node other = (Node) obj;
+        return this.X == other.X && this.Y == other.Y;
+    }
+
 
     
 }
