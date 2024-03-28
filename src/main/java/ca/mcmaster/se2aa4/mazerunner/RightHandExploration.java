@@ -13,7 +13,6 @@ public class RightHandExploration implements MazeSolver{
 
     public RightHandExploration(Maze maze){
         this.maze = maze; 
-        System.out.println("AINT NULL HERE " + maze);
         this.instructorCreator = new AlgorithmInstructions(maze.getPath());
     }
 
