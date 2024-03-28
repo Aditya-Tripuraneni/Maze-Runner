@@ -185,34 +185,41 @@ public class BreadthFirstSearchSolver implements MazeSolver{
             int dx = currentNode.getX() - prevNode.getX() ;
             int dy = currentNode.getY() - prevNode.getY();
 
-            // System.out.println("Old Node: " + prevNode.toString());
-            // System.out.println("New Node: " + currentNode.toString());
-            // System.out.println("Result of dx, dy: " + dx + ", " + dy);
-            
-
             Direction relativeDirection;
             
-            // negative result implies we moved south
+            // negative result implies we moved north
             if (dx < 0){
-                relativeDirection = compass.getRelativeDirection(oldOrientation, SOUTH);  
-                oldOrientation = SOUTH; 
-            }
-            // positive result implies we moved north
-            else if (dx > 0){
-                relativeDirection = compass.getRelativeDirection(oldOrientation, NORTH);
+                relativeDirection = compass.getRelativeDirection(oldOrientation, NORTH);  
                 oldOrientation = NORTH; 
+                this.handleInstruction(relativeDirection);
+
+            }
+            // positive result implies we moved south
+            else if (dx > 0){
+                relativeDirection = compass.getRelativeDirection(oldOrientation, SOUTH);
+                oldOrientation = SOUTH; 
+                this.handleInstruction(relativeDirection);
+
             }
             // negative result implies we moved west
             else if (dy < 0){
                 relativeDirection = compass.getRelativeDirection(oldOrientation, WEST);
                 oldOrientation = WEST; 
+                this.handleInstruction(relativeDirection);
+
             }
             // positive result implies we moved east
-            else {
+            else if (dy > 0){
                 relativeDirection = compass.getRelativeDirection(oldOrientation, EAST);
                 oldOrientation = EAST; 
+                this.handleInstruction(relativeDirection);
+
             }
-            this.handleInstruction(relativeDirection);
+            System.out.println("Old Node: " + prevNode.toString());
+            System.out.println("New Node: " + currentNode.toString());
+            System.out.println("Result of dx, dy: " + dx + ", " + dy);
+            System.out.println("Orientation: " + oldOrientation);
+            
             prevNode = currentNode; 
         }
     }
@@ -220,11 +227,12 @@ public class BreadthFirstSearchSolver implements MazeSolver{
 
     private void handleInstruction(Direction relativeDirection){
         if (relativeDirection == LEFT){
+            System.out.println("Instruct Left");
             instructorCreator.instructLeft();
             instructorCreator.instructForward();
         }
         else if (relativeDirection == RIGHT){
-            System.out.println("why was this even execeuted");
+            System.out.println("Instruct Right");
             instructorCreator.instructRight();
             instructorCreator.instructForward();
 

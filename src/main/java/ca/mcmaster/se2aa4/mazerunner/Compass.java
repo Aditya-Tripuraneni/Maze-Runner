@@ -14,12 +14,19 @@ public class Compass {
                 if (newOrientation == WEST) {
                     return LEFT;
                 }
+                if (newOrientation == NORTH){
+                    return FORWARD; 
+                }
             case SOUTH:
                 if (newOrientation == WEST){
                     return RIGHT;
                 }
                 if (newOrientation == EAST){
                     return LEFT; 
+                }
+
+                if (newOrientation == SOUTH){
+                    return FORWARD; 
                 }
             case EAST:
                 if (newOrientation == SOUTH){
@@ -29,6 +36,9 @@ public class Compass {
                 if (newOrientation == NORTH){
                     return LEFT; 
                 }
+                if (newOrientation == EAST){
+                    return FORWARD; 
+                }
             case WEST:
                 if (newOrientation == NORTH){
                     return RIGHT; 
@@ -36,6 +46,10 @@ public class Compass {
 
                 if (newOrientation == SOUTH){
                     return LEFT; 
+                }
+
+                if (newOrientation == WEST){
+                    return FORWARD; 
                 }
             default:
                 return FORWARD; 
