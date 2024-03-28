@@ -5,6 +5,7 @@ import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
 
 public class Compass {
 
+    
     public Direction getRelativeDirection(Direction currentOrientation, Direction newOrientation){
         switch (currentOrientation) {
             case NORTH:
