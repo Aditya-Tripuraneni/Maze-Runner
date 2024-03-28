@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 public class BreadthFirstSearchSolver implements MazeSolver{
 
     private Maze maze; 
