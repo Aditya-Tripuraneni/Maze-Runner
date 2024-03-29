@@ -6,22 +6,23 @@ import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
 import java.util.List;
 
 
-public class MazeInputReader implements InputReader{
+public class MazeInputReader implements InputVerifier, CannonicalVerifier, FactorizedVerifier{
     private PathChecker pathChecker; 
     private List<Integer> rowCoordinates;
     private int width; 
     private String userInput; 
     
 
-    public  MazeInputReader(PathChecker pathChecker){
-            this.pathChecker = pathChecker;
+    public  MazeInputReader(Maze maze, String userInput){
+            this.pathChecker = new PathChecker(maze);
+            this.setUserDefinedPath(userInput);
             rowCoordinates = pathChecker.getEntranceAndExit();
             this.width = pathChecker.getWidth();
-            this.userInput = pathChecker.getUserDefinedPath();
     }
 
 
     // Verfies if the userInput is a cannonical path
+    @Override
     public boolean isCannonical(){
         for (char c: userInput.toCharArray()){
             if (Character.isDigit(c)) return false; // If digit then its factorized
@@ -39,6 +40,7 @@ public class MazeInputReader implements InputReader{
      * @param startWest A boolean flag indicating whether the player starts on the west side of the maze.
      * @return True if the factorized instructions lead the player to the maze exit, false otherwise.
      */
+    @Override
     public boolean verifyFactorized(boolean startWest){
 
         // Initialize the player based on the starting side of the maze
@@ -101,29 +103,13 @@ public class MazeInputReader implements InputReader{
 
 
     /**
-     * Initializes a player's starting point based on the specified side of the maze.
-     * If starting from the west, the player is placed on the west side facing east.
-     * If starting from the east, the player is placed on the east side facing west.
-     * 
-     * @param startWest A boolean flag indicating whether the player starts on the west side of the maze.
-     * @return A new Player object representing the initialized player.
-     */
-    private Player initializePlayer(boolean startWest) {
-        if (startWest) {
-            return new Player(rowCoordinates.get(0), 0, rowCoordinates.get(1), this.width - 1, EAST);
-        } 
-        
-        return new Player(rowCoordinates.get(1), this.width - 1, rowCoordinates.get(0), 0, WEST); 
-    }
-
-    
-    /**
      * Verifies whether a sequence of canonical instructions is valid for the given maze and player.
      * Each character in the user input represents a single move or action ('F', 'L', 'R', 'B').
      * 
      * @param startWest A boolean flag indicating whether the player starts on the west side of the maze.
      * @return True if the canonical instructions lead the player to the maze exit, false otherwise.
      */
+    @Override
     public boolean verifyCannonical(boolean startWest)
     {
 
@@ -139,6 +125,57 @@ public class MazeInputReader implements InputReader{
         return ( (player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()) );
     }
 
+
+    @Override
+    public void verifyPath()
+    {
+
+        if (this.isCannonical())
+        {
+            // verify west to east path and east to west path
+            if (this.verifyCannonical(true) || this.verifyCannonical(false)){
+                System.out.println("correct path");
+            }
+            else{
+                System.out.println("incorrect path");
+            }
+        }
+        else{
+            // verify west to east path and east to west path
+            if (this.verifyFactorized( true) || this.verifyFactorized(false)){
+                System.out.println("correct path");
+            }
+            else{
+                System.out.println("incorrect path");
+            }
+        }
+    }
+
+
+
+    /**
+     * Initializes a player's starting point based on the specified side of the maze.
+     * If starting from the west, the player is placed on the west side facing east.
+     * If starting from the east, the player is placed on the east side facing west.
+     * 
+     * @param startWest A boolean flag indicating whether the player starts on the west side of the maze.
+     * @return A new Player object representing the initialized player.
+     */
+    private Player initializePlayer(boolean startWest) {
+        if (startWest) {
+            return new Player(rowCoordinates.get(0), 0, rowCoordinates.get(1), this.width - 1, EAST);
+        } 
+        
+        return new Player(rowCoordinates.get(1), this.width - 1, rowCoordinates.get(0), 0, WEST); 
+    }
+
+
+    private void setUserDefinedPath(String userPath){
+        userPath = userPath.replaceAll("\\s", ""); // Remove any spaces
+        this.userInput = userPath; 
+    }
+
+    
     private Direction convertDirection(char c){
         switch (c) {
             case 'F':

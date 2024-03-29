@@ -2,10 +2,15 @@
 
 
 public class AlgorithmInstructions {
-    private StringBuilder string; 
+    // private StringBuilder string; 
+    private Path path; 
 
-    public AlgorithmInstructions(StringBuilder string){
-        this.string = string; 
+    // public AlgorithmInstructions(StringBuilder string){
+    //     this.string = string; 
+    // }
+
+    public AlgorithmInstructions(Path path){
+        this.path = path; 
     }
 
 
@@ -20,54 +25,54 @@ public class AlgorithmInstructions {
     * @param string: The StringBuilder to which the instruction is appended.
     *************************************************************************/
     public void instructForward(){
-        if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'R'))
-            string.append(" F"); 
+        if (path.getPathLength() > 0 && (path.getLastInstruction() == 'L' || path.getLastInstruction() == 'R'))
+            path.addInstruction(" F"); 
         else
-            string.append("F");
+            path.addInstruction("F");
     }
 
 
     public void instructRight(){
-        if (string.length() > 0 && (string.charAt(string.length() - 1) == 'L' || string.charAt(string.length() - 1) == 'F'))
-            string.append(" R"); 
+        if (path.getPathLength() > 0 && (path.getLastInstruction() == 'L' || path.getLastInstruction() == 'F'))
+            path.addInstruction(" R"); 
         else
-            string.append("R");
+            path.addInstruction("R");
     }
 
 
     public void instructLeft(){
-        if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'R'))
-            string.append(" L"); 
+        if (path.getPathLength() > 0 && (path.getLastInstruction() == 'F' || path.getLastInstruction() == 'R'))
+            path.addInstruction(" L"); 
         else
-            string.append("L");
+            path.addInstruction("L");
     }
 
 
     public void instructBackwards(){
-        if (string.length() > 0 && (string.charAt(string.length() - 1) == 'F' || string.charAt(string.length() - 1) == 'L'))
-            string.append(" RR"); 
+        if (path.getPathLength() > 0 && (path.getLastInstruction() == 'F' || path.getLastInstruction() == 'L'))
+            path.addInstruction(" RR"); 
         else
-            string.append("RR");
+            path.addInstruction("RR");
     }
 
     
-    public String factoredExpressionPath(String string){
+    public String factorizeInstructions(){
         StringBuilder factoredExpression = new StringBuilder();
 
-        char currLetter = string.charAt(0);
+        char currLetter = path.instructionAt(0);
         int count = 0; 
 
-        for (int i = 0; i < string.length(); i ++)
+        for (int i = 0; i < path.getPathLength(); i ++)
         {
-            if (string.charAt(i) == currLetter)
+            if (path.instructionAt(i) == currLetter)
                 count++;
-            else if(string.charAt(i) != ' ')
+            else if(path.instructionAt(i) != ' ')
             {
                 if (count > 1)
                     factoredExpression.append(count).append(currLetter).append(" ");
                 else
                     factoredExpression.append(currLetter).append(" ");
-                currLetter = string.charAt(i);
+                currLetter = path.instructionAt(i);
                 count = 1;
 
             }

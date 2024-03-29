@@ -14,7 +14,7 @@ import java.util.Queue;
 public class BreadthFirstSearchSolver implements MazeSolver{
 
     private Maze maze; 
-    private AlgorithmInstructions instructorCreator;
+    private AlgorithmInstructions instructionCreator;
 
     private Queue<Node> queue = new LinkedList<>(); 
     private List<Integer> rowCoordinates; 
@@ -26,8 +26,8 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         this.maze = maze; 
         this.rowCoordinates = maze.getRowCoordinates();
         this.createMappings();
-        this.instructorCreator = new AlgorithmInstructions(maze.getPath()); //! this should be interacting with a path class 
-        //! ideally we dont want to store the path inside the maze class
+        //! I added a new Path inside algorithm Instructions
+        this.instructionCreator = new AlgorithmInstructions(new Path()); //! this should be interacting with a path class 
     }
 
 
@@ -132,7 +132,7 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         List<Node> pathSequence = this.backTrackPath();
 
         Node prevNode = pathSequence.get(0);
-        instructorCreator.instructForward();
+        instructionCreator.instructForward();
         Compass compass = new Compass();
         System.out.println("Pre path before doing jack shit: " + maze.getPath());
 
@@ -182,18 +182,18 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     private void handleInstruction(Direction relativeDirection){
         if (relativeDirection == LEFT){
             System.out.println("Instruct Left");
-            instructorCreator.instructLeft();
-            instructorCreator.instructForward();
+            instructionCreator.instructLeft();
+            instructionCreator.instructForward();
         }
         else if (relativeDirection == RIGHT){
             System.out.println("Instruct Right");
-            instructorCreator.instructRight();
-            instructorCreator.instructForward();
+            instructionCreator.instructRight();
+            instructionCreator.instructForward();
 
         }
         else if (relativeDirection == FORWARD){
             System.out.println("I moved forward!");
-            instructorCreator.instructForward();
+            instructionCreator.instructForward();
         }
     }
 
@@ -202,8 +202,11 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     public String solveMaze(){
         this.BFS();
         this.constructPath();
-        StringBuilder path = maze.getPath();
-        return instructorCreator.factoredExpressionPath(path.toString()); 
+        // StringBuilder path = maze.getPath();
+        String factoredPath = instructionCreator.factorizeInstructions(); //! changed 
+
+        System.out.println(factoredPath);
+        return factoredPath; 
     }
     
 }

@@ -8,12 +8,12 @@ import java.util.List;
 
 public class RightHandExploration implements MazeSolver{
     private Maze maze; 
-    private AlgorithmInstructions instructorCreator;
+    private AlgorithmInstructions instructionCreator;
 
 
     public RightHandExploration(Maze maze){
         this.maze = maze; 
-        this.instructorCreator = new AlgorithmInstructions(maze.getPath());
+        this.instructionCreator = new AlgorithmInstructions(new Path());
     }
 
 
@@ -27,31 +27,31 @@ public class RightHandExploration implements MazeSolver{
             {
                 // Player turns right and moves forward
                 player.turnRight(); 
-                instructorCreator.instructRight();
+                instructionCreator.instructRight();
                 player.moveForward();
-                instructorCreator.instructForward();
+                instructionCreator.instructForward();
             }
             else if (pathChecker.canMoveForward(player))
             {
                 // Player can move forward
                 player.moveForward();
-                instructorCreator.instructForward();
+                instructionCreator.instructForward();
             }
             else if (pathChecker.canMoveLeft(player))
             {
                 // Player turns left and moves forward
                 player.turnLeft(); 
-                instructorCreator.instructLeft();
+                instructionCreator.instructLeft();
                 player.moveForward();
-                instructorCreator.instructForward();
+                instructionCreator.instructForward();
             }
             else
             {
                 // Cannot go right, forward, left so must turn around
                 player.turnBackwards(); 
-                instructorCreator.instructBackwards();
+                instructionCreator.instructBackwards();
                 player.moveForward();
-                instructorCreator.instructForward();
+                instructionCreator.instructForward();
             }
         }
     }
@@ -79,9 +79,10 @@ public class RightHandExploration implements MazeSolver{
         
         this.rightHandExplore(player); // Solve maze using rightHandExplore algorithm
 
-        StringBuilder path = maze.getPath(); 
+        String factoredPath = instructionCreator.factorizeInstructions();
+        System.out.println(factoredPath);
 
         // Factored instructions to exit maze
-        return instructorCreator.factoredExpressionPath(path.toString()); 
+        return factoredPath; 
     }
 }
