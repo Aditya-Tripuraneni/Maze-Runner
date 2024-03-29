@@ -64,7 +64,7 @@ public class RightHandExploration implements MazeSolver{
      * @return A string representing the factored path to exit the maze.
      */
     @Override
-    public String solveMaze() 
+    public Path solveMaze() 
     {
         List<Integer> rowCoordinates = maze.getRowCoordinates(); 
 
@@ -83,6 +83,6 @@ public class RightHandExploration implements MazeSolver{
         System.out.println(factoredPath);
 
         // Factored instructions to exit maze
-        return factoredPath; 
+        return new Path(factoredPath); 
     }
 }

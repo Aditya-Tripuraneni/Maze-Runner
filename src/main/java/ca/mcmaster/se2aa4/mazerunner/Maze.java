@@ -14,7 +14,6 @@ public class Maze {
     private Tile [][] maze; 
     private PathChecker pathChecker;
     private List<Integer> rowCoordinates;
-    private StringBuilder path = new StringBuilder(); // path to exit maze
 
     
     public Maze(String filepath) throws FileNotFoundException, IOException
@@ -63,18 +62,7 @@ public class Maze {
     }
 
 
-
-    public StringBuilder getPath(){
-        return this.path; 
-    }
-
-
     public List<Integer> getRowCoordinates(){
         return this.rowCoordinates; 
-    }
-
-
-    public PathChecker getPathChecker(){
-        return this.pathChecker;
     }
 }

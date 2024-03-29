@@ -5,7 +5,7 @@ public enum Direction {
     EAST,
     SOUTH,
     WEST,
-    FORWARD,
-    RIGHT,
-    LEFT;  
+    F, //! was FORWARD
+    R, //! was RIGHT
+    L;  //! was LEFT
 }

@@ -10,7 +10,7 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
     private PathChecker pathChecker; 
     private List<Integer> rowCoordinates;
     private int width; 
-    private String userInput; 
+    private Path userInput;
     
 
     public  MazeInputReader(Maze maze, String userInput){
@@ -48,36 +48,36 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
 
         int i = 0;         
 
-        while (i < userInput.length())
+        while (i < userInput.getPathLength())
         {
-            char instruction = userInput.charAt(i);
+            char instruction = userInput.instructionAt(i);
             if (Character.isDigit(instruction))
             {
                 StringBuilder numberPortion = new StringBuilder();
 
                 // Extract all digits before an instruction
-                while(i < userInput.length() && Character.isDigit(userInput.charAt(i)))
+                while(i < userInput.getPathLength() && Character.isDigit(userInput.instructionAt(i)))
                 {
                     // Add the instruction we now have
                     numberPortion.append(instruction);
                     i++; 
-                    instruction = userInput.charAt(i); 
+                    instruction = userInput.instructionAt(i); 
                 }
 
                 int instructionTimes = Integer.parseInt(numberPortion.toString());  // number of times to execute the instruction
 
                 // Check out of bounds in-case after incrementation we are moving past the last letter
-                if (i < userInput.length()){
-                    instruction = userInput.charAt(i);
+                if (i < userInput.getPathLength()){
+                    instruction = userInput.instructionAt(i);
                 }
                 
                 Direction convertedDirection = this.convertDirection(instruction);
                 // Reduces redundant 360-degree turnarounds: multiples of 4 turns are equivalent to staying in the same spot
-                if (convertedDirection != FORWARD && instructionTimes % 4 == 0){
+                if (convertedDirection != F && instructionTimes % 4 == 0){
                     instructionTimes = (instructionTimes % 4); 
                 }
                 // Optimizes turn repetitions: 5 turns = 1 turn, 6 turns = 2 turns, 7 turns = 3 turns
-                else if(convertedDirection != FORWARD && instruction % 4 != 0){
+                else if(convertedDirection != F && instruction % 4 != 0){
                     instructionTimes %= 4; 
                 }
                 
@@ -129,7 +129,6 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
     @Override
     public void verifyPath()
     {
-
         if (this.isCannonical())
         {
             // verify west to east path and east to west path
@@ -152,7 +151,6 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
     }
 
 
-
     /**
      * Initializes a player's starting point based on the specified side of the maze.
      * If starting from the west, the player is placed on the west side facing east.
@@ -172,18 +170,18 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
 
     private void setUserDefinedPath(String userPath){
         userPath = userPath.replaceAll("\\s", ""); // Remove any spaces
-        this.userInput = userPath; 
+        this.userInput = new Path(userPath); 
     }
 
     
     private Direction convertDirection(char c){
         switch (c) {
             case 'F':
-                return FORWARD;
+                return F;
             case 'L':
-                return LEFT; 
+                return L; 
             case 'R':
-                return RIGHT; 
+                return R; 
             default:
                 return null;
         }

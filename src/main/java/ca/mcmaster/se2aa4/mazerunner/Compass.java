@@ -10,50 +10,50 @@ public class Compass {
         switch (currentOrientation) {
             case NORTH:
                 if (newOrientation == EAST) {
-                    return RIGHT;
+                    return R;
                 }
                 if (newOrientation == WEST) {
-                    return LEFT;
+                    return L;
                 }
                 if (newOrientation == NORTH){
-                    return FORWARD; 
+                    return F; 
                 }
             case SOUTH:
                 if (newOrientation == WEST){
-                    return RIGHT;
+                    return R;
                 }
                 if (newOrientation == EAST){
-                    return LEFT; 
+                    return L; 
                 }
 
                 if (newOrientation == SOUTH){
-                    return FORWARD; 
+                    return F; 
                 }
             case EAST:
                 if (newOrientation == SOUTH){
-                    return RIGHT; 
+                    return R; 
                 }
 
                 if (newOrientation == NORTH){
-                    return LEFT; 
+                    return L; 
                 }
                 if (newOrientation == EAST){
-                    return FORWARD; 
+                    return F; 
                 }
             case WEST:
                 if (newOrientation == NORTH){
-                    return RIGHT; 
+                    return R; 
                 }
 
                 if (newOrientation == SOUTH){
-                    return LEFT; 
+                    return L; 
                 }
 
                 if (newOrientation == WEST){
-                    return FORWARD; 
+                    return F; 
                 }
             default:
-                return FORWARD; 
+                return F; 
         }
     }
     

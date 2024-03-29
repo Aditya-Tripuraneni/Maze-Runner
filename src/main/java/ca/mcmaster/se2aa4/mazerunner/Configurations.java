@@ -29,12 +29,12 @@ public class Configurations {
             String filepath = cmd.getOptionValue("i");
     
             Maze maze = new Maze(filepath);
-            BreadthFirstSearchSolver breadthFirstSearchSolver = new BreadthFirstSearchSolver(maze);
-            // RightHandExploration rightHandExplorationSolver = new RightHandExploration(maze);
+            MazeSolver breadthFirstSearchSolver = new BreadthFirstSearchSolver(maze);
+            MazeSolver rightHandExplorationSolver = new RightHandExploration(maze);
             
             if (!cmd.hasOption("p")){
                 // rightHandExplorationSolver.solveMaze();
-                breadthFirstSearchSolver.solveMaze();
+                rightHandExplorationSolver.solveMaze();
             }
             else{ // need to veirfy user pathhow 
                 String userPath = cmd.getOptionValue("p");

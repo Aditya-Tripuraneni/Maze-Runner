@@ -178,7 +178,7 @@ public class PathChecker {
 
     // Verifies if a player can follow a particular instruction such as (F, R, L)
     public boolean canFollowInstruction(Direction instruction, Player player){
-        if (instruction == FORWARD)
+        if (instruction == F)
         {
             if (canMoveForward(player)){
                 player.moveForward();
@@ -187,10 +187,10 @@ public class PathChecker {
                 return false; // being instructed to go into wall hence false
             }
         }
-        else if (instruction == RIGHT){
+        else if (instruction == R){
             player.turnRight();
         }
-        else if (instruction == LEFT){
+        else if (instruction == L){
             player.turnLeft();
         }
 

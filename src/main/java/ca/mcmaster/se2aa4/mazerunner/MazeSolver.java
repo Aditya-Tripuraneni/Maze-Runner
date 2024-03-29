@@ -2,6 +2,5 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 // interafce to implement different types of maze solving algorithms
 interface  MazeSolver{
-
-      String solveMaze();
+      Path solveMaze();
 }
