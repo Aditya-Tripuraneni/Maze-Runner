@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.Paths;
 
 public class Path {
     private StringBuilder path; // path to exit maze

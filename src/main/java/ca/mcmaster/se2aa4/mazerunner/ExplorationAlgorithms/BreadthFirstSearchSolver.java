@@ -1,7 +1,11 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms;
 
-import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
 
+import ca.mcmaster.se2aa4.mazerunner.Entity.Node;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
+import ca.mcmaster.se2aa4.mazerunner.Utils.Compass;
+import ca.mcmaster.se2aa4.mazerunner.Utils.Direction;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -10,6 +14,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+
+
+import static ca.mcmaster.se2aa4.mazerunner.Utils.Direction.*;
+
+
 
 public class BreadthFirstSearchSolver implements MazeSolver{
 

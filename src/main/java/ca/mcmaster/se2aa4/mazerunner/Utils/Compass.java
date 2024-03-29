@@ -1,6 +1,6 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.Utils;
 
-import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
+import static ca.mcmaster.se2aa4.mazerunner.Utils.Direction.*;
 
 
 public class Compass {
