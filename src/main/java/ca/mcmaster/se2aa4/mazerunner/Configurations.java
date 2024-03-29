@@ -2,6 +2,14 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 
 import org.apache.commons.cli.Options;
+
+import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.BreadthFirstSearchSolver;
+import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.MazeSolver;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Verifiers.MazeInputReader;
+import ca.mcmaster.se2aa4.mazerunner.Verifiers.InputVerifier;
+
+
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -29,15 +37,17 @@ public class Configurations {
             String filepath = cmd.getOptionValue("i");
     
             Maze maze = new Maze(filepath);
+            MazeSolver breadthFirstSearchSolver = new BreadthFirstSearchSolver(maze);
+            // MazeSolver rightHandExplorationSolver = new RightHandExploration(maze);
             
             if (!cmd.hasOption("p")){
-                // maze.rightHandExplore();
-                maze.BFSExplore();
+                // rightHandExplorationSolver.solveMaze();
+                breadthFirstSearchSolver.solveMaze();
             }
             else{ // need to veirfy user pathhow 
                 String userPath = cmd.getOptionValue("p");
-                maze.setUserDefinedPath(userPath);
-                maze.verifyPath();
+                InputVerifier mazeInputVerifier = new MazeInputReader(maze, userPath);
+                mazeInputVerifier.verifyPath();
             }
 
     }

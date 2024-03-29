@@ -1,10 +1,13 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms;
 
-import static ca.mcmaster.se2aa4.mazerunner.Direction.*;
 
+import ca.mcmaster.se2aa4.mazerunner.Entity.Node;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
+import ca.mcmaster.se2aa4.mazerunner.Utils.Compass;
+import ca.mcmaster.se2aa4.mazerunner.Utils.Direction;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -12,31 +15,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+
+import static ca.mcmaster.se2aa4.mazerunner.Utils.Direction.*;
+
+
+
 public class BreadthFirstSearchSolver implements MazeSolver{
 
     private Maze maze; 
-    private AlgorithmInstructions instructorCreator;
+    private AlgorithmInstructions instructionCreator;
 
     private Queue<Node> queue = new LinkedList<>(); 
     private List<Integer> rowCoordinates; 
-    private Map<Node, Integer> distanceMapping;
-    private Map<Node, Node> parentMapping;
+    private Map<Node, Integer> distanceMapping = new HashMap<>();
+    private Map<Node, Node> parentMapping = new HashMap<>();
     
-
 
     public BreadthFirstSearchSolver(Maze maze){
         this.maze = maze; 
         this.rowCoordinates = maze.getRowCoordinates();
-        this.distanceMapping = this.createDistanceMapping();
-        this.parentMapping = this.createParentMapping();
-        this.instructorCreator = new AlgorithmInstructions(maze.getPath());
+        this.createMappings();
+        this.instructionCreator = new AlgorithmInstructions(new Path()); 
     }
 
 
-    private void BFS(){
-        Tile[][] mazeMatrix = maze.getMaze(); 
-
-
+    private void BFS(){        
         // Entrance Coordinate
         int startRow = this.rowCoordinates.get(0); // Entrance coordinate 
         int startCol = 0;  // Starting on west side means col = 0
@@ -62,36 +65,22 @@ public class BreadthFirstSearchSolver implements MazeSolver{
                 return; 
             }
 
-            // check if can add South tile
-            if (currentNode.getX() + 1 < mazeMatrix.length){
-                boolean isValidSouthTile = mazeMatrix[currentNode.getX() + 1][currentNode.getY()] != Tile.WALL;                
-                if (isValidSouthTile){
-                    this.addNeighbour(currentNode, new Node(currentNode.getX() + 1, currentNode.getY()));
-                }
+            Map<Direction, Boolean> neighbours = maze.getNeighbouringTiles(currentNode.getX(), currentNode.getY());
+
+            if (neighbours.get(SOUTH)){
+                this.addNeighbour(currentNode, new Node(currentNode.getX() + 1, currentNode.getY()));
             }
 
-            // check if can add North tile
-            if (currentNode.getX() - 1 >= 0){
-                boolean isValidNorthTile = mazeMatrix[currentNode.getX() - 1][currentNode.getY()] != Tile.WALL;
-                if (isValidNorthTile){
-                    this.addNeighbour(currentNode,  new Node(currentNode.getX() -1, currentNode.getY()));
-                }
+            if (neighbours.get(NORTH)){
+                this.addNeighbour(currentNode,  new Node(currentNode.getX() -1, currentNode.getY()));
             }
 
-            // check if can add East tile
-            if (currentNode.getY() + 1 < mazeMatrix[0].length){
-                boolean isValidEastTile = mazeMatrix[currentNode.getX()][currentNode.getY() + 1] != Tile.WALL;
-                if (isValidEastTile){
-                    this.addNeighbour(currentNode, new Node(currentNode.getX(), currentNode.getY() + 1));
-                }
+            if (neighbours.get(EAST)){
+                this.addNeighbour(currentNode, new Node(currentNode.getX(), currentNode.getY() + 1));
             }
 
-            // check if can add West tile
-            if (currentNode.getY() - 1 >= 0){
-                boolean isValidWestTile = mazeMatrix[currentNode.getX()][currentNode.getY() -1] != Tile.WALL;
-                if (isValidWestTile){
-                    this.addNeighbour(currentNode, new Node(currentNode.getX(), currentNode.getY() -1));
-                }
+            if (neighbours.get(WEST)){
+                this.addNeighbour(currentNode, new Node(currentNode.getX(), currentNode.getY() -1));
             }
         }
     }
@@ -108,36 +97,15 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     }
 
 
-    private Map<Node, Integer> createDistanceMapping(){
-        Tile[][] mazeMatrix = this.maze.getMaze();
-        Map<Node, Integer> mapping = new HashMap<>(); 
-        // for (Tile[] row: mazeMatrix){
-        //     System.out.println(Arrays.toString(row));
-        // }
-        
-
-        for(int row = 0; row < mazeMatrix.length; row ++){
-            for (int col = 0; col < mazeMatrix[row].length; col ++){
+    private void createMappings(){        
+        for(int row = 0; row < this.maze.getMazeHeight(); row ++){
+            for (int col = 0; col < this.maze.getMazeWidth(); col ++){
                 Node node = new Node(row, col); 
-                mapping.put(node, Integer.MAX_VALUE);
+                this.distanceMapping.put(node, Integer.MAX_VALUE);
+                this.parentMapping.put(node, node);
             }
         }
 
-        return mapping; 
-    }
-
-
-    private Map<Node, Node> createParentMapping(){
-        Tile[][] mazeMatrix = this.maze.getMaze();
-        Map<Node, Node> mapping = new HashMap<>(); 
-
-        for(int row = 0; row < mazeMatrix.length; row ++){
-            for (int col =0; col < mazeMatrix[row].length; col ++){
-                Node node = new Node(row, col); 
-                mapping.put(node, node);
-            }
-        }
-        return mapping; 
     }
 
 
@@ -172,9 +140,9 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         List<Node> pathSequence = this.backTrackPath();
 
         Node prevNode = pathSequence.get(0);
-        instructorCreator.instructForward();
+        instructionCreator.instructForward();
         Compass compass = new Compass();
-        System.out.println("Pre path before doing jack shit: " + maze.getPath());
+        // System.out.println("Pre path before doing jack shit: " + maze.getPath());
 
         for (int i = 1; i < pathSequence.size(); i ++)
         {
@@ -209,10 +177,10 @@ public class BreadthFirstSearchSolver implements MazeSolver{
 
 
 
-            System.out.println("Old Node: " + prevNode.toString());
-            System.out.println("New Node: " + currentNode.toString());
-            System.out.println("Result of dx, dy: " + dx + ", " + dy);
-            System.out.println("Orientation: " + oldOrientation);
+            // System.out.println("Old Node: " + prevNode.toString());
+            // System.out.println("New Node: " + currentNode.toString());
+            // System.out.println("Result of dx, dy: " + dx + ", " + dy);
+            // System.out.println("Orientation: " + oldOrientation);
             
             prevNode = currentNode; 
         }
@@ -220,30 +188,33 @@ public class BreadthFirstSearchSolver implements MazeSolver{
 
 
     private void handleInstruction(Direction relativeDirection){
-        if (relativeDirection == LEFT){
-            System.out.println("Instruct Left");
-            instructorCreator.instructLeft();
-            instructorCreator.instructForward();
+        if (relativeDirection == L){
+            // System.out.println("Instruct Left");
+            instructionCreator.instructLeft();
+            instructionCreator.instructForward();
         }
-        else if (relativeDirection == RIGHT){
-            System.out.println("Instruct Right");
-            instructorCreator.instructRight();
-            instructorCreator.instructForward();
+        else if (relativeDirection == R){
+            // System.out.println("Instruct Right");
+            instructionCreator.instructRight();
+            instructionCreator.instructForward();
 
         }
-        else if (relativeDirection == FORWARD){
-            System.out.println("I moved forward!");
-            instructorCreator.instructForward();
+        else if (relativeDirection == F){
+            // System.out.println("I moved forward!");
+            instructionCreator.instructForward();
         }
     }
 
 
     @Override
-    public String solveMaze(){
+    public Path solveMaze(){
         this.BFS();
         this.constructPath();
-        StringBuilder path = maze.getPath();
-        return instructorCreator.factoredExpressionPath(path.toString()); 
+        // StringBuilder path = maze.getPath();
+        String factoredPath = instructionCreator.factorizeInstructions(); 
+
+        System.out.println(factoredPath);
+        return new Path(factoredPath); 
     }
     
 }

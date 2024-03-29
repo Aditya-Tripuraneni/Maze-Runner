@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.Entity;
 
 public class Node {
     private final int X; 
@@ -31,11 +31,11 @@ public class Node {
 
     @Override
     public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + X;
-    result = prime * result + Y;
-    return result;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + X;
+        result = prime * result + Y;
+        return result;
     }
 
 
