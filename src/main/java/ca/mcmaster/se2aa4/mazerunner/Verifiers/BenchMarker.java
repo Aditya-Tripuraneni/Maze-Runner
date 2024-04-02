@@ -47,7 +47,7 @@ public class BenchMarker {
         
         //format to 2 decimal places
         String formattedDurationTwo = String.format("%.2f", durationTwo / 1e6); 
-        System.out.println(formattedDurationTwo + " ms spent exploring the maze using the provided method: " + userEnteredMethod);
+        System.out.println(formattedDurationTwo + " ms spent exploring the maze using the provided baseline method: " + userEnteredMethod);
 
         int methodInstructions = this.getInstructionCount(pathTwo);
 
