@@ -132,25 +132,29 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
 
 
     @Override
-    public void verifyPath()
+    public String verifyPath()
     {
         if (this.isCannonical())
         {
             // verify west to east path and east to west path
             if (this.verifyCannonical(true) || this.verifyCannonical(false)){
                 System.out.println("correct path");
+                return "correct path";
             }
             else{
                 System.out.println("incorrect path");
+                return "incorrect path";
             }
         }
         else{
             // verify west to east path and east to west path
             if (this.verifyFactorized( true) || this.verifyFactorized(false)){
                 System.out.println("correct path");
+                return "correct path";
             }
             else{
                 System.out.println("incorrect path");
+                return "incorrect path";
             }
         }
     }
