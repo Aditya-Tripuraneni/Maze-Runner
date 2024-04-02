@@ -3,9 +3,10 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import org.apache.commons.cli.Options;
 
-import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.BreadthFirstSearchSolver;
 import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.MazeSolver;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeSolverFactory;
+
 import ca.mcmaster.se2aa4.mazerunner.Verifiers.MazeInputReader;
 import ca.mcmaster.se2aa4.mazerunner.Verifiers.InputVerifier;
 
@@ -30,6 +31,8 @@ public class Configurations {
             Options options = new Options(); 
             options.addOption("i", true, "File name for -i"); 
             options.addOption("p", true, "Used to verify the path sequence"); 
+            options.addOption("m", "method", true, "The algorithm used to explore the maze");
+            options.addOption("b", "baseline", true, "Benchmarking baseline for comparassion");
     
             CommandLineParser parser = new DefaultParser();
             CommandLine cmd = parser.parse(options, this.args);
@@ -37,19 +40,25 @@ public class Configurations {
             String filepath = cmd.getOptionValue("i");
     
             Maze maze = new Maze(filepath);
-            MazeSolver breadthFirstSearchSolver = new BreadthFirstSearchSolver(maze);
-            // MazeSolver rightHandExplorationSolver = new RightHandExploration(maze);
-            
-            if (!cmd.hasOption("p")){
-                // rightHandExplorationSolver.solveMaze();
-                breadthFirstSearchSolver.solveMaze();
+            MazeSolver solver;
+
+            if (cmd.hasOption("m"))
+            {
+                String algorithm = cmd.getOptionValue("m");
+                MazeSolverFactory factory = new MazeSolverFactory(); 
+                solver = factory.createSolver(algorithm, maze);
+                solver.solveMaze();
             }
-            else{ // need to veirfy user pathhow 
+            
+
+            if (cmd.hasOption("p")){ // need to veirfy user pathhow 
                 String userPath = cmd.getOptionValue("p");
                 InputVerifier mazeInputVerifier = new MazeInputReader(maze, userPath);
                 mazeInputVerifier.verifyPath();
             }
 
     }
+
+    
 
 }
