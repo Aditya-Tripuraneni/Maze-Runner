@@ -13,10 +13,6 @@ import ca.mcmaster.se2aa4.mazerunner.Verifiers.InputVerifier;
 
 import org.apache.commons.cli.DefaultParser;
 
-import static ca.mcmaster.se2aa4.mazerunner.Utils.Direction.SOUTH;
-
-import java.beans.beancontext.BeanContextChild;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 
@@ -43,27 +39,29 @@ public class Configurations {
             CommandLine cmd = parser.parse(options, this.args);
     
             String filepath = cmd.getOptionValue("i");
-    
+            long startTime = System.nanoTime();
             Maze maze = new Maze(filepath);
-            MazeSolver solver;
+            long endTime = System.nanoTime(); 
 
-        
-            
 
             if (cmd.hasOption("b") && cmd.hasOption("m")){
                 String baseline = cmd.getOptionValue("b");
                 String method = cmd.getOptionValue("m");
+                long duration = endTime - startTime; 
+                String formattedDuration = String.format("%.2f", duration / 1e6); 
+                System.out.println("Time spent loading maze file: " + formattedDuration);
+
+
                 System.out.println("X time spent exploring the maze using the provided method: " + method);
                 System.out.println("Y time spent exploring the maze using the provided method:" + baseline);
                 System.out.println("Speed up: Y/X" );
-
             }
 
             else if (cmd.hasOption("m"))
             {
                 String algorithm = cmd.getOptionValue("m");
                 MazeSolverFactory factory = new MazeSolverFactory(); 
-                solver = factory.createSolver(algorithm, maze);
+                MazeSolver solver = factory.createSolver(algorithm, maze);
                 solver.solveMaze();
             }
             else if (cmd.hasOption("p")){ // need to veirfy user pathhow 
