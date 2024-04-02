@@ -8,6 +8,7 @@ import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeSolverFactory;
 
 import ca.mcmaster.se2aa4.mazerunner.Verifiers.MazeInputReader;
+import ca.mcmaster.se2aa4.mazerunner.Verifiers.BenchMarker;
 import ca.mcmaster.se2aa4.mazerunner.Verifiers.InputVerifier;
 
 
@@ -44,17 +45,15 @@ public class Configurations {
             long endTime = System.nanoTime(); 
 
 
-            if (cmd.hasOption("b") && cmd.hasOption("m")){
+            if (cmd.hasOption("b") && cmd.hasOption("m"))
+            {
                 String baseline = cmd.getOptionValue("b");
                 String method = cmd.getOptionValue("m");
                 long duration = endTime - startTime; 
                 String formattedDuration = String.format("%.2f", duration / 1e6); 
-                System.out.println("Time spent loading maze file: " + formattedDuration);
-
-
-                System.out.println("X time spent exploring the maze using the provided method: " + method);
-                System.out.println("Y time spent exploring the maze using the provided method:" + baseline);
-                System.out.println("Speed up: Y/X" );
+                System.out.println("Time spent loading " + filepath + " : " + formattedDuration + " ms");
+                BenchMarker benchMarker = new BenchMarker(maze);
+                benchMarker.benchMark(baseline, method);
             }
 
             else if (cmd.hasOption("m"))
@@ -71,7 +70,4 @@ public class Configurations {
             }
 
     }
-
-    
-
 }

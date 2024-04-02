@@ -213,7 +213,6 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         // StringBuilder path = maze.getPath();
         String factoredPath = instructionCreator.factorizeInstructions(); 
 
-        System.out.println(factoredPath);
         return new Path(factoredPath); 
     }
     

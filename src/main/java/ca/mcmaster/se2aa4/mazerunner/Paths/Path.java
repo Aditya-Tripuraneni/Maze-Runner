@@ -4,19 +4,24 @@ public class Path {
     private StringBuilder path; // path to exit maze
 
     public Path(){
-        path = new StringBuilder();
+        this.path = new StringBuilder();
     }
 
+    
+    public Path(String path){
+        this.path = new StringBuilder(path);
+    }
+    
 
     public char[] toCharArray(){
         String p = path.toString();
         return p.toCharArray(); 
 
     }
-    
 
-    public Path(String path){
-        this.path = new StringBuilder(path);
+
+    public StringBuilder getPath(){
+        return new StringBuilder(this.path);
     }
 
 
