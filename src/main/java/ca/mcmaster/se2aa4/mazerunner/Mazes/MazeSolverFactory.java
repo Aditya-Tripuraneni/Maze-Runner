@@ -34,5 +34,3 @@ public class MazeSolverFactory {
     }
 }
 
-// ahsan algoritthm implement maze solver
-

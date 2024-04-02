@@ -1,11 +1,11 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
@@ -14,66 +14,50 @@ import ca.mcmaster.se2aa4.mazerunner.Verifiers.InputVerifier;
 import ca.mcmaster.se2aa4.mazerunner.Verifiers.MazeInputReader;
 
 public class InputVerifierTest {
+    private Path path;
+    private Maze maze; 
+
+
+    @BeforeEach
+    public void setupVerifier() throws FileNotFoundException, IOException{
+        this.path = new Path("./examples/straight.maz.txt");
+        this.maze = new Maze(path);
+    }
 
 
 
     @Test
-    public void testStraightPathFactored() throws FileNotFoundException{
+    public void testStraightPathFactored() throws FileNotFoundException, IOException{
         String trueResult = "correct path";
-        Path path = new Path("./examples/straight.maz.txt");
+        String userPath = "4F";
 
-        try {
-            Maze maze = new Maze(path);
-            String userPath = "4F";
-            InputVerifier mazeInputVerifier = new MazeInputReader(maze, userPath);
-            String result = mazeInputVerifier.verifyPath();
-            assertEquals(trueResult, result);
-        } 
-        catch (IOException e) {
-            // If an exception is caught it means maze could not be loaded so fail the test
-            fail("Exception thrown: " + e.getMessage());
-        }
+        InputVerifier mazeInputVerifier = new MazeInputReader(this.maze, userPath);
+        String result = mazeInputVerifier.verifyPath();
+
+        assertEquals(trueResult, result);
     }
 
 
     @Test
-    public void testStraightPathNonFactored() throws FileNotFoundException{
+    public void testStraightPathNonFactored() throws FileNotFoundException, IOException{
         String trueResult = "correct path";
-        Path path = new Path("./examples/straight.maz.txt");
+        String userPath = "F F F F";
 
-        try {
-            Maze maze = new Maze(path);
-            String userPath = "F F F F";
-            InputVerifier mazeInputVerifier = new MazeInputReader(maze, userPath);
-            String result = mazeInputVerifier.verifyPath();
-            assertEquals(trueResult, result);
-        } 
-        catch (IOException e) {
-            // If an exception is caught it means maze could not be loaded so fail the test
-            fail("Exception thrown: " + e.getMessage());
-        }
+        InputVerifier mazeInputVerifier = new MazeInputReader(this.maze, userPath);
+        String result = mazeInputVerifier.verifyPath();
+
+        assertEquals(trueResult, result);
     }
 
 
     @Test
-    public void testStraightPathMixFactored() throws FileNotFoundException{
+    public void testStraightPathMixFactored() throws FileNotFoundException, IOException{
         String trueResult = "correct path";
-        Path path = new Path("./examples/straight.maz.txt");
+        String userPath = "2 F F F";
 
-        try {
-            Maze maze = new Maze(path);
-            String userPath = "2 F F F";
-            InputVerifier mazeInputVerifier = new MazeInputReader(maze, userPath);
-            String result = mazeInputVerifier.verifyPath();
-            assertEquals(trueResult, result);
-        } 
-        catch (IOException e) {
-            // If an exception is caught it means maze could not be loaded so fail the test
-            fail("Exception thrown: " + e.getMessage());
-        }
+        InputVerifier mazeInputVerifier = new MazeInputReader(this.maze, userPath);
+        String result = mazeInputVerifier.verifyPath();
+
+        assertEquals(trueResult, result);
     }
-
-
-   
-    
 }
