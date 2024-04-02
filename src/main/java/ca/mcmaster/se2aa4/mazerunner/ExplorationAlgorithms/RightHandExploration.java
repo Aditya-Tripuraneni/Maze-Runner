@@ -85,7 +85,6 @@ public class RightHandExploration implements MazeSolver{
         this.rightHandExplore(player); // Solve maze using rightHandExplore algorithm
 
         String factoredPath = instructionCreator.factorizeInstructions();
-        System.out.println(factoredPath);
 
         // Factored instructions to exit maze
         return new Path(factoredPath); 
