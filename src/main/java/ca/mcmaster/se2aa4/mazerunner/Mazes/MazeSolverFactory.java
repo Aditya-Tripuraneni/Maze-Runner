@@ -16,19 +16,20 @@ public class MazeSolverFactory {
                 return new BreadthFirstSearchSolver(maze);
             case RIGHTHAND:
                 return new RightHandExploration(maze);
-            default:
+            default: // this case is for BAD_ALGORITHM (unknown or algorithm does not exist)
                 throw new IllegalArgumentException("Unknown algorithm: " + algorithm);
         }
     }
 
-    private Algorithms getMazeAlgorithm(String algorithm){
-        if ("righthand".equals(algorithm)){
+    private Algorithms getMazeAlgorithm(String userEnteredAlgorithm){
+        String algorithm = userEnteredAlgorithm.toUpperCase();
+        if ("RIGHTHAND".equals(algorithm)){
             return RIGHTHAND;
         }
         else if ("BFS".equals(algorithm)){
             return BFS; 
         }
-        return BAD_ALGORITHM; // Or throw an exception for unknown algorithms
+        return BAD_ALGORITHM; // Exception for unknown algorithms
     }
 }
 

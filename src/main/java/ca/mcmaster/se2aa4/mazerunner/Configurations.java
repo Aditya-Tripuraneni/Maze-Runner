@@ -12,6 +12,11 @@ import ca.mcmaster.se2aa4.mazerunner.Verifiers.InputVerifier;
 
 
 import org.apache.commons.cli.DefaultParser;
+
+import static ca.mcmaster.se2aa4.mazerunner.Utils.Direction.SOUTH;
+
+import java.beans.beancontext.BeanContextChild;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 
@@ -42,16 +47,26 @@ public class Configurations {
             Maze maze = new Maze(filepath);
             MazeSolver solver;
 
-            if (cmd.hasOption("m"))
+        
+            
+
+            if (cmd.hasOption("b") && cmd.hasOption("m")){
+                String baseline = cmd.getOptionValue("b");
+                String method = cmd.getOptionValue("m");
+                System.out.println("X time spent exploring the maze using the provided method: " + method);
+                System.out.println("Y time spent exploring the maze using the provided method:" + baseline);
+                System.out.println("Speed up: Y/X" );
+
+            }
+
+            else if (cmd.hasOption("m"))
             {
                 String algorithm = cmd.getOptionValue("m");
                 MazeSolverFactory factory = new MazeSolverFactory(); 
                 solver = factory.createSolver(algorithm, maze);
                 solver.solveMaze();
             }
-            
-
-            if (cmd.hasOption("p")){ // need to veirfy user pathhow 
+            else if (cmd.hasOption("p")){ // need to veirfy user pathhow 
                 String userPath = cmd.getOptionValue("p");
                 InputVerifier mazeInputVerifier = new MazeInputReader(maze, userPath);
                 mazeInputVerifier.verifyPath();
