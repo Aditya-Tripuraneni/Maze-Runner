@@ -17,7 +17,7 @@ public class MazeSolverFactory {
             case RIGHTHAND:
                 return new RightHandExploration(maze);
             default: // this case is for BAD_ALGORITHM (unknown or algorithm does not exist)
-                throw new IllegalArgumentException(BAD_ALGORITHM + "request, Unknown algorithm: " + algorithm);
+                throw new IllegalArgumentException(BAD_ALGORITHM + " request, Unknown algorithm: " + userEnteredAlgorithm);
         }
     }
 
