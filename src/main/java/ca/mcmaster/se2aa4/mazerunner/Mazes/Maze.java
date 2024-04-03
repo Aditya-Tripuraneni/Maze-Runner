@@ -1,5 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner.Mazes;
 
+import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
 import ca.mcmaster.se2aa4.mazerunner.Paths.PathChecker;
 import ca.mcmaster.se2aa4.mazerunner.Utils.Direction;
 
@@ -19,7 +20,7 @@ public class Maze {
     private List<Integer> rowCoordinates;
 
     
-    public Maze(String filepath) throws FileNotFoundException, IOException
+    public Maze(Path filepath) throws FileNotFoundException, IOException
     {
         MazeExporter mazeExporter = new MazeExporter(filepath); 
         this.maze = mazeExporter.constructMaze();
