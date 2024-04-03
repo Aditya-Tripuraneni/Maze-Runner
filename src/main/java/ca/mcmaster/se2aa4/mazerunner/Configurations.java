@@ -51,7 +51,7 @@ public class Configurations {
                 String method = cmd.getOptionValue("m");
                 long duration = endTime - startTime; 
                 String formattedDuration = String.format("%.2f", duration / 1e6); 
-                System.out.println("Time spent loading " + filepath + " : " + formattedDuration + " ms");
+                System.out.println("Time spent loading " + filepath.getPath() + " : " + formattedDuration + " ms");
                 BenchMarker benchMarker = new BenchMarker(maze);
                 benchMarker.benchMark(baseline, method);
             }
