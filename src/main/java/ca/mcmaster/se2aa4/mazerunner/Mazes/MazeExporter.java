@@ -11,7 +11,6 @@ public class MazeExporter{
     private StringBuilder filePath; 
 
     public MazeExporter(Path fp){
-        System.out.println(fp.getPath());
         this.filePath = fp.getPath(); 
     }
 

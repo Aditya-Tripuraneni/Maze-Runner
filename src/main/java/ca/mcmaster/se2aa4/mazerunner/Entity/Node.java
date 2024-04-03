@@ -16,6 +16,10 @@ public class Node {
     public int getY(){return this.Y;}
 
 
+     /*
+     * Source: https://www.javacodegeeks.com/2019/05/java-equals-hashcode.html
+     * Inspiration from javacodegeeks. 
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -29,6 +33,10 @@ public class Node {
     }
 
 
+    /*
+     * Source: https://www.javacodegeeks.com/2019/05/java-equals-hashcode.html
+     * Inspiration from javacodegeeks. 
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -45,7 +53,4 @@ public class Node {
     return "(" + this.X + ", " + this.Y + ")";
     }
 
-
-
-    
 }

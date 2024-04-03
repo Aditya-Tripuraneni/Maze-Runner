@@ -37,8 +37,12 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         this.createMappings();
         this.instructionCreator = new AlgorithmInstructions(new Path()); 
     }
+    
 
-
+    /*
+     * This algorithm was learned from: 2C03 - Algorithms by Sedgewick Robert, 4th edition
+     * Credit also given to the 2C03 course from McMaster University Winter 2024 term. 
+     */
     private void BFS(){        
         // Entrance Coordinate
         int startRow = this.rowCoordinates.get(0); // Entrance coordinate 
