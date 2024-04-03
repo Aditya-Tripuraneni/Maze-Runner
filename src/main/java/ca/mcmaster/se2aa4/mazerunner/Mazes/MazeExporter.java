@@ -67,7 +67,7 @@ public class MazeExporter{
     private int getHeight() throws FileNotFoundException, IOException{
         int count = 0; 
         BufferedReader reader = new BufferedReader(new FileReader(this.filePath.toString()));
-        while ((reader.readLine()) != null) 
+        while (reader.readLine() != null) 
         {
             count++;
         }

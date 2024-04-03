@@ -132,9 +132,7 @@ public class BreadthFirstSearchSolver implements MazeSolver{
             deque.addFirst(accessor);
         }
 
-        List<Node> pathSequence = new ArrayList<>(deque);
-
-        return pathSequence; 
+        return (List<Node>) new ArrayList<>(deque);
     }
 
 

@@ -103,7 +103,7 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
         }
 
         // Verify if current coordinates match exit coordinates
-        return  ((player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()));
+        return  player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol();
     }
 
 
@@ -127,7 +127,7 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
         }
             
         // Verify if current coordinates match exit coordinates
-        return ( (player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()) );
+        return player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol();
     }
 
 
