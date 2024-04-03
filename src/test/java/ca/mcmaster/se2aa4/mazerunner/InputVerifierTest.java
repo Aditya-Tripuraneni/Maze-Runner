@@ -27,7 +27,7 @@ public class InputVerifierTest {
 
 
     @Test
-    public void testStraightPathFactored() throws FileNotFoundException, IOException{
+    public void testStraightPathFactored() {
         String trueResult = "correct path";
         String userPath = "4F";
 
@@ -39,7 +39,7 @@ public class InputVerifierTest {
 
 
     @Test
-    public void testStraightPathNonFactored() throws FileNotFoundException, IOException{
+    public void testStraightPathNonFactored() {
         String trueResult = "correct path";
         String userPath = "F F F F";
 
@@ -51,7 +51,7 @@ public class InputVerifierTest {
 
 
     @Test
-    public void testStraightPathMixFactored() throws FileNotFoundException, IOException{
+    public void testStraightPathMixFactored() {
         String trueResult = "correct path";
         String userPath = "2 F F F";
 
