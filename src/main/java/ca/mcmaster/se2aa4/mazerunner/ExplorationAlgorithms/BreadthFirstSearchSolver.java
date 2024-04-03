@@ -43,7 +43,7 @@ public class BreadthFirstSearchSolver implements MazeSolver{
      * This algorithm was learned from: 2C03 - Algorithms by Sedgewick Robert, 4th edition
      * Credit also given to the 2C03 course from McMaster University Winter 2024 term. 
      */
-    private void BFS(){        
+    private void breathFirstSearch(){        
         // Entrance Coordinate
         int startRow = this.rowCoordinates.get(0); // Entrance coordinate 
         int startCol = 0;  // Starting on west side means col = 0
@@ -212,7 +212,7 @@ public class BreadthFirstSearchSolver implements MazeSolver{
 
     @Override
     public Path solveMaze(){
-        this.BFS();
+        this.breathFirstSearch();
         this.constructPath();
         // StringBuilder path = maze.getPath();
         String factoredPath = instructionCreator.factorizeInstructions(); 
