@@ -30,7 +30,7 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
     @Override
     public boolean isCannonical(){
         for (char c: userInput.toCharArray()){
-            if (Character.isDigit(c)) return false; // If digit then its factorized
+            if (Character.isDigit(c)) {return false;} // If digit then its factorized
         }
         
         return true; // No digit found so cannonical
@@ -91,19 +91,19 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
                 {
                     // Hit wall so invalid path
                     Direction playerInstruction = this.convertDirection(instruction);
-                    if (!pathChecker.canFollowInstruction(playerInstruction, player)) return false; 
+                    if (!pathChecker.canFollowInstruction(playerInstruction, player)) {return false;}
                 }
             }
             else{ 
                 // Hit a wall so path invalid 
                 Direction playerInstruction = this.convertDirection(instruction);
-                if (!pathChecker.canFollowInstruction(playerInstruction, player)) return false; 
+                if (!pathChecker.canFollowInstruction(playerInstruction, player)) {return false;}
             }
             i++;
         }
 
         // Verify if current coordinates match exit coordinates
-        return  ((player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()));
+        return  player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol();
     }
 
 
@@ -123,11 +123,11 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
         for (char c: userInput.toCharArray()){
             // Player cannot make a valid move then the path is not valid so return false
             Direction instructionDirection = this.convertDirection(c);
-            if (!pathChecker.canFollowInstruction(instructionDirection, player)) return false; 
+            if (!pathChecker.canFollowInstruction(instructionDirection, player)) {return false;}
         }
             
         // Verify if current coordinates match exit coordinates
-        return ( (player.getRow() == player.getExitRow()) && (player.getCol() == player.getExitCol()) );
+        return player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol();
     }
 
 
