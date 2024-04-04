@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Test;
 import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.BreadthFirstSearchSolver;
 import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.MazeSolver;
 import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.RightHandExploration;
-import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeMatrix;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeSolverFactory;
 import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
 
 
 public class MazeSolverFactoryTest {
     private Path path; 
-    private Maze maze; 
+    private MazeMatrix maze; 
     
 
     /**
@@ -31,7 +31,7 @@ public class MazeSolverFactoryTest {
     @BeforeEach
     public void setUpMaze() throws FileNotFoundException, IOException{
         this.path = new Path("./examples/straight.maz.txt");
-        this.maze = new Maze(path);
+        this.maze = new MazeMatrix(path);
     }
 
 

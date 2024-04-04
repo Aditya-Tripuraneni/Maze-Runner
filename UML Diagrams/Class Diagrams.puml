@@ -1,0 +1,173 @@
+
+package ExplorationAlgorithms{
+interface MazeSolver {
+    + solveMaze()
+}
+
+
+class BreadthFirstSearchSolver {
+    + solveMaze()
+}
+
+class RightHandExploration {
+    + solveMaze()
+}
+
+MazeSolver <|.. BreadthFirstSearchSolver
+MazeSolver <|.. RightHandExploration
+
+ class AlgorithmInstructions {
+        - path: Path
+
+        + AlgorithmInstructions(path: Path)
+        + instructForward()
+        + instructRight()
+        + instructLeft()
+        + instructBackwards()
+        + factorizeInstructions(): String
+    }
+}
+
+package Entity{
+
+class Node {
+    + Node(x: int, y: int)
+    + getX(): int
+    + getY(): int
+}
+
+interface PlayerExplorer {
+        + turnRight()
+        + turnLeft()
+        + turnBackwards()
+        + moveForward()
+    }
+
+class Player {
+        
+        + Player(row: int, col: int, exitRow: int, exitCol: int, orientation: Direction)
+        + turnRight()
+        + turnLeft()
+        + turnBackwards()
+        + moveForward()
+    }
+
+PlayerExplorer <|.. Player
+}
+
+
+package Mazes{
+
+enum Tile{
+    WALL,
+    PASS
+}
+
+class Maze {
+        + Maze(filepath: Path)
+        + getMazeWidth(): int
+        + getMazeHeight(): int
+        + getNeighbouringTiles(row: int, col: int): Map<Direction, Boolean>
+        + isPassTile(row: int, col: int): boolean
+        + getRowCoordinates(): List<Integer>
+    }
+
+
+class MazeExporter {
+        - filePath: StringBuilder
+        
+        + MazeExporter(fp: Path)
+        + constructMaze(): Tile[][]
+    }
+
+ class MazeSolverFactory {
+        + createSolver(userEnteredAlgorithm: String, maze: Maze): MazeSolver
+    }
+}
+
+package Paths{
+
+class Path {
+        - path: StringBuilder
+        
+        + Path()
+        + Path(path: String)
+        + getPath(): StringBuilder
+        + addInstruction(instruction: String): void
+        + getPathLength(): int
+        + getLastInstruction(): char
+    }
+
+class PathChecker {
+        - maze: Maze
+        
+        + PathChecker(maze: Maze)
+        + getEntranceAndExit(): List<Integer>
+        + canMoveLeft(player: Player): boolean
+        + canMoveRight(player: Player): boolean
+        + canMoveForward(player: Player): boolean
+        + canFollowInstruction(instruction: Direction, player: Player): boolean
+    }
+}
+
+package Utils{
+
+enum Direction {
+    NORTH
+    EAST
+    SOUTH
+    WEST
+    F
+    R
+    L
+}
+
+enum Algorithms {
+        RIGHTHAND
+        BFS
+        BAD_ALGORITHM
+    }
+
+class Compass {
+        + getRelativeDirection(currentOrientation: Direction, newOrientation: Direction): Direction
+    }
+}
+
+package Verifiers{
+
+interface InputVerifier {
+    + verifyPath(): String
+}
+
+interface FactorizedVerifier {
+    + verifyFactorized(startWest: boolean): boolean
+}
+
+interface CannonicalVerifier {
+    + isCannonical(): boolean
+    + verifyCannonical(startWest: boolean): boolean
+}
+
+class MazeInputReader {
+        + MazeInputReader(maze: Maze, userInput: String)
+        + isCannonical(): boolean
+        + verifyFactorized(startWest: boolean): boolean
+        + verifyCannonical(startWest: boolean): boolean
+        + verifyPath(): String
+    }
+
+
+MazeInputReader ..|> InputVerifier
+MazeInputReader ..|> FactorizedVerifier
+MazeInputReader ..|> CannonicalVerifier
+
+
+class BenchMarker {
+        - solver: MazeSolver
+        - factory: MazeSolverFactory
+        - maze: Maze
+        + BenchMarker(maze: Maze)
+        + benchMark(userEnteredBaseLine: String, userEnteredMethod: String): void
+    }
+
+}

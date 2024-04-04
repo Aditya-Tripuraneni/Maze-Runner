@@ -4,10 +4,12 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.commons.cli.Options;
 
 import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.MazeSolver;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeMatrix;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeSolverFactory;
 import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
 import ca.mcmaster.se2aa4.mazerunner.Verifiers.MazeInputReader;
+import ca.mcmaster.se2aa4.mazerunner.Verifiers.BenchMark;
 import ca.mcmaster.se2aa4.mazerunner.Verifiers.BenchMarker;
 import ca.mcmaster.se2aa4.mazerunner.Verifiers.InputVerifier;
 
@@ -41,7 +43,7 @@ public class Configurations {
     
             Path filepath = new Path(cmd.getOptionValue("i"));
             long startTime = System.nanoTime();
-            Maze maze = new Maze(filepath);
+            Maze maze = new MazeMatrix(filepath);
             long endTime = System.nanoTime(); 
 
 
@@ -52,7 +54,7 @@ public class Configurations {
                 long duration = endTime - startTime; 
                 String formattedDuration = String.format("%.2f", duration / 1e6); 
                 System.out.println("Time spent loading " + filepath.getPath() + " : " + formattedDuration + " ms");
-                BenchMarker benchMarker = new BenchMarker(maze);
+                BenchMark benchMarker = new BenchMarker(maze);
                 benchMarker.benchMark(baseline, method);
             }
 

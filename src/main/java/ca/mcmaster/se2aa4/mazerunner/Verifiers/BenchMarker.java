@@ -9,7 +9,7 @@ import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeSolverFactory;
 import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
 
-public class BenchMarker {
+public class BenchMarker implements BenchMark{
     private MazeSolver solver;
     private MazeSolverFactory factory = new MazeSolverFactory();
     private Maze maze;
@@ -19,7 +19,7 @@ public class BenchMarker {
 
     }
 
-
+    @Override
     public void benchMark(String userEnteredBaseLine, String userEnteredMethod){
         // run baseline
         this.solver = factory.createSolver(userEnteredBaseLine, this.maze);
@@ -57,6 +57,7 @@ public class BenchMarker {
        
         System.out.println("Speed up: " +  speedUp);
     }
+
 
 
     private int getInstructionCount(Path path){
