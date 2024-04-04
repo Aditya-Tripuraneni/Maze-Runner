@@ -8,20 +8,24 @@ import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeMatrix;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeExporter;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeMatrixExporter;
 import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
 import ca.mcmaster.se2aa4.mazerunner.Verifiers.InputVerifier;
 import ca.mcmaster.se2aa4.mazerunner.Verifiers.MazeInputReader;
 
 public class InputVerifierTest {
     private Path path;
-    private MazeMatrix maze; 
+    private MazeExporter mazeExporter; 
+    private Maze maze; 
 
 
     @BeforeEach
     public void setupVerifier() throws FileNotFoundException, IOException{
         this.path = new Path("./examples/straight.maz.txt");
-        this.maze = new MazeMatrix(path);
+        this.mazeExporter = new MazeMatrixExporter(path);
+        this.maze = this.mazeExporter.constructMaze();
     }
 
 

@@ -8,6 +8,7 @@ import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.MazeSolver;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeSolverFactory;
 import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
+import ca.mcmaster.se2aa4.mazerunner.Utils.Algorithms;
 
 public class BenchMarker implements BenchMark{
     private MazeSolver solver;
@@ -20,7 +21,7 @@ public class BenchMarker implements BenchMark{
     }
 
     @Override
-    public void benchMark(String userEnteredBaseLine, String userEnteredMethod){
+    public void benchMark(Algorithms userEnteredBaseLine, Algorithms userEnteredMethod){
         // run baseline
         this.solver = factory.createSolver(userEnteredBaseLine, this.maze);
         long startTimeOne = System.nanoTime(); 

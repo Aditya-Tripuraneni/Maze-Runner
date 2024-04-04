@@ -47,6 +47,7 @@ public class Player implements PlayerExplorer{
 
 
     // turns player right relative to cardinal direction
+    @Override
     public void turnRight()
     {
         switch (orientation)
@@ -70,6 +71,7 @@ public class Player implements PlayerExplorer{
 
 
     // turns left relative to cardinal direction
+    @Override
     public void turnLeft()
     {
         switch (orientation)
@@ -94,6 +96,7 @@ public class Player implements PlayerExplorer{
 
 
     // turns backwards relative to cardinal direction
+    @Override
     public void turnBackwards()
     {
         switch (orientation)
@@ -117,6 +120,7 @@ public class Player implements PlayerExplorer{
 
     
     // updates players coordinates after moving forward relative to cardinal direction
+    @Override
     public void moveForward(){
 
         switch (orientation)

@@ -1,4 +1,3 @@
-
 package ExplorationAlgorithms{
 interface MazeSolver {
     + solveMaze()
@@ -6,11 +5,9 @@ interface MazeSolver {
 
 
 class BreadthFirstSearchSolver {
-    + solveMaze()
 }
 
 class RightHandExploration {
-    + solveMaze()
 }
 
 MazeSolver <|.. BreadthFirstSearchSolver
@@ -45,11 +42,6 @@ interface PlayerExplorer {
 
 class Player {
         
-        + Player(row: int, col: int, exitRow: int, exitCol: int, orientation: Direction)
-        + turnRight()
-        + turnLeft()
-        + turnBackwards()
-        + moveForward()
     }
 
 PlayerExplorer <|.. Player
@@ -63,13 +55,18 @@ enum Tile{
     PASS
 }
 
-class Maze {
+
+interface Maze {
+    + getMazeWidth(): int
+    + getMazeHeight(): int
+    + getNeighbouringTiles(row: int, col: int): Map<Direction, Boolean>
+    + isPassTile(row: int, col: int): boolean
+    + getRowCoordinates(): List<Integer>
+}
+
+
+class MazeMatrix {
         + Maze(filepath: Path)
-        + getMazeWidth(): int
-        + getMazeHeight(): int
-        + getNeighbouringTiles(row: int, col: int): Map<Direction, Boolean>
-        + isPassTile(row: int, col: int): boolean
-        + getRowCoordinates(): List<Integer>
     }
 
 
@@ -83,7 +80,12 @@ class MazeExporter {
  class MazeSolverFactory {
         + createSolver(userEnteredAlgorithm: String, maze: Maze): MazeSolver
     }
+
+MazeMatrix..|> Maze
+
 }
+
+
 
 package Paths{
 
@@ -135,6 +137,10 @@ class Compass {
 
 package Verifiers{
 
+interface BenchMark {
+    + benchMark(userEnteredBaseLine: String, userEnteredMethod: String): void
+}
+
 interface InputVerifier {
     + verifyPath(): String
 }
@@ -149,11 +155,6 @@ interface CannonicalVerifier {
 }
 
 class MazeInputReader {
-        + MazeInputReader(maze: Maze, userInput: String)
-        + isCannonical(): boolean
-        + verifyFactorized(startWest: boolean): boolean
-        + verifyCannonical(startWest: boolean): boolean
-        + verifyPath(): String
     }
 
 
@@ -163,11 +164,39 @@ MazeInputReader ..|> CannonicalVerifier
 
 
 class BenchMarker {
-        - solver: MazeSolver
-        - factory: MazeSolverFactory
-        - maze: Maze
-        + BenchMarker(maze: Maze)
-        + benchMark(userEnteredBaseLine: String, userEnteredMethod: String): void
+     
     }
 
+BenchMarker ..|> BenchMark
+
 }
+
+
+
+
+Mazes -[hidden]> Utils
+Mazes -[hidden]> Entity 
+
+Mazes-[hidden]--------> ExplorationAlgorithms 
+Utils-[hidden]---> Verifiers
+Entity -[hidden]---> Paths
+
+
+ExplorationAlgorithms -[hidden]> Verifiers
+ExplorationAlgorithms -[hidden]> Paths
+
+BreadthFirstSearchSolver o-- MazeMatrix
+BreadthFirstSearchSolver o-- AlgorithmInstructions
+BreadthFirstSearchSolver o-- Node
+BreadthFirstSearchSolver o-- Compass
+
+
+BenchMarker o-- MazeSolver
+BenchMarker o-- MazeSolverFactory
+BenchMarker o-- Maze
+
+RightHandExploration o-- Maze
+
+RightHandExploration o-- AlgorithmInstructions
+RightHandExploration o-- Player
+

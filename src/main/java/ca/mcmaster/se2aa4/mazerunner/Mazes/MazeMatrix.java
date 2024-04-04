@@ -1,6 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner.Mazes;
 
-import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
 import ca.mcmaster.se2aa4.mazerunner.Paths.PathChecker;
 import ca.mcmaster.se2aa4.mazerunner.Utils.Direction;
 
@@ -19,11 +18,10 @@ public class MazeMatrix implements Maze{
     private PathChecker pathChecker;
     private List<Integer> rowCoordinates;
 
-    
-    public MazeMatrix(Path filepath) throws FileNotFoundException, IOException
+
+    public MazeMatrix(Tile[][] matrixRepresentation) throws FileNotFoundException, IOException
     {
-        MazeExporter mazeExporter = new MazeExporter(filepath); 
-        this.maze = mazeExporter.constructMaze();
+        this.maze = matrixRepresentation; 
         pathChecker = new PathChecker(this);
         rowCoordinates = pathChecker.getEntranceAndExit();
     }
