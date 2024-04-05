@@ -1,0 +1,48 @@
+@startuml
+
+participant Main 
+participant Configurations
+participant MazeExporter 
+participant MazeSolverFactory 
+participant Solver 
+participant BenchMarker
+participant MazeInputReader 
+
+
+activate Main 
+Main -> Configurations: configure()
+deactivate Main
+
+activate Configurations
+
+activate MazeExporter
+Configurations -> MazeExporter : constructMaze()
+MazeExporter --> Configurations : Maze
+
+deactivate MazeExporter
+
+group if 
+else cmd.hasOption("b")  && cmd.hasOption("m")
+activate BenchMarker 
+Configurations -> BenchMarker :benchMark(Algorithm baseLine, Algorithm method)
+deactivate BenchMarker
+else cmd.hasOption("m")
+activate MazeSolverFactory
+MazeSolverFactory -> Solver : createSolver(Algorithm method)
+deactivate MazeSolverFactory
+activate Solver
+Solver --> Solver : solveMaze()
+Solver --> Configurations: Path
+deactivate Solver
+else cmd.hasOption("p") 
+activate MazeInputReader
+Configurations -> MazeInputReader : verifyPath()
+MazeInputReader --> Configurations : verifyPath()
+
+deactivate MazeInputReader 
+deactivate Configurations
+
+end
+
+
+@enduml

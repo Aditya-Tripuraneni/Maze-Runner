@@ -82,6 +82,7 @@ public class Configurations {
                 InputVerifier mazeInputVerifier = new MazeInputReader(mazeMatrix, userPath);
                 mazeInputVerifier.verifyPath();
             }
+           
 
     }
 }

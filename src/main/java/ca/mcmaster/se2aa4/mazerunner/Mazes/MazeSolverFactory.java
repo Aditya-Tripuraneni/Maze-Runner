@@ -13,7 +13,7 @@ public class MazeSolverFactory {
                 return new BreadthFirstSearchSolver(maze);
             case RIGHTHAND:
                 return new RightHandExploration(maze);
-            default: // this case is for BAD_ALGORITHM (unknown or algorithm does not exist)
+            default: 
                 return new BreadthFirstSearchSolver(maze);
         }
     }
