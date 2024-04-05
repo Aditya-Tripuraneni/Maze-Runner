@@ -2,6 +2,8 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static ca.mcmaster.se2aa4.mazerunner.Utils.Algorithms.*;
+
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,12 +15,14 @@ import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.BreadthFirstSearchSol
 import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.MazeSolver;
 import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.RightHandExploration;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeExporter;
+import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeMatrixExporter;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeSolverFactory;
-import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
 
 
 public class MazeSolverFactoryTest {
-    private Path path; 
+    private String path = "./examples/straight.maz.txt";
+    private MazeExporter mazeExporter; 
     private Maze maze; 
     
 
@@ -30,8 +34,8 @@ public class MazeSolverFactoryTest {
      */
     @BeforeEach
     public void setUpMaze() throws FileNotFoundException, IOException{
-        this.path = new Path("./examples/straight.maz.txt");
-        this.maze = new Maze(path);
+        this.mazeExporter = new MazeMatrixExporter(this.path);
+        this.maze = this.mazeExporter.constructMaze();
     }
 
 
@@ -42,7 +46,7 @@ public class MazeSolverFactoryTest {
     @Test
     public void testBFSImplementsMazeSolver() {
         MazeSolverFactory factory = new MazeSolverFactory();
-        MazeSolver solver = factory.createSolver("BFS", maze);
+        MazeSolver solver = factory.createSolver(BFS, maze);
         assertTrue(solver instanceof MazeSolver);
     }
 
@@ -53,7 +57,7 @@ public class MazeSolverFactoryTest {
     @Test
     public void testCreateBreadthFirstSearchSolver() {
         MazeSolverFactory factory = new MazeSolverFactory();
-        MazeSolver solver = factory.createSolver("BFS", maze);
+        MazeSolver solver = factory.createSolver(BFS, maze);
         assertTrue(solver instanceof BreadthFirstSearchSolver);
     }
 
@@ -65,7 +69,7 @@ public class MazeSolverFactoryTest {
     @Test
     public void testBFSSolverNotInstanceRightHandSolver(){
         MazeSolverFactory factory = new MazeSolverFactory();
-        MazeSolver solver = factory.createSolver("BFS", maze);
+        MazeSolver solver = factory.createSolver(BFS, maze);
         assertFalse(solver instanceof RightHandExploration);
     }
 
@@ -76,7 +80,7 @@ public class MazeSolverFactoryTest {
     @Test
     public void testRightHandImplementsMazeSolver() {
         MazeSolverFactory factory = new MazeSolverFactory();
-        MazeSolver solver = factory.createSolver("RIGHTHAND", maze);
+        MazeSolver solver = factory.createSolver(RIGHTHAND, maze);
         assertTrue(solver instanceof MazeSolver);
     }
 
@@ -87,7 +91,7 @@ public class MazeSolverFactoryTest {
     @Test
     public void testCreateRightHandSolver() {
         MazeSolverFactory factory = new MazeSolverFactory();
-        MazeSolver solver = factory.createSolver("RIGHTHAND", maze);
+        MazeSolver solver = factory.createSolver(RIGHTHAND, maze);
         assertTrue(solver instanceof RightHandExploration);
     }
 
@@ -99,7 +103,7 @@ public class MazeSolverFactoryTest {
     @Test
     public void testRightHandSolverNotInstanceBFS() {
         MazeSolverFactory factory = new MazeSolverFactory();
-        MazeSolver solver = factory.createSolver("RIGHTHAND", maze);
+        MazeSolver solver = factory.createSolver(RIGHTHAND, maze);
         assertFalse(solver instanceof BreadthFirstSearchSolver);
     }
 

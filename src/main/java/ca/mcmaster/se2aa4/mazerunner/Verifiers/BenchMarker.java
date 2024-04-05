@@ -8,9 +8,11 @@ import ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms.MazeSolver;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeSolverFactory;
 import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
+import ca.mcmaster.se2aa4.mazerunner.Utils.Algorithms;
 
-public class BenchMarker {
+public class BenchMarker implements BenchMark{
     private MazeSolver solver;
+    private final double MILLISECOND_CONVERSION = 1e6; 
     private MazeSolverFactory factory = new MazeSolverFactory();
     private Maze maze;
 
@@ -19,8 +21,8 @@ public class BenchMarker {
 
     }
 
-
-    public void benchMark(String userEnteredBaseLine, String userEnteredMethod){
+    @Override
+    public void benchMark(Algorithms userEnteredBaseLine, Algorithms userEnteredMethod){
         // run baseline
         this.solver = factory.createSolver(userEnteredBaseLine, this.maze);
         long startTimeOne = System.nanoTime(); 
@@ -29,9 +31,10 @@ public class BenchMarker {
 
         // time taken for baseline algorithm
         long durationOne = endTimeOne - startTimeOne;   
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
 
         //format to 2 decimal places
-        String formattedDuration = String.format("%.2f", durationOne / 1e6); 
+        String formattedDuration = decimalFormat.format(durationOne / MILLISECOND_CONVERSION);
         System.out.println(formattedDuration + " ms spent exploring the maze using the provided method: " + userEnteredBaseLine);
 
         int baselineInstructions = this.getInstructionCount(pathOne);
@@ -46,16 +49,16 @@ public class BenchMarker {
         long durationTwo = endTimeTwo - startTimeTwo;   
         
         //format to 2 decimal places
-        String formattedDurationTwo = String.format("%.2f", durationTwo / 1e6); 
+        String formattedDurationTwo = decimalFormat.format(durationTwo / MILLISECOND_CONVERSION); 
         System.out.println(formattedDurationTwo + " ms spent exploring the maze using the provided baseline method: " + userEnteredMethod);
 
         int methodInstructions = this.getInstructionCount(pathTwo);
 
         double speedUp = (double) baselineInstructions / methodInstructions; 
-        DecimalFormat df = new DecimalFormat("#.##"); 
+        DecimalFormat df = new DecimalFormat("#0.00"); 
         speedUp = Double.valueOf(df.format(speedUp));
        
-        System.out.println("Speed up: " +  speedUp);
+        System.out.println("Speed up: " +  df.format(speedUp));
     }
 
 

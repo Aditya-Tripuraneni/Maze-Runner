@@ -1,0 +1,280 @@
+@startuml
+
+left to right direction
+package ExplorationAlgorithms{
+interface MazeSolver {
+    + solveMaze()
+}
+
+interface Maze{
+
+}
+
+
+class PathChecker{ 
+
+}
+
+class Path{ 
+
+}
+
+
+
+class BreadthFirstSearchSolver {
+    + ^solveMaze()
+
+}
+
+class RightHandExploration {
+    + ^solveMaze()
+}
+
+interface PlayerExplorer{
+}
+
+
+RightHandExploration o-down- PlayerExplorer
+
+RightHandExploration *-right- Maze
+MazeSolverFactory  -[hidden]down- Maze
+MazeSolver  -[hidden]left- Maze
+
+BreadthFirstSearchSolver *-right- Maze
+
+
+
+
+MazeSolver <|.left. BreadthFirstSearchSolver
+MazeSolver <|.right. RightHandExploration
+BreadthFirstSearchSolver o-down- Node
+
+Path *-left- AlgorithmInstructions
+
+
+
+ class AlgorithmInstructions {
+        + instructForward()
+        + instructRight()
+        + instructLeft()
+        + instructBackwards()
+        + factorizeInstructions()
+    }
+
+class Node{ 
+
+}
+
+MazeSolverFactory *-- BreadthFirstSearchSolver
+MazeSolverFactory *-- RightHandExploration
+RightHandExploration *-up- PathChecker
+
+BreadthFirstSearchSolver o-- AlgorithmInstructions
+RightHandExploration o-- AlgorithmInstructions
+
+}
+
+' Exploration Algorithms Ends Here
+
+
+newpage
+package Entity{
+
+enum Direction{ 
+}
+
+class Node {
+    + Node(int, int)
+    + getX(): int
+    + getY(): int
+}
+
+interface PlayerExplorer {
+        + turnRight()
+        + turnLeft()
+        + turnBackwards()
+        + moveForward()
+        + getExitLocation()
+        + getCurrentLocation()
+        + getOrientation()
+    }
+
+class Player {
+    + ^turnRight()
+    + ^turnLeft()
+    + ^turnBackwards()
+    + ^moveForward()
+    + ^getExitLocation()
+    + ^getCurrentLocation()
+    + ^getOrientation()
+    }
+
+
+PlayerExplorer <|.up. Player
+Player --> Direction
+
+}
+
+newpage 
+package Mazes{
+
+interface MazeExporter {
+    + constructMaze() : Maze
+}
+
+
+
+enum Tile{
+    WALL,
+    PASS
+}
+
+enum Algorithms{
+
+}
+
+
+interface Maze {
+    + getMazeWidth(): 
+    + getMazeHeight(): 
+    + getNeighbouringTiles(int, int)
+    + isPassTile(int, int): boolean
+    + getRowCoordinates(): List<Integer>
+}
+
+
+class MazeMatrix {
+ + ^getMazeWidth(): 
+    + ^getMazeHeight(): 
+    + ^getNeighbouringTiles(int, int)
+    + ^isPassTile(int, int): boolean
+    + ^getRowCoordinates(): List<Integer>
+   }
+
+
+class MazeMatrixExporter {
+    + ^constructMaze() : Maze
+
+
+    }
+
+ class MazeSolverFactory {
+        + createSolver(String, Maze): MazeSolver
+    }
+
+
+
+Maze <|.up. MazeMatrix
+MazeExporter <|.down. MazeMatrixExporter
+MazeMatrixExporter -left-> Tile
+MazeMatrix *-right- MazeMatrixExporter
+MazeMatrix -up-> Tile
+
+MazeSolverFactory *-left- Maze
+
+MazeSolverFactory -down-> Algorithms
+
+newpage
+package Paths{
+
+class PathChecker {
+    + PathChecker(Maze)
+    + canMoveLeft(PlayerExplorer): boolean
+    + canMoveRight(PlayerExplorer): boolean
+    + canMoveForward(PlayerExplorer): boolean
+    + canFollowInstruction(Direction, PlayerExplorer): boolean
+}
+
+
+class Path {
+    + toCharArray(): char[]
+    + addInstruction(String): void
+    + instructionAt(int): char
+}
+
+interface Maze{
+}
+
+interface InputVerifier{}
+
+class Configurations
+
+interface BenchMark
+
+PathChecker *-right- Maze
+
+Path o-down- BenchMark
+Path o-left- InputVerifier
+Path o-right- Configurations
+}
+
+
+newpage
+package Utils{
+
+enum Algorithms{
+RIGHTHAND, 
+BFS
+}
+
+enum Directions{
+NORTH,
+    EAST,
+    SOUTH,
+    WEST,
+    F, 
+    R, 
+    L 
+}
+
+class Compass {
+    + getRelativeDirection(Direction, Direction): Direction
+}
+
+
+Compass --> Directions
+
+}
+
+
+newpage
+package Main{
+
+class Configurations{
++ configure(): void
+}
+
+class Main{
+}
+
+interface MazeExporter{}
+interface BenchMark{}
+interface InputVerifier{}
+interface MazeSolver{}
+
+class MazeSolverFactory{}
+class Path{}
+
+enum Algorithms{}
+
+
+Path o-down- Configurations
+
+Configurations o-left- Main
+Configurations o-right- MazeSolver
+Configurations o-right- MazeExporter
+Configurations o-up- MazeSolverFactory
+Configurations o-down- InputVerifier
+Configurations o-right- BenchMark
+
+
+
+
+
+Configurations --> Algorithms
+
+
+
+}
+}
+@enduml 

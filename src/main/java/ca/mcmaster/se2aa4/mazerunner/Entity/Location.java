@@ -1,19 +1,30 @@
 package ca.mcmaster.se2aa4.mazerunner.Entity;
 
-public class Node {
-    private final int X; 
-    private final int Y; 
+public class Location {
+    private int x; 
+    private int y; 
 
 
-    public Node(int x, int y){
-        this.X = x; 
-        this.Y = y; 
+    public Location(int x, int y){
+        this.x = x; 
+        this.y = y; 
     }
 
-    public int getX(){return this.X;}
-    
 
-    public int getY(){return this.Y;}
+    public Location(Location other) {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
+    public int getX(){return this.x;}
+
+    public void setX(int val){this.x = val;}
+
+
+    public int getY(){return this.y;}
+
+    public void setY(int val){this.y = val;}
+
 
 
      /*
@@ -28,8 +39,8 @@ public class Node {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        Node other = (Node) obj;
-        return this.X == other.X && this.Y == other.Y;
+        Location other = (Location) obj;
+        return this.x == other.x && this.y == other.y;
     }
 
 
@@ -41,8 +52,8 @@ public class Node {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + X;
-        result = prime * result + Y;
+        result = prime * result + x;
+        result = prime * result + y;
         return result;
     }
 
@@ -50,7 +61,7 @@ public class Node {
 
     @Override
     public String toString() {
-    return "(" + this.X + ", " + this.Y + ")";
+    return "(" + this.x + ", " + this.y + ")";
     }
 
 }

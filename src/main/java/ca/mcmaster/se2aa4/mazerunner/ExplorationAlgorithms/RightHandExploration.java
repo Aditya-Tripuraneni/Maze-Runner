@@ -1,7 +1,9 @@
 package ca.mcmaster.se2aa4.mazerunner.ExplorationAlgorithms;
 
 
+import ca.mcmaster.se2aa4.mazerunner.Entity.Location;
 import ca.mcmaster.se2aa4.mazerunner.Entity.Player;
+import ca.mcmaster.se2aa4.mazerunner.Entity.PlayerExplorer;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
 import ca.mcmaster.se2aa4.mazerunner.Paths.*;
 
@@ -23,10 +25,10 @@ public class RightHandExploration implements MazeSolver{
 
 
     // Algorithm for right hand exploration of maze
-    private void rightHandExplore(Player player){
+    private void rightHandExplore(PlayerExplorer player){
         PathChecker pathChecker = new PathChecker(maze); 
 
-        while (player.getRow() != player.getExitRow() || player.getCol() != player.getExitCol())
+        while (player.getCurrentLocation().getX() != player.getExitLocation().getX() || player.getCurrentLocation().getY() != player.getExitLocation().getY())
         {
             if (pathChecker.canMoveRight(player))
             {
@@ -75,12 +77,15 @@ public class RightHandExploration implements MazeSolver{
 
         int startRow = rowCoordinates.get(0); // Entrance coordinate 
         int startCol = 0;  // Starting on west side means col = 0
+        Location startLocation = new Location(startRow, startCol);
 
         int exitRow = rowCoordinates.get(1);  // Exit coordinate
         int exitCol = maze.getMazeWidth() -1; 
+        Location exitLocation = new Location(exitRow, exitCol);
+
 
         // Player to be spawned on West side of maze
-        Player player = new Player(startRow, startCol, exitRow, exitCol, EAST); 
+        PlayerExplorer player = new Player(startLocation, exitLocation, EAST); 
         
         this.rightHandExplore(player); // Solve maze using rightHandExplore algorithm
 

@@ -5,48 +5,37 @@ import static ca.mcmaster.se2aa4.mazerunner.Utils.Direction.*;
 
 
 public class Player implements PlayerExplorer{
-    private int row; 
-    private int col; 
-    private int exitRow; 
-    private int exitCol; 
+    private Location currentLocation; 
+    private Location exitLocation; 
     private Direction orientation; 
 
 
-    public Player(int row, int col, int exitRow, int exitCol, Direction orientation){
-        this.row = row; 
-        this.col = col; 
-        this.exitRow = exitRow; 
-        this.exitCol = exitCol; 
+    public Player(Location currentLocation, Location exitLocation, Direction orientation){
+        this.currentLocation = currentLocation; 
+        this.exitLocation = exitLocation; 
         this.orientation = orientation; 
     }
 
-
+    @Override
     public Direction getOrientation(){
         return this.orientation;
     }
 
 
-    public int getRow(){
-        return this.row; 
+    @Override
+    public Location getCurrentLocation(){
+        return new Location(this.currentLocation);
     }
 
-
-    public int getCol(){
-        return this.col; 
-    }
-
-
-    public int getExitRow(){
-        return this.exitRow;
-    }
-
-
-    public int getExitCol(){
-        return this.exitCol; 
+    
+    @Override
+    public Location getExitLocation(){
+        return new Location(this.exitLocation);
     }
 
 
     // turns player right relative to cardinal direction
+    @Override
     public void turnRight()
     {
         switch (orientation)
@@ -70,6 +59,7 @@ public class Player implements PlayerExplorer{
 
 
     // turns left relative to cardinal direction
+    @Override
     public void turnLeft()
     {
         switch (orientation)
@@ -94,6 +84,7 @@ public class Player implements PlayerExplorer{
 
 
     // turns backwards relative to cardinal direction
+    @Override
     public void turnBackwards()
     {
         switch (orientation)
@@ -117,23 +108,28 @@ public class Player implements PlayerExplorer{
 
     
     // updates players coordinates after moving forward relative to cardinal direction
+    @Override
     public void moveForward(){
+        int newCol;
+        int newRow;
 
         switch (orientation)
         {
             case EAST:
-                col++;
+                newCol = this.getCurrentLocation().getY() + 1;
+                this.currentLocation.setY(newCol);
                 break; 
-            
             case WEST:
-                col--;
+                newCol = this.getCurrentLocation().getY() - 1;
+                this.currentLocation.setY(newCol);
                 break;
             case NORTH: 
-                row--;
+                newRow = this.getCurrentLocation().getX() - 1; 
+                this.currentLocation.setX(newRow);
                 break; 
-
             case SOUTH:
-                row++;
+                newRow = this.getCurrentLocation().getX() + 1; 
+                this.currentLocation.setX(newRow);
                 break;
             default:
                 break;
