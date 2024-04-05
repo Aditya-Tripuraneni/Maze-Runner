@@ -12,6 +12,7 @@ import ca.mcmaster.se2aa4.mazerunner.Utils.Algorithms;
 
 public class BenchMarker implements BenchMark{
     private MazeSolver solver;
+    private final double MILLISECOND_CONVERSION = 1e6; 
     private MazeSolverFactory factory = new MazeSolverFactory();
     private Maze maze;
 
@@ -30,9 +31,10 @@ public class BenchMarker implements BenchMark{
 
         // time taken for baseline algorithm
         long durationOne = endTimeOne - startTimeOne;   
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
 
         //format to 2 decimal places
-        String formattedDuration = String.format("%.2f", durationOne / 1e6); 
+        String formattedDuration = decimalFormat.format(durationOne / MILLISECOND_CONVERSION);
         System.out.println(formattedDuration + " ms spent exploring the maze using the provided method: " + userEnteredBaseLine);
 
         int baselineInstructions = this.getInstructionCount(pathOne);
@@ -47,18 +49,17 @@ public class BenchMarker implements BenchMark{
         long durationTwo = endTimeTwo - startTimeTwo;   
         
         //format to 2 decimal places
-        String formattedDurationTwo = String.format("%.2f", durationTwo / 1e6); 
+        String formattedDurationTwo = decimalFormat.format(durationTwo / MILLISECOND_CONVERSION); 
         System.out.println(formattedDurationTwo + " ms spent exploring the maze using the provided baseline method: " + userEnteredMethod);
 
         int methodInstructions = this.getInstructionCount(pathTwo);
 
         double speedUp = (double) baselineInstructions / methodInstructions; 
-        DecimalFormat df = new DecimalFormat("#.##"); 
+        DecimalFormat df = new DecimalFormat("#0.00"); 
         speedUp = Double.valueOf(df.format(speedUp));
        
-        System.out.println("Speed up: " +  speedUp);
+        System.out.println("Speed up: " +  df.format(speedUp));
     }
-
 
 
     private int getInstructionCount(Path path){

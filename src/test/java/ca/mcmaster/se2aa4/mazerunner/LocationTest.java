@@ -7,16 +7,16 @@ import org.junit.jupiter.api.Test;
 
 
 
-import ca.mcmaster.se2aa4.mazerunner.Entity.Node;
+import ca.mcmaster.se2aa4.mazerunner.Entity.Location;
 
-public class NodeTest {
+public class LocationTest {
 
     /**
      * Tests the getX() method of the Node class.
      */
     @Test
     public void testGetX() {
-        Node node = new Node(1, 1);
+        Location node = new Location(1, 1);
         int trueResult = 1; 
         int result = node.getX(); 
         assertEquals(trueResult, result);
@@ -28,7 +28,7 @@ public class NodeTest {
      */
     @Test
     public void testGetY() {
-        Node node = new Node(1, 2);
+        Location node = new Location(1, 2);
         int trueResult = 2; 
         int result = node.getY(); 
         assertEquals(trueResult, result);
@@ -40,8 +40,8 @@ public class NodeTest {
      */
     @Test
     public void testEquals() {
-        Node nodeOne = new Node(1, 2);
-        Node nodeTwo = new Node(1, 2);
+        Location nodeOne = new Location(1, 2);
+        Location nodeTwo = new Location(1, 2);
         assertEquals(nodeOne, nodeTwo);
     }
     
@@ -51,8 +51,8 @@ public class NodeTest {
      */
     @Test
     public void testNotEquals() {
-        Node nodeOne = new Node(1, 2);
-        Node nodeTwo = new Node(2, 1);
+        Location nodeOne = new Location(1, 2);
+        Location nodeTwo = new Location(2, 1);
         assertNotEquals(nodeOne, nodeTwo);
     }
     

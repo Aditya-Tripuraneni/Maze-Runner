@@ -5,13 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
-
 public class MazeMatrixExporter implements MazeExporter{    
-    private StringBuilder filePath; 
+    private String filePath; 
 
-    public MazeMatrixExporter(Path fp){
-        this.filePath = fp.getPath(); 
+    public MazeMatrixExporter(String fp){
+        this.filePath = fp; 
     }
 
 
@@ -24,7 +22,8 @@ public class MazeMatrixExporter implements MazeExporter{
 
         Tile [][] maze = new Tile [height][width];
 
-        BufferedReader reader = new BufferedReader(new FileReader(this.filePath.toString()));
+
+        BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
         String line;
         
         int row = 0; 
@@ -69,7 +68,8 @@ public class MazeMatrixExporter implements MazeExporter{
     
     private int getHeight() throws FileNotFoundException, IOException{
         int count = 0; 
-        BufferedReader reader = new BufferedReader(new FileReader(this.filePath.toString()));
+
+        BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
         while (reader.readLine() != null) 
         {
             count++;
@@ -81,7 +81,8 @@ public class MazeMatrixExporter implements MazeExporter{
 
     private  int getWidth() throws FileNotFoundException, IOException{
         int count = 0; 
-        BufferedReader reader = new BufferedReader(new FileReader(this.filePath.toString()));
+
+        BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
         String line;
         line = reader.readLine(); 
 

@@ -41,7 +41,7 @@ public class Configurations {
     
             CommandLineParser parser = new DefaultParser();
             CommandLine cmd = parser.parse(options, this.args);
-            Path filepath = new Path(cmd.getOptionValue("i"));
+            String filepath = cmd.getOptionValue("i");
 
             MazeExporter mazeExporter = new MazeMatrixExporter(filepath);
 
@@ -61,7 +61,7 @@ public class Configurations {
 
                 long duration = endTime - startTime; 
                 String formattedDuration = String.format("%.2f", duration / 1e6); 
-                System.out.println("Time spent loading " + filepath.getPath() + " : " + formattedDuration + " ms");
+                System.out.println("Time spent loading " + filepath + " : " + formattedDuration + " ms");
                 BenchMark benchMarker = new BenchMarker(mazeMatrix);
 
                 benchMarker.benchMark(baseLineAlgorithm, methodAlgorithm);

@@ -1,6 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner.Verifiers;
 
 import ca.mcmaster.se2aa4.mazerunner.Paths.*;
+import ca.mcmaster.se2aa4.mazerunner.Entity.Location;
 import ca.mcmaster.se2aa4.mazerunner.Entity.Player;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
 import ca.mcmaster.se2aa4.mazerunner.Utils.Direction;
@@ -103,7 +104,7 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
         }
 
         // Verify if current coordinates match exit coordinates
-        return  player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol();
+        return  player.getCurrentLocation().getX() == player.getExitLocation().getX() && player.getCurrentLocation().getY() == player.getExitLocation().getY();
     }
 
 
@@ -127,7 +128,8 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
         }
             
         // Verify if current coordinates match exit coordinates
-        return player.getRow() == player.getExitRow() && player.getCol() == player.getExitCol();
+        return  player.getCurrentLocation().getX() == player.getExitLocation().getX() && player.getCurrentLocation().getY() == player.getExitLocation().getY();
+
     }
 
 
@@ -170,10 +172,14 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
      */
     private Player initializePlayer(boolean startWest) {
         if (startWest) {
-            return new Player(rowCoordinates.get(0), 0, rowCoordinates.get(1), this.width - 1, EAST);
+            Location startLocation = new Location(rowCoordinates.get(0), 0);
+            Location endLocation = new Location(rowCoordinates.get(1), this.width - 1);
+            return new Player(startLocation, endLocation, EAST);
         } 
+        Location startLocation = new Location(rowCoordinates.get(1), this.width - 1);
+        Location endLocation = new Location(rowCoordinates.get(0), 0);
         
-        return new Player(rowCoordinates.get(1), this.width - 1, rowCoordinates.get(0), 0, WEST); 
+        return new Player(startLocation, endLocation, WEST); 
     }
 
 
@@ -195,4 +201,6 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
                 return null;
         }
     }
+
+    
 }

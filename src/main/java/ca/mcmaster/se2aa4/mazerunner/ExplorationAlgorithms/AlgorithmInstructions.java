@@ -97,7 +97,6 @@ public class AlgorithmInstructions {
             factoredExpression.append(currLetter);
         }
 
-
         return factoredExpression.toString();
     }
     

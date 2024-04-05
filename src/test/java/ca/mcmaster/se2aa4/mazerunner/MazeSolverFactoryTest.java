@@ -18,11 +18,10 @@ import ca.mcmaster.se2aa4.mazerunner.Mazes.Maze;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeExporter;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeMatrixExporter;
 import ca.mcmaster.se2aa4.mazerunner.Mazes.MazeSolverFactory;
-import ca.mcmaster.se2aa4.mazerunner.Paths.Path;
 
 
 public class MazeSolverFactoryTest {
-    private Path path; 
+    private String path = "./examples/straight.maz.txt";
     private MazeExporter mazeExporter; 
     private Maze maze; 
     
@@ -35,8 +34,7 @@ public class MazeSolverFactoryTest {
      */
     @BeforeEach
     public void setUpMaze() throws FileNotFoundException, IOException{
-        this.path = new Path("./examples/straight.maz.txt");
-        this.mazeExporter = new MazeMatrixExporter(path);
+        this.mazeExporter = new MazeMatrixExporter(this.path);
         this.maze = this.mazeExporter.constructMaze();
     }
 
