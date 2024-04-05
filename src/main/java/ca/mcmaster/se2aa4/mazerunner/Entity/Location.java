@@ -16,12 +16,15 @@ public class Location {
         this.y = other.y;
     }
 
+
     public int getX(){return this.x;}
+
 
     public void setX(int val){this.x = val;}
 
 
     public int getY(){return this.y;}
+
 
     public void setY(int val){this.y = val;}
 
@@ -56,7 +59,6 @@ public class Location {
         result = prime * result + y;
         return result;
     }
-
 
 
     @Override
