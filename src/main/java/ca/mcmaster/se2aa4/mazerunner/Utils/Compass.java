@@ -5,7 +5,13 @@ import static ca.mcmaster.se2aa4.mazerunner.Utils.Direction.*;
 
 public class Compass {
 
-    
+    /**
+     * Returns the relative direction between current orientation and new orientation.
+     * 
+     * @param currentOrientation The current orientation.
+     * @param newOrientation The new orientation.
+     * @return The relative direction (R for right, L for left, F for forward).
+     */
     public Direction getRelativeDirection(Direction currentOrientation, Direction newOrientation){
         switch (currentOrientation) {
             case NORTH:
