@@ -16,11 +16,19 @@ public class BenchMarker implements BenchMark{
     private MazeSolverFactory factory = new MazeSolverFactory();
     private Maze maze;
 
-    public BenchMarker(Maze maze){
+    public BenchMarker(Maze maze) {
         this.maze = maze; 
-
     }
 
+
+    /**
+     * Benchmarks the performance of two maze-solving algorithms.
+     * Compares the time taken and instruction count between the baseline and the method algorithm.
+     * Calculates the speedup achieved by the method algorithm compared to the baseline.
+     * 
+     * @param userEnteredBaseLine The baseline algorithm chosen by the user.
+     * @param userEnteredMethod The method algorithm chosen by the user.
+     */
     @Override
     public void benchMark(Algorithms userEnteredBaseLine, Algorithms userEnteredMethod){
         // run baseline

@@ -59,11 +59,4 @@ public class Location {
         result = prime * result + y;
         return result;
     }
-
-
-    @Override
-    public String toString() {
-    return "(" + this.x + ", " + this.y + ")";
-    }
-
 }
