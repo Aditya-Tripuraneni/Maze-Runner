@@ -31,19 +31,37 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     private Map<Location, Location> parentMapping = new HashMap<>();
     
 
-    public BreadthFirstSearchSolver(Maze maze){
+    public BreadthFirstSearchSolver(Maze maze) {
         this.maze = maze; 
         this.rowCoordinates = maze.getRowCoordinates();
         this.createMappings();
         this.instructionCreator = new AlgorithmInstructions(new Path()); 
     }
-    
 
-    /*
+
+    /**
+     * Solves the maze using a breadth-first search algorithm.
+     * Constructs a path based on the exploration results.
+     * Factors the exploration instructions and returns the solved path.
+     * 
+     * @return The solved path represented as an instance of the Path class.
+     */
+    @Override
+    public Path solveMaze() {
+        this.breathFirstSearch();
+        this.constructPath();
+        // StringBuilder path = maze.getPath();
+        String factoredPath = instructionCreator.factorizeInstructions(); 
+
+        return new Path(factoredPath); 
+    }
+
+
+     /*
      * This algorithm was learned from: 2C03 - Algorithms by Sedgewick Robert, 4th edition
      * Credit also given to the 2C03 course from McMaster University Winter 2024 term. 
      */
-    private void breathFirstSearch(){        
+    private void breathFirstSearch() {        
         // Entrance Coordinate
         int startRow = this.rowCoordinates.get(0); // Entrance coordinate 
         int startCol = 0;  // Starting on west side means col = 0
@@ -90,7 +108,14 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     }
 
 
-    private void addNeighbour(Location currentNode, Location neighbourNode){
+    /**
+     * Adds a neighboring node to the exploration queue if it can be reached with a shorter distance
+     * from the current node compared to its current recorded distance.
+     * 
+     * @param currentNode The current node in the exploration process.
+     * @param neighbourNode The neighboring node to be added to the exploration queue.
+     */
+    private void addNeighbour(Location currentNode, Location neighbourNode) {
         int currentDistance = this.distanceMapping.get(currentNode);
 
         if (currentDistance + 1 < this.distanceMapping.get(neighbourNode)){
@@ -101,7 +126,11 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     }
 
 
-    private void createMappings(){        
+    /**
+     * Initializes distance and parent mappings for each location in the maze.
+     * Initializes each location with maximum distance and itself as its parent.
+     */
+    private void createMappings() {        
         for(int row = 0; row < this.maze.getMazeHeight(); row ++){
             for (int col = 0; col < this.maze.getMazeWidth(); col ++){
                 Location node = new Location(row, col); 
@@ -111,6 +140,12 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         }
     }
 
+
+    /**
+     * Backtracks from the exit node to the entrance node to find the path taken.
+     * 
+     * @return The list of locations representing the path from entrance to exit.
+     */
 
     private List<Location> backTrackPath(){
         Deque<Location> deque = new LinkedList<>();
@@ -135,7 +170,13 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     }
 
 
-    private void constructPath(){
+    /**
+     * Constructs the path based on the backtracked sequence of locations.
+     * Updates the instruction creator with the forward instructions along the path.
+     * 
+     * Uses the relative movement direction to handle the instruction for each step.
+     */
+    private void constructPath() {
         
         Direction oldOrientation = EAST; 
         List<Location> pathSequence = this.backTrackPath();
@@ -143,7 +184,6 @@ public class BreadthFirstSearchSolver implements MazeSolver{
         Location prevNode = pathSequence.get(0);
         instructionCreator.instructForward();
         Compass compass = new Compass();
-        // System.out.println("Pre path before doing jack shit: " + maze.getPath());
 
         for (int i = 1; i < pathSequence.size(); i ++)
         {
@@ -180,32 +220,23 @@ public class BreadthFirstSearchSolver implements MazeSolver{
     }
 
 
-    private void handleInstruction(Direction relativeDirection){
+    /**
+     * Handles the instruction based on the relative direction of movement.
+     * 
+     * @param relativeDirection The relative direction of movement (L for left, R for right, F for forward).
+     */
+    private void handleInstruction(Direction relativeDirection) {
         if (relativeDirection == L){
-            // System.out.println("Instruct Left");
             instructionCreator.instructLeft();
             instructionCreator.instructForward();
         }
         else if (relativeDirection == R){
-            // System.out.println("Instruct Right");
             instructionCreator.instructRight();
             instructionCreator.instructForward();
 
         }
         else if (relativeDirection == F){
-            // System.out.println("I moved forward!");
             instructionCreator.instructForward();
         }
-    }
-
-
-    @Override
-    public Path solveMaze(){
-        this.breathFirstSearch();
-        this.constructPath();
-        // StringBuilder path = maze.getPath();
-        String factoredPath = instructionCreator.factorizeInstructions(); 
-
-        return new Path(factoredPath); 
     }
 }

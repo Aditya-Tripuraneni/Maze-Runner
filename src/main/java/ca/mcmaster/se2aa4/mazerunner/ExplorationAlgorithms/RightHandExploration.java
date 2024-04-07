@@ -18,7 +18,6 @@ public class RightHandExploration implements MazeSolver {
     private AlgorithmInstructions instructionCreator;
 
 
-
     /**
      * Constructs a RightHandExploration object to explore the provided maze using the right-hand rule.
      * Initializes an AlgorithmInstructions object for generating exploration instructions.
@@ -62,7 +61,11 @@ public class RightHandExploration implements MazeSolver {
     }
 
 
-      // Algorithm for right hand exploration of maze
+      /**
+     * Performs right-hand exploration of the maze by guiding the player using the right-hand rule.
+     * 
+     * @param player The player explorer object used for navigating the maze.
+     */
       private void rightHandExplore(PlayerExplorer player) {
         PathChecker pathChecker = new PathChecker(maze); 
 
