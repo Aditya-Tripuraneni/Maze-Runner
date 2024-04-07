@@ -81,7 +81,7 @@ The delivered program at the end of this assignment should use the following fla
 - `-i MAZE_FILE`: specifies the filename to be used;
 - `-p PATH_SEQUENCE`: activates the path verification mode to validate that PATH_SEQUENCE is correct for the maze
 - `-m METHOD`: activates the method to solve the maze using an algorithm
-- `-b BENCHAMRK`: activates the benchmark mode to compare two algorithms, a baseline and a metho
+- `-b BENCHAMRK`: activates the benchmark mode to compare two algorithms, a baseline and a method
 
 
 If you are also delivering the bonus, your program will react to a third flag:
