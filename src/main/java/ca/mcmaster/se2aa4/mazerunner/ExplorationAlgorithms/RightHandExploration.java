@@ -13,19 +13,60 @@ import java.util.List;
 import static ca.mcmaster.se2aa4.mazerunner.Utils.Direction.*;
 
 
-public class RightHandExploration implements MazeSolver{
+public class RightHandExploration implements MazeSolver {
     private Maze maze; 
     private AlgorithmInstructions instructionCreator;
 
 
-    public RightHandExploration(Maze maze){
+    /**
+     * Constructs a RightHandExploration object to explore the provided maze using the right-hand rule.
+     * Initializes an AlgorithmInstructions object for generating exploration instructions.
+     * 
+     * @param maze The maze to be explored.
+     */
+    public RightHandExploration(Maze maze) {
         this.maze = maze; 
         this.instructionCreator = new AlgorithmInstructions(new Path());
     }
 
 
-    // Algorithm for right hand exploration of maze
-    private void rightHandExplore(PlayerExplorer player){
+    /**
+     * This method solves the maze passed to it.
+     * 
+     * @param maze The maze to be solved.
+     * @return A string representing the factored path to exit the maze.
+     */
+    @Override
+    public Path solveMaze() {
+        List<Integer> rowCoordinates = maze.getRowCoordinates(); 
+
+        int startRow = rowCoordinates.get(0); // Entrance coordinate 
+        int startCol = 0;  // Starting on west side means col = 0
+        Location startLocation = new Location(startRow, startCol);
+
+        int exitRow = rowCoordinates.get(1);  // Exit coordinate
+        int exitCol = maze.getMazeWidth() -1; 
+        Location exitLocation = new Location(exitRow, exitCol);
+
+
+        // Player to be spawned on West side of maze
+        PlayerExplorer player = new Player(startLocation, exitLocation, EAST); 
+        
+        this.rightHandExplore(player); // Solve maze using rightHandExplore algorithm
+
+        String factoredPath = instructionCreator.factorizeInstructions();
+
+        // Factored instructions to exit maze
+        return new Path(factoredPath); 
+    }
+
+
+      /**
+     * Performs right-hand exploration of the maze by guiding the player using the right-hand rule.
+     * 
+     * @param player The player explorer object used for navigating the maze.
+     */
+      private void rightHandExplore(PlayerExplorer player) {
         PathChecker pathChecker = new PathChecker(maze); 
 
         while (player.getCurrentLocation().getX() != player.getExitLocation().getX() || player.getCurrentLocation().getY() != player.getExitLocation().getY())
@@ -61,37 +102,5 @@ public class RightHandExploration implements MazeSolver{
                 instructionCreator.instructForward();
             }
         }
-    }
-
-
-    /**
-     * This method solves the maze passed to it.
-     * 
-     * @param maze The maze to be solved.
-     * @return A string representing the factored path to exit the maze.
-     */
-    @Override
-    public Path solveMaze() 
-    {
-        List<Integer> rowCoordinates = maze.getRowCoordinates(); 
-
-        int startRow = rowCoordinates.get(0); // Entrance coordinate 
-        int startCol = 0;  // Starting on west side means col = 0
-        Location startLocation = new Location(startRow, startCol);
-
-        int exitRow = rowCoordinates.get(1);  // Exit coordinate
-        int exitCol = maze.getMazeWidth() -1; 
-        Location exitLocation = new Location(exitRow, exitCol);
-
-
-        // Player to be spawned on West side of maze
-        PlayerExplorer player = new Player(startLocation, exitLocation, EAST); 
-        
-        this.rightHandExplore(player); // Solve maze using rightHandExplore algorithm
-
-        String factoredPath = instructionCreator.factorizeInstructions();
-
-        // Factored instructions to exit maze
-        return new Path(factoredPath); 
     }
 }

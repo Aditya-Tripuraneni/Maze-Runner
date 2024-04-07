@@ -4,40 +4,49 @@ import ca.mcmaster.se2aa4.mazerunner.Utils.Direction;
 import static ca.mcmaster.se2aa4.mazerunner.Utils.Direction.*;
 
 
-public class Player implements PlayerExplorer{
+public class Player implements PlayerExplorer {
     private Location currentLocation; 
     private Location exitLocation; 
     private Direction orientation; 
 
 
-    public Player(Location currentLocation, Location exitLocation, Direction orientation){
+    /**
+     * Constructs a Player object with the specified current location, exit location, and orientation.
+     * 
+     * @param currentLocation The current location of the player in the maze.
+     * @param exitLocation The exit location of the maze.
+     * @param orientation The orientation of the player (North, South, East, or West).
+     */
+    public Player(Location currentLocation, Location exitLocation, Direction orientation) {
         this.currentLocation = currentLocation; 
         this.exitLocation = exitLocation; 
         this.orientation = orientation; 
     }
 
+
     @Override
-    public Direction getOrientation(){
+    public Direction getOrientation() {
         return this.orientation;
     }
 
 
     @Override
-    public Location getCurrentLocation(){
+    public Location getCurrentLocation() {
         return new Location(this.currentLocation);
     }
 
     
     @Override
-    public Location getExitLocation(){
+    public Location getExitLocation() {
         return new Location(this.exitLocation);
     }
 
 
-    // turns player right relative to cardinal direction
+    /**
+     * Turns the player right relative to the current cardinal direction.
+     */
     @Override
-    public void turnRight()
-    {
+    public void turnRight() {
         switch (orientation)
         {
             case EAST:
@@ -58,10 +67,11 @@ public class Player implements PlayerExplorer{
     }
 
 
-    // turns left relative to cardinal direction
+    /**
+     * Turns the player left relative to the current cardinal direction.
+     */
     @Override
-    public void turnLeft()
-    {
+    public void turnLeft() {
         switch (orientation)
         {
             case EAST:
@@ -83,10 +93,11 @@ public class Player implements PlayerExplorer{
     }
 
 
-    // turns backwards relative to cardinal direction
+    /**
+     * Turns the player backwards relative to the current cardinal direction.
+     */
     @Override
-    public void turnBackwards()
-    {
+    public void turnBackwards() {
         switch (orientation)
         {
             case EAST:
@@ -106,10 +117,12 @@ public class Player implements PlayerExplorer{
         }
     }
 
-    
-    // updates players coordinates after moving forward relative to cardinal direction
+
+    /**
+     * Updates the player's coordinates after moving forward relative to the current cardinal direction.
+     */
     @Override
-    public void moveForward(){
+    public void moveForward() {
         int newCol;
         int newRow;
 
@@ -134,7 +147,5 @@ public class Player implements PlayerExplorer{
             default:
                 break;
         }
-
     }
-
 }

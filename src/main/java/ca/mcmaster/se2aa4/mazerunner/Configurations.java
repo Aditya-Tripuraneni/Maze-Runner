@@ -82,6 +82,14 @@ public class Configurations {
                 InputVerifier mazeInputVerifier = new MazeInputReader(mazeMatrix, userPath);
                 mazeInputVerifier.verifyPath();
             }
+            else{
+                MazeSolverFactory factory = new MazeSolverFactory(); 
+                // generate the solving algorithm
+                MazeSolver solver = factory.createSolver(Algorithms.valueOf("BFS"), mazeMatrix);
+                // solve the maze and output the path
+                Path path = solver.solveMaze();
+                System.out.println(path.getPath());
 
+            }
     }
 }

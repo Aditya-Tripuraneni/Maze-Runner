@@ -19,7 +19,15 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
     private Path userInput;
     
 
-    public  MazeInputReader(Maze maze, String userInput){
+    /**
+     * Constructs a MazeInputReader object with the provided maze and user input.
+     * Initializes a PathChecker object to perform path-related operations on the maze.
+     * Sets the user-defined path and extracts entrance and exit coordinates.
+     * 
+     * @param maze The maze object to be read.
+     * @param userInput The user-defined path input.
+     */
+    public  MazeInputReader(Maze maze, String userInput) {
             this.pathChecker = new PathChecker(maze);
             this.setUserDefinedPath(userInput);
             rowCoordinates = pathChecker.getEntranceAndExit();
@@ -29,8 +37,8 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
 
     // Verfies if the userInput is a cannonical path
     @Override
-    public boolean isCannonical(){
-        for (char c: userInput.toCharArray()){
+    public boolean isCannonical() {
+        for (char c: userInput.toCharArray()) {
             if (Character.isDigit(c)) {return false;} // If digit then its factorized
         }
         
@@ -47,7 +55,7 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
      * @return True if the factorized instructions lead the player to the maze exit, false otherwise.
      */
     @Override
-    public boolean verifyFactorized(boolean startWest){
+    public boolean verifyFactorized(boolean startWest) {
 
         // Initialize the player based on the starting side of the maze
         Player player = initializePlayer(startWest);
@@ -116,8 +124,7 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
      * @return True if the canonical instructions lead the player to the maze exit, false otherwise.
      */
     @Override
-    public boolean verifyCannonical(boolean startWest)
-    {
+    public boolean verifyCannonical(boolean startWest) {
 
         Player player = initializePlayer(startWest);
 
@@ -129,13 +136,11 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
             
         // Verify if current coordinates match exit coordinates
         return  player.getCurrentLocation().getX() == player.getExitLocation().getX() && player.getCurrentLocation().getY() == player.getExitLocation().getY();
-
     }
 
 
     @Override
-    public String verifyPath()
-    {
+    public String verifyPath() {
         if (this.isCannonical())
         {
             // verify west to east path and east to west path
@@ -183,13 +188,13 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
     }
 
 
-    private void setUserDefinedPath(String userPath){
+    private void setUserDefinedPath(String userPath) {
         userPath = userPath.replaceAll("\\s", ""); // Remove any spaces
         this.userInput = new Path(userPath); 
     }
 
     
-    private Direction convertDirection(char c){
+    private Direction convertDirection(char c) {
         switch (c) {
             case 'F':
                 return F;
@@ -202,5 +207,4 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
         }
     }
 
-    
 }

@@ -8,14 +8,23 @@ import java.io.IOException;
 public class MazeMatrixExporter implements MazeExporter{    
     private String filePath; 
 
-    public MazeMatrixExporter(String fp){
+
+    public MazeMatrixExporter(String fp) {
         this.filePath = fp; 
     }
 
 
+    /**
+     * Constructs a maze based on the dimensions specified by getWidth() and getHeight(),
+     * and the layout provided in the file specified by filePath.
+     * 
+     * @return The constructed maze as an instance of the Maze interface.
+     * 
+     * @throws FileNotFoundException if the specified file path does not exist or is inaccessible.
+     * @throws IOException if an I/O error occurs while reading the file.
+     */
     @Override
-    public Maze constructMaze() throws FileNotFoundException, IOException
-    {
+    public Maze constructMaze() throws FileNotFoundException, IOException {
 
         int width = this.getWidth(); 
         int height = this.getHeight();  
@@ -52,7 +61,7 @@ public class MazeMatrixExporter implements MazeExporter{
     }
 
 
-    private Tile convertTilechar(char c){
+    private Tile convertTilechar(char c) {
         switch (c){
             case '#': 
                 return Tile.WALL; 
@@ -66,7 +75,7 @@ public class MazeMatrixExporter implements MazeExporter{
     }
     
     
-    private int getHeight() throws FileNotFoundException, IOException{
+    private int getHeight() throws FileNotFoundException, IOException {
         int count = 0; 
 
         BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
@@ -79,7 +88,7 @@ public class MazeMatrixExporter implements MazeExporter{
     }
 
 
-    private  int getWidth() throws FileNotFoundException, IOException{
+    private int getWidth() throws FileNotFoundException, IOException {
         int count = 0; 
 
         BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
