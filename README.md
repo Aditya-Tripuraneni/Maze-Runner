@@ -27,13 +27,14 @@ This program explores a maze, finding a path from an entry point to an exit one.
 - The program takes as input a maze and print the path on the standard output.
     - For this assignment, the path does not have to be the shortest one.
 - The program can take a path as input and verify if it's a legit one.
+- The program can activate a bench mark mode to compare two different maze solving algorithms. 
 
 ## How to run this software?
 
 To build the program, simply package it with Maven:
 
 ```
-mosser@azrael A1-Template % mvn -q clean package 
+mosser@azrael A3-Template % mvn -q clean package 
 ```
 
 ### Provided version (starter code)
@@ -41,7 +42,7 @@ mosser@azrael A1-Template % mvn -q clean package
 The starter code assumes the maze file name is the first argument. 
 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar ./examples/small.maz.txt
+mosser@azrael A3-Template % java -jar target/mazerunner.jar ./examples/small.maz.txt
 ** Starting Maze Runner
 **** Reading the maze from file ./examples/small.maz.txt
 WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL 
@@ -63,7 +64,7 @@ PATH NOT COMPUTED
 When called on a non-existing file. it prints an error message
 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar ./examples/small.maz.txtd
+mosser@azrael A3-Template % java -jar target/mazerunner.jar ./examples/small.maz.txtd
 ** Starting Maze Runner
 **** Reading the maze from file ./examples/small.maz.txtd
 /!\ An error has occured /!\
@@ -80,8 +81,8 @@ The delivered program at the end of this assignment should use the following fla
 
 - `-i MAZE_FILE`: specifies the filename to be used;
 - `-p PATH_SEQUENCE`: activates the path verification mode to validate that PATH_SEQUENCE is correct for the maze
-- `-m METHOD`: activates the method to solve the maze using an algorithm
-- `-b BENCHAMRK`: activates the benchmark mode to compare two algorithms, a baseline and a method
+- `-m PREFFERED_METHOD`: activates the method to solve the maze using an algorithm
+- `-b BENCHMARK_MODE`: activates the benchmark mode to compare two algorithms, a baseline and a method
 
 
 If you are also delivering the bonus, your program will react to a third flag:
@@ -93,24 +94,35 @@ If you are also delivering the bonus, your program will react to a third flag:
 When no logs are activated, the programs only print the computed path on the standard output.
 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt
+mosser@azrael A3-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt
 4F
-mosser@azrael A1-Template %
+mosser@azrael A3-Template %
 ```
 
 If a given path is correct, the program prints the message `correct path` on the standard output.
 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 4F
+mosser@azrael A3-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 4F
 correct path
-mosser@azrael A1-Template %
+mosser@azrael A3-Template %
 ```
 
 If a given path is incorrect, the program prints the message `incorrect path` on the standard output.
 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 3F
+mosser@azrael A3-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 3F
 inccorrect path
-mosser@azrael A1-Template %
+mosser@azrael A3-Template %
+```
+
+If the program is executed in Benchmark mode, the program will print the time taken to load the maze file, the time to solve the maze using the specified baseline algorithm, and the time taken to solve the maze using the preferred method. It then prints out the computed speed-up ratio. 
+
+```
+mosser@azrael A3-Template % java -jar target/mazerunner.jar -i ./examples/giant.maz.txt -b RIGHTHAND -m BFS
+Time spent loading ./examples/giant.maz.txt : 5.81 ms
+31.70 ms spent exploring the maze using the provided method: RIGHTHAND
+19.08 ms spent exploring the maze using the provided baseline method: BFS
+Speedup = 75.88
+mosser@azrael A3-Template %
 ```
 
