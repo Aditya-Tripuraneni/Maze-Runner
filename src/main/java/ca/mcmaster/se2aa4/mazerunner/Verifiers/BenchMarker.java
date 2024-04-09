@@ -66,7 +66,7 @@ public class BenchMarker implements BenchMark{
         DecimalFormat df = new DecimalFormat("#0.00"); 
         speedUp = Double.valueOf(df.format(speedUp));
        
-        System.out.println("Speed up: " +  df.format(speedUp));
+        System.out.println("Speedup = " +  df.format(speedUp));
     }
 
 
