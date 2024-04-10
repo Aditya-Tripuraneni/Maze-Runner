@@ -33,7 +33,7 @@ public class MazeSolverFactoryTest {
      * @throws IOException           if an I/O error occurs while reading the maze file.
      */
     @BeforeEach
-    public void setUpMaze() throws FileNotFoundException, IOException{
+    public void setUpMaze() throws FileNotFoundException, IOException {
         this.mazeExporter = new MazeMatrixExporter(this.path);
         this.maze = this.mazeExporter.constructMaze();
     }
@@ -67,11 +67,12 @@ public class MazeSolverFactoryTest {
      * algorithm is not an instance of Right Hand Exploration solver.
      */
     @Test
-    public void testBFSSolverNotInstanceRightHandSolver(){
+    public void testBFSSolverNotInstanceRightHandSolver() {
         MazeSolverFactory factory = new MazeSolverFactory();
         MazeSolver solver = factory.createSolver(BFS, maze);
         assertFalse(solver instanceof RightHandExploration);
     }
+
 
     /**
      * Tests whether the Right Hand Exploration solver created by the MazeSolverFactory
@@ -106,6 +107,4 @@ public class MazeSolverFactoryTest {
         MazeSolver solver = factory.createSolver(RIGHTHAND, maze);
         assertFalse(solver instanceof BreadthFirstSearchSolver);
     }
-
-    
 }
