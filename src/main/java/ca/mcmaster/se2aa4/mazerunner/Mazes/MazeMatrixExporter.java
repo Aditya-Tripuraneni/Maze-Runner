@@ -83,6 +83,7 @@ public class MazeMatrixExporter implements MazeExporter{
         {
             count++;
         }
+        
         reader.close();
         return count; // height of maze
     }
@@ -102,6 +103,5 @@ public class MazeMatrixExporter implements MazeExporter{
 
         reader.close();
         return count; // width of maze
-
     }
 }
