@@ -27,7 +27,7 @@ public class MazeInputReader implements InputVerifier, CannonicalVerifier, Facto
      * @param maze The maze object to be read.
      * @param userInput The user-defined path input.
      */
-    public  MazeInputReader(Maze maze, String userInput) {
+    public MazeInputReader(Maze maze, String userInput) {
             this.pathChecker = new PathChecker(maze);
             this.setUserDefinedPath(userInput);
             rowCoordinates = pathChecker.getEntranceAndExit();

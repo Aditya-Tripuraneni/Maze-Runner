@@ -30,7 +30,7 @@ public class BenchMarker implements BenchMark{
      * @param userEnteredMethod The method algorithm chosen by the user.
      */
     @Override
-    public void benchMark(Algorithms userEnteredBaseLine, Algorithms userEnteredMethod){
+    public void benchMark(Algorithms userEnteredBaseLine, Algorithms userEnteredMethod) {
         // run baseline
         this.solver = factory.createSolver(userEnteredBaseLine, this.maze);
         long startTimeOne = System.nanoTime(); 
@@ -70,7 +70,7 @@ public class BenchMarker implements BenchMark{
     }
 
 
-    private int getInstructionCount(Path path){
+    private int getInstructionCount(Path path) {
         int instructionCount = 0;
         int i = 0;
         while ( i < path.getPathLength()){
