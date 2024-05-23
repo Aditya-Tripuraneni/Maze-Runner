@@ -30,6 +30,7 @@ public class MazeMatrixExporter implements MazeExporter{
         int height = this.getHeight();  
 
         Tile [][] maze = new Tile [height][width];
+        //ArrayList<booean> maze = ....
 
 
         BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
@@ -55,7 +56,7 @@ public class MazeMatrixExporter implements MazeExporter{
 
         reader.close();
 
-        Maze mazeMatrix = new MazeMatrix(maze);
+        Maze mazeMatrix = new MazeMatrix(maze);// new MazeArray2Dlist<maze>
 
         return mazeMatrix; 
     }

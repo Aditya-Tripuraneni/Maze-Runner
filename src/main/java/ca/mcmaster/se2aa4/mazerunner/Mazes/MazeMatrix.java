@@ -11,8 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// MazeArray2DList
 public class MazeMatrix implements Maze {
     private Tile [][] maze; 
+    // your version here new ArrayList<>
     private PathChecker pathChecker;
     private List<Integer> rowCoordinates;
 
