@@ -31,8 +31,7 @@ public class Configurations {
     }
     
 
-    public void configure() throws Exception
-    {
+    public void configure() throws Exception {
             Options options = new Options(); 
             options.addOption("i", true, "File name for -i"); 
             options.addOption("p", true, "Used to verify the path sequence"); 
@@ -89,7 +88,6 @@ public class Configurations {
                 // solve the maze and output the path
                 Path path = solver.solveMaze();
                 System.out.println(path.getPath());
-
             }
     }
 }

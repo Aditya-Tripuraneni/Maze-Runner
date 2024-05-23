@@ -12,7 +12,7 @@ public class Compass {
      * @param newOrientation The new orientation.
      * @return The relative direction (R for right, L for left, F for forward).
      */
-    public Direction getRelativeDirection(Direction currentOrientation, Direction newOrientation){
+    public Direction getRelativeDirection(Direction currentOrientation, Direction newOrientation) {
         switch (currentOrientation) {
             case NORTH:
                 if (newOrientation == EAST) {
@@ -68,5 +68,4 @@ public class Compass {
 
         return F; 
     }
-    
 }

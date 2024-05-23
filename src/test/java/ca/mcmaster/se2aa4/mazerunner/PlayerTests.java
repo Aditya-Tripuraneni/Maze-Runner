@@ -13,7 +13,7 @@ import ca.mcmaster.se2aa4.mazerunner.Utils.Direction;
 public class PlayerTests {
 
     @Test
-    public void testEquals(){
+    public void testEquals() {
         Location one = new Location(1,1);
         Location two = new Location(1,1);
         Player playerOne = new Player(one, two, EAST);
@@ -23,7 +23,7 @@ public class PlayerTests {
 
 
     @Test
-    public void testGetRow(){
+    public void testGetRow() {
         Location one = new Location(45,1);
         Location two = new Location(1,1);
 
@@ -35,7 +35,7 @@ public class PlayerTests {
 
 
     @Test
-    public void testGetCol(){
+    public void testGetCol() {
         Location one = new Location(1,45);
         Location two = new Location(1,1);
         int trueResult = 45;
@@ -46,7 +46,7 @@ public class PlayerTests {
 
 
     @Test
-    public void testGetExitRow(){
+    public void testGetExitRow() {
         Location one = new Location(1,1);
         Location two = new Location(45,1);
         int trueResult = 45;
@@ -57,7 +57,7 @@ public class PlayerTests {
 
 
     @Test
-    public void testGetExitCol(){
+    public void testGetExitCol() {
         Location one = new Location(1,1);
         Location two = new Location(1,45);
         int trueResult = 45;
@@ -68,7 +68,7 @@ public class PlayerTests {
 
 
     @Test
-    public void testgetOrientation(){
+    public void testgetOrientation() {
         Location one = new Location(1,1);
         Location two = new Location(1,1);
         Direction trueResult = SOUTH; 
@@ -76,5 +76,4 @@ public class PlayerTests {
         Direction result = playerOne.getOrientation();
         assertEquals(trueResult, result);
     }
-    
 }

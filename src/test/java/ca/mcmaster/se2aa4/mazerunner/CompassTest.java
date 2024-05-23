@@ -15,7 +15,7 @@ public class CompassTest {
      * Tests the relative direction when facing north and changing cardinal direction to east.
      */
     @Test
-    public void testNorthRelativeDirectionFaceEast(){
+    public void testNorthRelativeDirectionFaceEast() {
         Compass compass = new Compass();
         Direction trueAnswer = R; //right
         Direction result = compass.getRelativeDirection(NORTH, EAST);
@@ -27,7 +27,7 @@ public class CompassTest {
      * Tests the relative direction when facing north and changing cardinal direction to west.
      */
     @Test
-    public void testNorthRelativeDirectionFaceWest(){
+    public void testNorthRelativeDirectionFaceWest() {
         Compass compass = new Compass();
         Direction trueAnswer = L; //left
         Direction result = compass.getRelativeDirection(NORTH, WEST);
@@ -39,7 +39,7 @@ public class CompassTest {
      * Tests the relative direction when facing north and changing cardinal direction to north.
      */
     @Test
-    public void testNorthRelativeDirectionFaceNorth(){
+    public void testNorthRelativeDirectionFaceNorth() {
         Compass compass = new Compass();
         Direction trueAnswer = F; //forward
         Direction result = compass.getRelativeDirection(NORTH, NORTH);
@@ -51,7 +51,7 @@ public class CompassTest {
      * Tests the relative direction when facing south and changing cardinal direction to east.
      */
     @Test
-    public void testSouthRelativeDirectionFaceEast(){
+    public void testSouthRelativeDirectionFaceEast() {
         Compass compass = new Compass();
         Direction trueAnswer = L; //left
         Direction result = compass.getRelativeDirection(SOUTH, EAST);
@@ -63,7 +63,7 @@ public class CompassTest {
      * Tests the relative direction when facing south and changing cardinal direction to west.
      */
     @Test
-    public void testSouthRelativeDirectionFaceWest(){
+    public void testSouthRelativeDirectionFaceWest() {
         Compass compass = new Compass();
         Direction trueAnswer = R; //right
         Direction result = compass.getRelativeDirection(SOUTH, WEST);
@@ -75,7 +75,7 @@ public class CompassTest {
      * Tests the relative direction when facing south and changing cardinal direction to south.
      */
     @Test
-    public void testSouthRelativeDirectionFaceSouth(){
+    public void testSouthRelativeDirectionFaceSouth() {
         Compass compass = new Compass();
         Direction trueAnswer = F; //forward
         Direction result = compass.getRelativeDirection(SOUTH, SOUTH);
@@ -87,7 +87,7 @@ public class CompassTest {
      * Tests the relative direction when facing west and changing cardinal direction to north.
      */
     @Test
-    public void testWestRelativeDirectionFaceNorth(){
+    public void testWestRelativeDirectionFaceNorth() {
         Compass compass = new Compass();
         Direction trueAnswer = R; //right
         Direction result = compass.getRelativeDirection(WEST, NORTH);
@@ -99,7 +99,7 @@ public class CompassTest {
      * Tests the relative direction when facing west and changing cardinal direction to south.
      */
     @Test
-    public void testWestRelativeDirectionFaceSouth(){
+    public void testWestRelativeDirectionFaceSouth() {
         Compass compass = new Compass();
         Direction trueAnswer = L; //left
         Direction result = compass.getRelativeDirection(WEST, SOUTH);
@@ -111,7 +111,7 @@ public class CompassTest {
      * Tests the relative direction when facing west and changing cardinal direction to west.
      */
     @Test
-    public void testWestRelativeDirectionFaceWest(){
+    public void testWestRelativeDirectionFaceWest() {
         Compass compass = new Compass();
         Direction trueAnswer = F; //forward
         Direction result = compass.getRelativeDirection(WEST, WEST);
@@ -123,7 +123,7 @@ public class CompassTest {
      * Tests the relative direction when facing east and changing cardinal direction to north.
      */
     @Test
-    public void testEastRelativeDirectionFaceNorth(){
+    public void testEastRelativeDirectionFaceNorth() {
         Compass compass = new Compass();
         Direction trueAnswer = L; //left
         Direction result = compass.getRelativeDirection(EAST, NORTH);
@@ -135,7 +135,7 @@ public class CompassTest {
      * Tests the relative direction when facing east and changing cardinal direction to south.
      */
     @Test
-    public void testEastRelativeDirectionFaceSouth(){
+    public void testEastRelativeDirectionFaceSouth() {
         Compass compass = new Compass();
         Direction trueAnswer = R; //right
         Direction result = compass.getRelativeDirection(EAST, SOUTH);
@@ -147,14 +147,10 @@ public class CompassTest {
      * Tests the relative direction when facing east and changing cardinal direction to east.
      */
     @Test
-    public void testEastRelativeDirectionFaceEast(){
+    public void testEastRelativeDirectionFaceEast() {
         Compass compass = new Compass();
         Direction trueAnswer = F; //forward
         Direction result = compass.getRelativeDirection(EAST, EAST);
         assertEquals(trueAnswer, result);
     }
-
-
-
-    
 }

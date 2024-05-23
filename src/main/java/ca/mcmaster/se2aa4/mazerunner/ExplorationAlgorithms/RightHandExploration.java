@@ -61,7 +61,7 @@ public class RightHandExploration implements MazeSolver {
     }
 
 
-      /**
+    /**
      * Performs right-hand exploration of the maze by guiding the player using the right-hand rule.
      * 
      * @param player The player explorer object used for navigating the maze.

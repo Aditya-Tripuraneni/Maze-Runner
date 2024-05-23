@@ -21,7 +21,7 @@ public class PathChecker {
     private Maze maze;
     private int width;
 
-    public PathChecker(Maze maze){
+    public PathChecker(Maze maze) {
         this.maze = maze; 
         this.width = this.maze.getMazeWidth();
     }
@@ -35,9 +35,7 @@ public class PathChecker {
      * @param player The player for whom path options are to be determined.
      * @return A HashMap containing path options ('N', 'S', 'W', 'E') and their corresponding tile contents.
      */
-    private Map<Direction, Tile> getPathOptions(PlayerExplorer player)
-    {
-
+    private Map<Direction, Tile> getPathOptions(PlayerExplorer player) {
         Map<Direction, Tile> neighbours = new HashMap<>();
 
         Location currLocation = player.getCurrentLocation();
@@ -83,7 +81,7 @@ public class PathChecker {
      *
      * @return An ArrayList containing the entrance and exit row coordinates of the maze.
      */
-    public List<Integer> getEntranceAndExit(){
+    public List<Integer> getEntranceAndExit() {
         List<Integer>  exitAndEntrance = new ArrayList<>();
         
         int lastXCoordinate  = this.width -1; // Last valid column within the maze
@@ -112,7 +110,7 @@ public class PathChecker {
 
 
     // Verifies if a player can move left in case of walls
-    public boolean canMoveLeft(PlayerExplorer player){
+    public boolean canMoveLeft(PlayerExplorer player) {
         Map<Direction, Tile> neighbours = this.getPathOptions(player);
         switch (player.getOrientation())
         {
@@ -135,7 +133,7 @@ public class PathChecker {
 
 
     // Verifies if a player can move right incase of walls
-    public boolean canMoveRight(PlayerExplorer player){
+    public boolean canMoveRight(PlayerExplorer player) {
         Map<Direction, Tile> neighbours = getPathOptions(player);
 
         switch (player.getOrientation())
@@ -160,8 +158,7 @@ public class PathChecker {
 
     
     // Verifies if a player can move forward incase of walls
-    public boolean canMoveForward(PlayerExplorer player)
-    {
+    public boolean canMoveForward(PlayerExplorer player) {
         Map<Direction, Tile> neighbours = getPathOptions(player);
 
         switch (player.getOrientation())
@@ -184,7 +181,7 @@ public class PathChecker {
 
 
     // Verifies if a player can follow a particular instruction such as (F, R, L)
-    public boolean canFollowInstruction(Direction instruction, PlayerExplorer player){
+    public boolean canFollowInstruction(Direction instruction, PlayerExplorer player) {
         if (instruction == F)
         {
             if (canMoveForward(player)){
@@ -205,8 +202,7 @@ public class PathChecker {
     }
     
 
-    public int getWidth(){
+    public int getWidth() {
         return this.width; 
     }
-    
 }

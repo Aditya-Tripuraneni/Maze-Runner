@@ -11,5 +11,4 @@ public interface Maze {
     Map<Direction, Boolean> getNeighbouringTiles(int row, int col);
     boolean isPassTile(int row, int col);
     List<Integer> getRowCoordinates();
-
 }

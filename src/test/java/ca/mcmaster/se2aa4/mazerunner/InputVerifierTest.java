@@ -21,7 +21,7 @@ public class InputVerifierTest {
 
 
     @BeforeEach
-    public void setupVerifier() throws FileNotFoundException, IOException{
+    public void setupVerifier() throws FileNotFoundException, IOException {
         this.mazeExporter = new MazeMatrixExporter(this.path);
         this.maze = this.mazeExporter.constructMaze();
     }
